@@ -1,0 +1,44 @@
+﻿package 
+{
+    import ran.ui.core.*;
+
+    dynamic public class ListItemRenderer_ClubInfo extends MMaskedListItemRenderer
+    {
+
+        public function ListItemRenderer_ClubInfo()
+        {
+            addFrameScript(0, this.frame1, 9, this.frame10, 19, this.frame20, 29, this.frame30, 39, this.frame40);
+            return;
+        }// end function
+
+        function frame1()
+        {
+            return;
+        }// end function
+
+        function frame10()
+        {
+            stop();
+            return;
+        }// end function
+
+        function frame20()
+        {
+            stop();
+            return;
+        }// end function
+
+        function frame30()
+        {
+            stop();
+            return;
+        }// end function
+
+        function frame40()
+        {
+            stop();
+            return;
+        }// end function
+
+    }
+}
