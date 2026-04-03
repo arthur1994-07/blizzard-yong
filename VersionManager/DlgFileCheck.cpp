@@ -58,22 +58,22 @@ void CDlgFileCheck::StartFileCheck()
     IVersionManagerDb* pDb = pFrame->GetDbMan();    
     IVersionManConfig* pConfig = pFrame->GetConfig();
 
-    // DB 에 입력된 파일과, 실제로 존재하는지 비교검사한다.
-    CConsoleMessage::GetInstance()->Write("------- 파일체크를 시작합니다 ---------");
+    // Compares the file entered into the DB with whether it actually exists.
+    CConsoleMessage::GetInstance()->Write("------- Starting file check ---------");
 
-    // DB 에서 전체 파일리스트를 가져온다
-    CConsoleMessage::GetInstance()->Write("전체 파일리스트를 가져옵니다");
+    // Retrieve the entire file list from the DB
+    CConsoleMessage::GetInstance()->Write("Get the entire file list");
     std::vector<FullFileList> vFullFileList; 
     pDb->GetAllFileList(vFullFileList);
 
-    // 실제파일이 존재하는지 비교한다.
+   // Compares whether the actual file exists.
     CString strSrc(pConfig->GetTargetPath());
 
     int nTotalCount = (int) vFullFileList.size();
     int nCount = 0;
     int nErrorNum = 0;   
 
-    CConsoleMessage::GetInstance()->Write("파일 비교를 시작합니다");
+    CConsoleMessage::GetInstance()->Write("Get the entire file list");
 
     for (int i=0; i<(int) vFullFileList.size(); i++)
 	{	        
@@ -92,14 +92,14 @@ void CDlgFileCheck::StartFileCheck()
         else // 존재하지 않는다면
         {
             nErrorNum++;
-            CConsoleMessage::GetInstance()->Write("%d %s 파일이 존재하지 않습니다", nCount, strFullPath.GetString());
+            CConsoleMessage::GetInstance()->Write("%d %s file does not exist", nCount, strFullPath.GetString());
         }
 
         m_ProgressCheck.SetPos((int)((nCount*100)/nTotalCount));
     }
 
-    CConsoleMessage::GetInstance()->Write("%d 개 파일오류를 발견했습니다", nErrorNum);
-    CConsoleMessage::GetInstance()->Write("------- 파일체크가 완료되었습니다 ---------");
+    CConsoleMessage::GetInstance()->Write("%d I found a file error.", nErrorNum);
+    CConsoleMessage::GetInstance()->Write("-------File check completed. ---------");
 }
 
 BOOL CDlgFileCheck::IsExist(CString strFullPath)

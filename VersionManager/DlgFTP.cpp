@@ -74,8 +74,8 @@ void CDlgFTP::OnTimer(UINT nIDEvent)
 
 int CDlgFTP::UploadThreadProc()
 {
-    // ftp 에 연결한다.	
-    CConsoleMessage::GetInstance()->Write("---------- FTP Upload 를 시작합니다 ---------");
+    // Connect to FTP.	
+    CConsoleMessage::GetInstance()->Write("----------Start FTP Upload ---------");
     CMinFtp* pFtp = new CMinFtp();
 
     IVersionManConfig* pConfig = m_pFrame->GetConfig();
@@ -92,12 +92,12 @@ int CDlgFTP::UploadThreadProc()
 		if (nRetCode == NET_ERROR)
 		{
 			CConsoleMessage::GetInstance()->Write("-------------------------------------------------------------------");
-			CConsoleMessage::GetInstance()->Write("ERROR:%d %s FTP 연결에 실패하였습니다.", nFtpCrt, strIP.GetString());
+			CConsoleMessage::GetInstance()->Write("ERROR:%d %s FTP connection failed..", nFtpCrt, strIP.GetString());
 			CConsoleMessage::GetInstance()->Write("-------------------------------------------------------------------");
 			return -1;
 		}
 
-		// FTP 의 최초 접속 ROOT 디렉토리 위치
+		// Location of the initial FTP connection ROOT directory
 		CString strFirstDir;
 		
 		if (pFtp->m_pConnect->GetCurrentDirectory(strFirstDir) == 0)
@@ -106,18 +106,20 @@ int CDlgFTP::UploadThreadProc()
 			return -1;
 		}
 
-		// 전체 폴더리스트를 가져온다.        
+		//Get the entire folder list.        
         IVersionManagerDb* pDb = m_pFrame->GetDbMan();        
         IVersionManConfig* pConfig = m_pFrame->GetConfig();
 
 		std::vector<FolderList> vFolder;
 		pDb->GetFolderList(vFolder);
 
-		// FTP 에 폴더를 생성시킨다
-		// 주의 : 아래와 같은 방식으로 하지 않으면...
-		// Windows 계열과 Unix 계열에서 동시에 동작하지 않는다.
+		//Create a folder on FTP
 
-		CConsoleMessage::GetInstance()->Write("--FTP 에 폴더를 체크합니다--");
+		// Caution: If you do not do it in the following way...
+
+		// It does not work on Windows and Unix systems simultaneously.
+
+		CConsoleMessage::GetInstance()->Write("--Check the folder in FTP.--");
 		for (int i=0; i<(int) vFolder.size(); i++)
 		{	
 			CString strTmpFolder= (&vFolder[i])->strName;
@@ -135,13 +137,13 @@ int CDlgFTP::UploadThreadProc()
 			pFtp->SetCurrentDirectory(strFirstDir);        
 		}   
 
-		// 전체 파일리스트를 가져온다.
-		CConsoleMessage::GetInstance()->Write("전체 파일리스트를 가져옵니다");
+		// Get the entire file list..
+		CConsoleMessage::GetInstance()->Write("Get the entire file list");
 		std::vector<FullFileList> vFullFileList;    
 		pDb->GetNotUploadedFileList(vFullFileList);
 	    
-		// 순회하면서 파일을 하나씩 업로드 한다.
-		CConsoleMessage::GetInstance()->Write("파일을 업로드 합니다");
+		// Upload files one by one while going through.
+		CConsoleMessage::GetInstance()->Write("Upload the file");
 		CString strSrcPath;
 		strSrcPath.Format("%s", pConfig->GetTargetPath());
 
@@ -167,15 +169,15 @@ int CDlgFTP::UploadThreadProc()
 			pFtp->SetCurrentDirectory(strChgfolder);
 			if (pFtp->PutFile(strMakePath, strFileName) == NET_ERROR)
 			{
-				CConsoleMessage::GetInstance()->Write("ERROR:%s 파일업로드 에러", strFileName.GetString());
-				CConsoleMessage::GetInstance()->Write("INFO:%s 재시도", strFileName.GetString());
+				CConsoleMessage::GetInstance()->Write("ERROR:%s File Upload Error", strFileName.GetString());
+				CConsoleMessage::GetInstance()->Write("INFO:%s Retry", strFileName.GetString());
 				if (pFtp->PutFile(strMakePath, strFileName) == NET_ERROR)
 				{
-					CConsoleMessage::GetInstance()->Write("ERROR:%s 파일업로드 재시도 실패", strFileName.GetString());					
+					CConsoleMessage::GetInstance()->Write("ERROR:%s File upload retry failed", strFileName.GetString());					
 				}
 				else
 				{
-					CConsoleMessage::GetInstance()->Write("INFO:%s 파일업로드 재시도 성공", strFileName.GetString());
+					CConsoleMessage::GetInstance()->Write("INFO:%s File upload retry successful", strFileName.GetString());
 				}
 			}
 			else
@@ -191,7 +193,7 @@ int CDlgFTP::UploadThreadProc()
 
 			if (m_bStop)
 			{
-				CConsoleMessage::GetInstance()->Write("업로드를 중단합니다");
+				CConsoleMessage::GetInstance()->Write("Stop uploading");
 				pFtp->DisConnect();
 				delete pFtp;
 				return -1;
@@ -199,30 +201,30 @@ int CDlgFTP::UploadThreadProc()
 			Sleep( 5 );
 		}
 
-		// 마지막으로 파일리스트를 업로드 한다.
-		CConsoleMessage::GetInstance()->Write("파일리스트를 업로드 합니다");    
+		// Finally, upload the file list..
+		CConsoleMessage::GetInstance()->Write("Upload file list");    
 		if (pFtp->SetCurrentDirectory(strFirstDir) == NET_ERROR)
 		{
-			CConsoleMessage::GetInstance()->Write("ERROR:파일리스트 SetCurrentDirectory 실패");
+			CConsoleMessage::GetInstance()->Write("ERROR: File List SetCurrentDirectory failed");
 		}
 		else
 		{
 			if (pFtp->PutFile(strSrcPath + '\\' + "filelist.bin.cab", "filelist.bin.cab") == NET_ERROR)
 			{
-                CConsoleMessage::GetInstance()->Write("ERROR:파일리스트 업로드 실패");
+                CConsoleMessage::GetInstance()->Write("ERROR: File list upload failed");
 			}
 			else
 			{
-				CConsoleMessage::GetInstance()->Write("INFO:파일리스트 업로드 성공");
+				CConsoleMessage::GetInstance()->Write("INFO: File list upload successful");
 			}
 		}
 	   
 		// ftp 연결을 해제한다.
-		CConsoleMessage::GetInstance()->Write("FTP 연결을 해제합니다");
+		CConsoleMessage::GetInstance()->Write("Disconnect the FTP connection.");
 		pFtp->DisConnect();
 	}
     delete pFtp;
-	CConsoleMessage::GetInstance()->Write("---------- FTP Upload 를 완료했습니다 ---------");
+	CConsoleMessage::GetInstance()->Write("---------- FTP Upload completed. ---------");
     return 0;
 }
 
@@ -260,7 +262,7 @@ int CDlgFTP::StartUploadThread()
 	if (m_hThread == NULL)
 	{
 		// 쓰래드 생성에 실패하였습니다.
-        CConsoleMessage::GetInstance()->Write("쓰래드 생성에 실패하였습니다");
+        CConsoleMessage::GetInstance()->Write("Failed to create thread");
 		return NET_ERROR;
 	}
 	else
