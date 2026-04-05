@@ -63,7 +63,7 @@ BOOL CDlgCompress::OnInitDialog()
 	m_Pregress.SetRange(0, 100);	
 	m_Pregress.SetPos(0);
 
-	if (m_nMode == 1) // 일반적 파일추가
+	if (m_nMode == 1) // General file addition
 	{
 		// 사용하지 않는 기능이므로 삭제
 		//SetTimer(100, 1000, NULL);
@@ -140,10 +140,10 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
 	DWORD dwRetCode;
 	CString strFolder;
 
-    CConsoleMessage::GetInstance()->Write("----폴더를 체크합니다----");
+    CConsoleMessage::GetInstance()->Write("----Checking folder----");
 
 	//////////////////////////////////////////////////////////////////////////////
-	// 루트디렉토리는 무조건 생성한다. "\\"
+	// The root directory is always created.
 	strFolder = pConfig->GetTargetPath();
 	CreateDirectory(strFolder, NULL);
 	if( pDb->IsFolderExist("\\") == false )
@@ -154,50 +154,50 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
 
 	for (pos = ListLoader.m_vFolderList.begin(); pos<ListLoader.m_vFolderList.end(); ++pos)
 	{		
-		// DB 에 폴더가 있는지 체크한다.        
+		// Check if there is a folder in the DB..        
         nRetCode = pDb->IsFolderExist((*pos).strName);
         strFolder = pConfig->GetTargetPath() + (*pos).strName;
         strFolder.Replace('/', '\\');
 
         if (nRetCode == TRUE)
         {
-			// DB 에 있고 실제 존재한다면 스킵
+			// Skip if it is in the DB and actually exists
             dwRetCode = GetFileAttributes(strFolder);
-            if (dwRetCode == INVALID_FILE_ATTRIBUTES) // DB 에는 있지만 존재하지 않는 경우
+            if (dwRetCode == INVALID_FILE_ATTRIBUTES) // Cases where it exists in the DB but does not exist
             {
                 // 디렉토리를 생성한다.
                 if (CreateDirectory(strFolder, NULL) == 0)
 		        {
 			        // 생성실패
-                    CConsoleMessage::GetInstance()->Write("%s 디렉토리가 생성되지 않았습니다", strFolder.GetString());			        
+                    CConsoleMessage::GetInstance()->Write("The %s directory was not created.", strFolder.GetString());			        
 		        }
 		        else
 		        {
 			        // 생성성공
 		        }
             } 
-            else // DB 에 입력되어 있고 실제로 존재하는 경우 
+            else // In the case where it is entered into the DB and actually exists
             {                                   
             }
         }
-        else // DB 에 없는경우
+        else // If not in the DB
         {
-            // 디렉토리를 생성한다.
+            // Create a directory.
             if (CreateDirectory(strFolder, NULL) == 0)
 		    {
-			    // 생성실패
-				CConsoleMessage::GetInstance()->Write("%s 디렉토리를 체크하십시오", strFolder.GetString());
+			    // Creation failed
+				CConsoleMessage::GetInstance()->Write("Please check the %s directory", strFolder.GetString());
 		    }
 		    else
 		    {
-			    // 생성성공
-			    // DB 에 생성된 폴더 이름 입력
+			    // Creation successful
+			    // Enter the folder name created in the DB
                 CString strXXX = (*pos).strName;
                 strXXX.Replace('/', '\\');
 			    if (pDb->CreateFolder(strXXX) != DB_OK)
 			    {
 				    // 생성에는 성공 DB 에는 입력되지 않았음
-                    CConsoleMessage::GetInstance()->Write("%s 디렉토리가 DB 에 입력되지 않았습니다.", strFolder.GetString());    			
+                    CConsoleMessage::GetInstance()->Write("The %s directory was not entered into the DB.", strFolder.GetString());    			
 			    }
                 else
                 {
@@ -206,35 +206,35 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
 		    }            
         }	
 	}
-    CConsoleMessage::GetInstance()->Write("----폴더 체크 완료----");
-	// 파일을 하나씩 압축해서 해당 폴더로 옮긴다.
+    CConsoleMessage::GetInstance()->Write("----Folder check complete----");
+	// Compress the files one by one and move them to the corresponding folder..
 	std::vector<CompressFile>::iterator posFile;
 
-    CConsoleMessage::GetInstance()->Write("----파일을 체크합니다----");
+    CConsoleMessage::GetInstance()->Write("----Checking the file----");
     
-    // 디렉토리 고유번호를 넣어서 세팅한다.
+    // Set it up by entering the directory's unique ID.
 	for (posFile = ListLoader.m_vFile.begin(); posFile<ListLoader.m_vFile.end(); ++posFile)
 	{
-		// 디렉토리의 고유번호를 구한후 값을 넣는다.
+		// After obtaining the unique ID of the directory, insert the value.
         int nDidx = pDb->GetFolderNum((*posFile).strPurePath);
 
         if (nDidx == DB_ERROR)
         {
-            CConsoleMessage::GetInstance()->Write("%s 의 고유값을 찾지 못했습니다", (*posFile).strTarget.GetString());
+            CConsoleMessage::GetInstance()->Write("Unable to find the unique value of %s", (*posFile).strTarget.GetString());
         }
         else
         {
             (*posFile).nDir = nDidx;
-            CConsoleMessage::GetInstance()->Write("%s 의 고유값은 %d 입니다", (*posFile).strTarget.GetString(), nDidx);
+            CConsoleMessage::GetInstance()->Write("The unique value of %s is %d.", (*posFile).strTarget.GetString(), nDidx);
         }
 
-        // 파일을 등록한다.
+        //Register the file.
 	}
 
     nTotalCount = (int) ListLoader.m_vFile.size();
     int nCount = 0;
 
-    // 파일을 압축해서 넣는다.
+    // Compress the file and put it in..
     for (posFile = ListLoader.m_vFile.begin(); posFile<ListLoader.m_vFile.end(); ++posFile)
 	{
 		nCount++;
@@ -244,26 +244,26 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
 		strTemp.Format("%s %d/%d", sTemp.strFileName.GetString(), nCount, nTotalCount);
 		pDLG->m_StaticCtl.SetWindowText(strTemp);
 		sTemp.strSrc.GetString();
-		// 압축해서 해당 디렉토리에 저장한다.
+		// Compress and save to the corresponding directory.
 		if (CAB_UTIL_MIN::MinMakeCab(sTemp.strSrc.GetString(), sTemp.strTarget.GetString()) == TRUE)
 		{ 
-			// 같은 이름의 파일이 있는지 조사한다.
+			//Check if there is a file with the same name.
 			BOOL bExist = pDb->IsFileExist(sTemp.strFileName, (*posFile).nDir);
 			if (bExist)
 			{
-                // 같은 디렉토리의 같은 파일인지 조사한다.
+                //Check if it is the same file in the same directory..
                 int nDirNum = pDb->GetFileFolderNum(sTemp.strFileName);
                 
-                // 같은 디렉토리의 같은 파일이면 업데이트 한다.
+                // Update if it is the same file in the same directory..
                 if (nDirNum == sTemp.nDir) 
                 {               
 					pDb->UpdateFile( sTemp.strFileName, sTemp.strMD5, ListLoader.m_nVerIncreaseCount, (*posFile).nDir );
                     pDb->UpdateFileStateFalse( sTemp.strFileName );
 				    // CConsoleMessage::GetInstance()->Write("%s 기존 파일을 교체하였습니다", sTemp.strFileName.GetString());
                 }                
-                else // 다른 디렉토리의 같은 파일명이면 압축을 취소한다.
+                else // If the file has the same name in a different directory, cancel the compression.
                 {
-                    CConsoleMessage::GetInstance()->Write("%s 파일은 이미 존재합니다", sTemp.strFileName.GetString());
+                    CConsoleMessage::GetInstance()->Write("The %s file already exists", sTemp.strFileName.GetString());
                 }
             }
 			else
@@ -277,13 +277,13 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
 		}
 		else
 		{
-			CConsoleMessage::GetInstance()->Write("%s 파일 압축에 실패하였습니다", sTemp.strFileName.GetString());			
+			CConsoleMessage::GetInstance()->Write("Failed to compress %s file", sTemp.strFileName.GetString());			
 		}		
 		
 		pDLG->m_Pregress.SetPos((int)((nCount*100)/nTotalCount));
 	}
 
-    CConsoleMessage::GetInstance()->Write("----파일 체크 완료----");
+    CConsoleMessage::GetInstance()->Write("----File check complete----");
 
 	return 0;
 }

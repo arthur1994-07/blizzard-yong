@@ -161,7 +161,7 @@ void CVersionManagerDoc::OnFileSave()
     // TODO: 여기에 명령 처리기 코드를 추가합니다.
     TRACE("OnFileSave \n");    
 
-    // DB 에서 전체 파일리스트를 가져온다    
+    // Retrieve the entire file list from the DB.    
     CMainFrame* pFrame = (CMainFrame*) AfxGetMainWnd();
     IVersionManagerDb* pDb = pFrame->GetDbMan();
     IVersionManConfig* pConfig = pFrame->GetConfig();
@@ -171,7 +171,7 @@ void CVersionManagerDoc::OnFileSave()
     
     std::string AppPath = sc::getAppPath();
     AppPath.append("\\filelist.bin");
-    // 파일리스트를 저장한다.
+    // Saves the file list.
     CFile tmpFile;
     if (!tmpFile.Open(AppPath.c_str(), CFile::modeCreate | CFile::modeWrite))
     {
@@ -187,9 +187,9 @@ void CVersionManagerDoc::OnFileSave()
     RanFileList sTemp;
     SecureZeroMemory( &sTemp, sizeof(RanFileList) );
 
-    int nTotalCount = (int) vFullFileList.size(); // 전체 파일갯수
+    int nTotalCount = (int) vFullFileList.size(); //Total number of files
     
-	// 첫번째 레코드는 파일리스트 버전이다.
+	// The first record is the file list version..
 #ifdef CHINAPARAM
     sTemp.nVersion = 2;
 #else
@@ -197,13 +197,13 @@ void CVersionManagerDoc::OnFileSave()
 #endif
     tmpFile.Write(&sTemp, sizeof(RanFileList));
 
-    // 두번째 레코드는 전체 파일갯수이다.
+    // The second record is the total number of files..
     sTemp.nVersion = nTotalCount;
     tmpFile.Write(&sTemp, sizeof(RanFileList));
 
     sc::TxtFile TxtList(sc::getAppPath()+"\\filelist.csv", true);
 
-    // 두번째 레코드 부터 마지막까지 파일경로와 파일명을 저장한다.
+    // Saves the file paths and filenames from the second record to the last.
     for (int i=0; i<(int) vFullFileList.size(); i++)
 	{	
         SecureZeroMemory( &sTemp, sizeof(RanFileList) );
@@ -240,7 +240,7 @@ void CVersionManagerDoc::OnFileSave()
 
     tmpFile.Close();
     
-    // 파일리스트를 압축해서 등록한다.  
+    // Compress the file list and register it. 
      
     //CString strFullPath;
     //CString strCommandLine;
@@ -272,7 +272,7 @@ void CVersionManagerDoc::OnFileSave()
     {
         std::string Msg(
             sc::string::format(
-                "%1% %2% 파일리스트 생성을 완료했습니다",
+                "%1% %2% File list creation completed",
                 AppPath,
                 TargetPath.GetString()));
         pFrame->MessageBox(Msg.c_str());
@@ -281,7 +281,7 @@ void CVersionManagerDoc::OnFileSave()
     {
         std::string Msg(
             sc::string::format(
-            "%1% %2% 파일리스트 압축에 실패하였습니다",
+            "Failed to compress the %1% %2% file list",
             AppPath,
             TargetPath.GetString()));
         pFrame->MessageBox(Msg.c_str());      

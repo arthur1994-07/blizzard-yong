@@ -100,7 +100,7 @@ void CFormLeft::InitListData()
 
 	if (nRetCode == DB_ERROR)
 	{
-		MessageBox("폴더리스트를 가져올 수 없습니다", "ERROR", MB_ICONEXCLAMATION);
+		MessageBox("Unable to retrieve folder list", "ERROR", MB_ICONEXCLAMATION);
 		return;
 	}
 
@@ -199,17 +199,17 @@ void CFormLeft::OnMakeCmd()
 		if (CreateDirectory(strTemp, NULL) == 0)
 		{
 			// 생성실패
-			MessageBox("생성에 실패하였습니다", "ERROR", MB_ICONEXCLAMATION);
+			MessageBox("Failed to create", "ERROR", MB_ICONEXCLAMATION);
 		}
 		else
 		{
 			// 생성성공
-			MessageBox("생성에 성공하였습니다");
+			MessageBox("Creation successful");
 			// DB 에 생성된 폴더 이름 입력			
             IVersionManagerDb* pDb = pFrame->GetDbMan();
 			if (pDb->CreateFolder(dlg.m_strFolder) != DB_OK)
 			{
-				MessageBox("디렉토리는 생성되었지만 DB 에 입력되지는 않았습니다");
+				MessageBox("The directory was created but not entered into the DB.");
 			
 			}
 			// Left form refresh
@@ -232,7 +232,7 @@ void CFormLeft::OnDeleteCmd()
 
 	if (RemoveDirectory(strTemp) == 0)
 	{
-		MessageBox("삭제에 실패하였습니다", "ERROR", MB_ICONEXCLAMATION);
+		MessageBox("Deletion failed.", "ERROR", MB_ICONEXCLAMATION);
 	}
 	else	
 	{
@@ -247,11 +247,11 @@ void CFormLeft::OnDeleteCmd()
             IVersionManagerDb* pDb = pFrame->GetDbMan();
 			if (pDb->RemoveFolder(nDir) == DB_OK)
 			{
-				MessageBox("올바르게 삭제되었습니다");
+				MessageBox("It has been deleted correctly.");
 			}
 			else
 			{
-				MessageBox("디렉토리는 지워졌지만 DB 에서 지워지지 않았습니다");
+				MessageBox("The directory was deleted, but it was not deleted from the DB.");
 			}
 			// Left form refresh
 			InitListData();
@@ -260,7 +260,7 @@ void CFormLeft::OnDeleteCmd()
 		}
 		else
 		{
-			MessageBox("선택된 디렉토리가 없습니다");
+			MessageBox("No directory selected");
 		}
 	}
 }
