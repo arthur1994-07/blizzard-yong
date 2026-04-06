@@ -32,56 +32,56 @@ namespace RENDERPARAM
 
 	EMCHARRENDER_TYPE	emCharRenderTYPE	= EMCRT_NORMAL;
 
-	// Note : ����
+	// Note: Brightness
 	float	fGamma			= 1.f;
 	DWORD	dwOverBright	= 1;
 	float	fContrast		= 1.f;
 
-	// Note : Device ����
+	// Note: Device information
 	BOOL		m_bUseMIXED = FALSE;
 	BOOL		g_bPixelShader_1_1 = FALSE;
 	BOOL		g_bPixelShader_1_4 = FALSE;
 	BOOL		g_bPixelShader_2 = FALSE;
 	BOOL		g_bPixelShader_3 = FALSE;
-	BOOL		g_bDefferedRendering = FALSE;		// �̰��� TRUE ���߸� �⺻Deffered�� Ȱ��ȭ�ɼ� �ִ�.
-													// D3DFMT_A16B16G16R16F �Ǹ� �ظ��Ѱ� ��.
-													// 	���� if ( d3dCaps.PrimitiveMiscCaps & D3DPMISCCAPS_MRTINDEPENDENTBITDEPTHS &&
+	BOOL		g_bDefferedRendering = FALSE;		// If set to TRUE, basic Deferred rendering can be enabled.
+												// D3DFMT_A16B16G16R16F must be met.
+												// e.g. if ( d3dCaps.PrimitiveMiscCaps & D3DPMISCCAPS_MRTINDEPENDENTBITDEPTHS &&
 													//			d3dCaps.PrimitiveMiscCaps & D3DPMISCCAPS_MRTPOSTPIXELSHADERBLENDING )
 
-	BOOL		g_bDefferedRendering_HIGH = FALSE;	// �̰��� TRUE ���߸� HIGH, VeryHigh �� Ȱ��ȭ�ɼ� �ִ�.
-													// D3DFMT_A16B16G16R16 �Ǹ� �ظ��Ѱ� ��.
+	BOOL		g_bDefferedRendering_HIGH = FALSE;	// If set to TRUE, HIGH and VeryHigh can be enabled.
+												// D3DFMT_A16B16G16R16 must be met.
 
-	BOOL		g_bDefferedRendering_INTZ = FALSE;	// Direct DepthBuffer Access, Deffered ��
-	BOOL		g_bDefferedRendering_DF16 = FALSE;	// Direct DepthBuffer Access, Deffered ��
-	//BOOL		g_bDefferedRendering_RAWZ = FALSE;	// �̰� ������� �ʵ��� �Ѵ�.
+	BOOL		g_bDefferedRendering_INTZ = FALSE;	// Direct DepthBuffer Access, Deferred mode
+	BOOL		g_bDefferedRendering_DF16 = FALSE;	// Direct DepthBuffer Access, Deferred mode
+	//BOOL		g_bDefferedRendering_RAWZ = FALSE;	// Do not use this.
 
-	BOOL		g_bSurfaceG32R32F = FALSE;			// �� Surface�� �����Ѱ�~?
-													// �̰� �Ǿ� ������ VeryHigh �� Ȱ��ȭ �� �� �ִ�.
+	BOOL		g_bSurfaceG32R32F = FALSE;			// Does this Surface exist?
+												// If true, VeryHigh can be enabled.
 
-	BOOL		g_bEnableHW_HDR = FALSE;			// HDR	// �ϵ����� �����Ѱ�~?
+	BOOL		g_bEnableHW_HDR = FALSE;			// HDR	// Is hardware supported?
 	BOOL		g_bEnable_HDR = FALSE;				// HDR 
 	BOOL		g_bSeparateAlphaBlend = FALSE;
 	TnL_MODE	g_emTnLMode = TnL_FIXED;
 
-	BOOL		g_bForceLowHardwareMode = FALSE;	// ���� ������� Ȱ��ȭ ON / OFF
+	BOOL		g_bForceLowHardwareMode = FALSE;	// Low hardware mode activation ON / OFF
 	BOOL		g_bHideDeadBodies = FALSE;			// Hide dead player character bodies ON / OFF
 
 	TEXTURE_FILTERING	g_emTextureFiltering = TEXTURE_FILTER_ANISOTROPIC_16X;
 
-	// �ɼ��� �ٲ�ٰ� �ٷ� ������ ���� �ʰ� �� �̵��� �ɼ��� ����ǵ��� �Ѵ�.
-	BOOL				g_bChangeTexQuality = FALSE;						// �ɼ��� ����Ǿ����� Ȯ���ϴ� �ڵ�
-	TEXTURE_QUALITY		g_emTextureQuality_NEW = TEXTURE_QUALITY_HIGH;		// ����� �ɼ��� ������ ���´�. ( ���̵��� �� ���� g_emTextureQuality �� ����ȴ�. )
-	TEXTURE_QUALITY		g_emTextureQuality = TEXTURE_QUALITY_HIGH;			// ���� ���Ǵ� �ɼ�.
+	// Option is changed but not applied immediately; will be applied during the next map move.
+	BOOL				g_bChangeTexQuality = FALSE;							// Code to check whether the option was changed
+	TEXTURE_QUALITY		g_emTextureQuality_NEW = TEXTURE_QUALITY_HIGH;		// Stores the newly selected option. (Applied to g_emTextureQuality after loading is complete.)
+	TEXTURE_QUALITY		g_emTextureQuality = TEXTURE_QUALITY_HIGH;			// Currently applied option.
 
 	PHYSX_CLOTH_LEVEL	g_emPhysXCloth = PHYSX_CLOTH_LEVEL_ALL;
 
-	// ���� Qulity
-	// �������۽��� ���������ذ� ������ ������ ������������ �����Ͽ� ���������� �ɼ��� ���Ѵ�.
+	// Ground Quality
+	// Determined by hardware capability at startup; ground rendering quality option is set accordingly.
 	TnL_MODE		g_emGroundQulity = TnL_NONE;
 	TnL_MODE		g_emGroundQulityTHREAD = TnL_FIXED;
 
-	// ĳ���� Qulity
-	// �������۽��� ���������ذ� ������ ������ ������������ �����Ͽ� ĳ���ͷ����� �ɼ��� ���Ѵ�.
+	// Character Quality
+	// Determined by hardware capability at startup; character rendering quality option is set accordingly.
 	TnL_CHAR_MODE	g_emCharacterQulity = TnL_CHAR_FIXED;
 	//TnL_CHAR_MODE	g_emCharacterQulityHW = TnL_CHAR_FIXED;
 
@@ -90,7 +90,7 @@ namespace RENDERPARAM
 	BOOL	bEnableEEX = FALSE;
 	BOOL	bEnableSSE = FALSE;
 
-	// Note : �׽�Ʈ
+	// Note: Test
 	BOOL	bCALCULATE_BONE = TRUE;
 	BOOL	bCALCULATE_SSE = TRUE;
 	BOOL	bRENDER_CHAR = TRUE;
@@ -117,7 +117,7 @@ namespace RENDERPARAM
 
 
 
-	// MMX �����ϴ��� üũ
+	// Check if MMX is supported
 	bool isMMXSupported() 
 	{ 
 		int fSupported; 
@@ -140,7 +140,7 @@ namespace RENDERPARAM
 		}
 	} 
 
-	// SSE �����ϴ��� üũ
+	// Check if SSE is supported
 	bool isISSESupported() 
 	{ 
 		int processor; 
@@ -188,7 +188,7 @@ namespace RENDERPARAM
 
 	BOOL IsCheckDeviceFormat_A16B16G16R16F( LPDIRECT3DQ pD3D, const D3DCAPSQ* pd3dCaps, D3DFORMAT sFormat )
 	{
-		// �� ���������� ���� Geforce 6000/7000 �ø���� FALSE�� �ȴ�.
+		// In this function, Geforce 6000/7000 series returns FALSE.
 		if( SUCCEEDED( pD3D->CheckDeviceFormat(
 			pd3dCaps->AdapterOrdinal,
 			pd3dCaps->DeviceType,
@@ -214,7 +214,7 @@ namespace RENDERPARAM
 
 	void CheckSystemInfo( LPDIRECT3DQ pD3D, LPDIRECT3DDEVICEQ pd3dDevice )
 	{
-		// �ػ� Update
+			// Resolution Update
 		{
 			D3DSURFACE_DESC		d3dsdBackBuffer;
 			LPDIRECT3DSURFACEQ pBackBuffer;
@@ -226,7 +226,7 @@ namespace RENDERPARAM
 			RENDERPARAM::m_dwResolutionY = d3dsdBackBuffer.Height;
 		}
 
-		// GPU ���� Update
+			// GPU information Update
 		{
 			D3DADAPTER_IDENTIFIER9 sAdapter;
 			pD3D->GetAdapterIdentifier( D3DADAPTER_DEFAULT, 0, &sAdapter );
@@ -290,7 +290,7 @@ namespace RENDERPARAM
 			{
 				if ( strName[i] >= '0' && strName[i] <= '9' )
 				{
-					// ���� ���̿� ���ڰ� ���� ��� �������� 3���� �߰��� �־��ش�.
+						// If there is a gap between numbers in the model name, add 3 identical digits.
 					if ( !bLink )
 					{
 						strGpuModel += strName[i];
@@ -348,17 +348,17 @@ namespace RENDERPARAM
 				g_bPixelShader_1_4 = TRUE;
 			}
 
-			//// �� ��ġ�� -1 �� ���õǾ� ������ �ȵȴ�.
-			//// Intel(R) Q45/Q43 Express Chipset �� shadermodel �� 3.0 �� �����ȴٰ� �������� �̷��� ���õǾ��ִ�.
-			//// ������ ����� ���� sm.2.0 ���� �������� �������� ���� �ʴ´�.
-			//// �ð��� ����ϴٸ� ã�ƺ��� ������, ������ �׷� �ʿ伺�� �� ������ sm.1.4 ������ ���۵ǵ��� �Ѵ�.
+				//// This location is mapped to -1 and causes problems.
+				//// Intel(R) Q45/Q43 Express Chipset reports shadermodel as 3.0 but it is registered incorrectly.
+				//// As a result, it does not render with sm.2.0 even though it should.
+				//// If there is time to investigate; for now make it run with sm.1.4.
 			//if ( d3dCaps.MaxVShaderInstructionsExecuted == -1 && 
 			//	d3dCaps.MaxPShaderInstructionsExecuted == -1 && 
 			//	DxSurfaceTex::GetInstance().IsLowLowGPU() )
 			//{
-			//	// ������ �ִ� �׷���ī��
-			//	// Intel �� �����.. 
-			//	// �׷��� �ֽ� ATI �׷��� ī�嵵 d3dCaps.MaxVShaderInstructionsExecuted = -1 �̴� �̤�
+					//	// Problematic graphics card
+					//	// Probably Intel..
+					//	// But recent ATI graphics cards also have d3dCaps.MaxVShaderInstructionsExecuted = -1
 			//}
 			//else
 			{
@@ -447,9 +447,9 @@ namespace RENDERPARAM
 			}
 			else
 			{
-				// R.A.W.Z �� ���� �ʵ��� ����.
-				// Nvidia 6000, 7000 �ø���� ��밡��������, ���� Ư���� �۾��� ���⵵ �Ѵ�.
-				// �̰����� ���� HIGH, VeryHigh �� ��� �Ұ��� �ȴ�.
+						// Do not use R.A.W.Z.
+						// Nvidia 6000, 7000 series can use it, but it causes special problems here too.
+						// Therefore HIGH and VeryHigh are both unavailable here.
 				//D3DFORMAT sFormatRAWZ = (D3DFORMAT)MAKEFOURCC('R','A','W','Z');
 				//if( SUCCEEDED( pD3D->CheckDeviceFormat(
 				//	d3dCaps.AdapterOrdinal,
@@ -485,8 +485,8 @@ namespace RENDERPARAM
 				}
 			}
 
-			// �ƹ��� ���ص� �⺻ Deffered �� �Ǿ� D3DFMT_G32R32F �� ����� �� �ִ�.
-			// Deffered �� �ȵǸ鼭 D3DFMT_G32R32F ���°� ������.
+				// Even without this, basic Deferred is available and D3DFMT_G32R32F can be used.
+				// Issue where D3DFMT_G32R32F is available without Deferred.
 			if ( g_bDefferedRendering_HIGH )
 			{
 				if( SUCCEEDED( pD3D->CheckDeviceFormat(
@@ -507,7 +507,7 @@ namespace RENDERPARAM
 			g_bSeparateAlphaBlend = TRUE;
 		}
 		
-		// Note : MMX �� SSE�� ���� ���� üũ.
+		// Note: Availability check for MMX and SSE.
 		if( isMMXSupported() )
 		{
 			bEnableEEX = TRUE;
@@ -520,10 +520,10 @@ namespace RENDERPARAM
 
 	BOOL LOAD( LPDIRECT3DQ pD3D, LPDIRECT3DDEVICEQ pd3dDevice, const char *szRootPath )
 	{
-        // Note : Device�� üũ�Ѵ�.
+        // Note: Checks the Device.
 		DeviceCheck( pD3D, pd3dDevice );
 
-		// ���Ǵ� TnL Mode �� �����Ѵ�.
+		// Determines the TnL Mode to be used.
 		CheckTnLMode();
 
 		//strRootPath = szRootPath;
@@ -537,16 +537,16 @@ namespace RENDERPARAM
 
 		//int nTEMP(0);
 
-		////	���÷��� ����.
+			////	Character render settings.
 		//cFILE.getflag ( "emCharRenderTYPE", 1, 1, emCharRenderTYPE );
 
-		//// Note : ����
+			//// Note: Brightness
 		//cFILE.getflag ( "fGamma", 1, 1, fGamma );
 		//cFILE.getflag ( "dwOverBright", 1, 1, dwOverBright );
 		//cFILE.getflag ( "fContrast", 1, 1, fContrast );
 
 
-		//// Note : �׽�Ʈ
+			//// Note: Test
 		//cFILE.getflag ( "bCALCULATE_BONE", 1, 1, bCALCULATE_BONE );
 		//cFILE.getflag ( "bCALCULATE_SSE", 1, 1, bCALCULATE_SSE );
 		//cFILE.getflag ( "bRENDER_CHAR", 1, 1, bRENDER_CHAR );
@@ -554,9 +554,9 @@ namespace RENDERPARAM
 		//cFILE.getflag ( "bRENDER_PIECE", 1, 1, bRENDER_PIECE );
 	
 
-  //      // Note : SSE �� �����ϸ� EMCRT_SOFTWARE, ���ϸ� EMCRT_NORMAL;
-		////		Ȥ�� EMCRT_SOFTWARE �� EMCRT_NORMAL �� ���⼭ �� �ؾ� �Ұ��� �ִٸ�,
-		////		EMCRT_NON_SOFT �۾��� �������� �� ���� �Ѵ�.
+		//      // Note: If SSE is supported, use EMCRT_SOFTWARE; otherwise use EMCRT_NORMAL;
+		////		Or if EMCRT_SOFTWARE vs EMCRT_NORMAL must be decided here,
+		////		the EMCRT_NON_SOFT task needs to be handled here.
 		////		
 		//switch( emCharRenderTYPE )
 		//{
@@ -585,7 +585,7 @@ namespace RENDERPARAM
 	void CheckTnLMode()
 	{
 		//////////////////////////////////////////////////////////////////////////
-		// ���� ������� ����.
+		// Low hardware mode settings.
 		if ( g_bForceLowHardwareMode )
 		{
 			if ( g_bPixelShader_1_1 )
@@ -599,14 +599,14 @@ namespace RENDERPARAM
 
 			if ( g_bPixelShader_2 )
 			{
-				// �������� g_bPixelShader_1_1 ���� üũ������, s_m_cos_airport_body.cps, s_m_cos_airport_leg.cps ��
-				// Ư�� ��ǻ��(ȫ�پ���ǻ��)���� ���װ� �߻��Ͽ� 2.0 ���� �����ϴ� �����۵��Ͽ���.
-				// ���� �ľ��� �ȵǼ� g_bPixelShader_2 �̻� �ǵ��� �Ѵ�.
+					// Previously checked g_bPixelShader_1_1 for s_m_cos_airport_body.cps, s_m_cos_airport_leg.cps,
+					// but a crash occurred on specific PCs (Hong Kong PCs) so it now runs in 2.0 mode.
+					// Could not identify the root cause, so set it to require g_bPixelShader_2 or higher.
 				g_emCharacterQulity = TnL_CHAR_PS_1_1;
 			}
 			else
 			{
-				// �ɼ����δ� �̰��� ���� �� ����.
+					// Cannot be changed in options.
 				g_emCharacterQulity = TnL_CHAR_FIXED;
 			}
 
@@ -616,7 +616,7 @@ namespace RENDERPARAM
 		}
 
 		//////////////////////////////////////////////////////////////////////////
-		// ����
+		// Ground
 		if ( g_bPixelShader_3 && 
 			g_bDefferedRendering_HIGH &&
 			g_bSurfaceG32R32F &&
@@ -663,14 +663,14 @@ namespace RENDERPARAM
 		}
 		else
 		{
-			// [shhan][2014.09.12] ��å�� �ٲ㼭 g_bPixelShader_1_1 ������ �ȵǴ� �͸� TnL_FIXED �� ���۵ǵ��� �Ѵ�.
-			//						�ɼ����δ� �̰��� ���� �� ����.
+			// [shhan][2014.09.12] Changed policy: things that cannot use g_bPixelShader_1_1 now run in TnL_FIXED mode.
+			//					Cannot be changed in options.
 			g_emTnLMode = TnL_FIXED;
 		}
 
 
 		////////////////////////////////////////////////////////////////////////
-		// ĳ���� 
+		// Character
 		if ( g_bPixelShader_3 && 
 			DxEffectMan::GetInstance().GetSkinDetail() >= SKD_BEST &&
 			DxSurfaceTex::GetInstance().m_pShadowTexR32F )
@@ -684,14 +684,14 @@ namespace RENDERPARAM
 		}
 		else if ( g_bPixelShader_2 )
 		{
-			// �������� g_bPixelShader_1_1 ���� üũ������, s_m_cos_airport_body.cps, s_m_cos_airport_leg.cps ��
-			// Ư�� ��ǻ��(ȫ�پ���ǻ��)���� ���װ� �߻��Ͽ� 2.0 ���� �����ϴ� �����۵��Ͽ���.
-			// ���� �ľ��� �ȵǼ� g_bPixelShader_2 �̻� �ǵ��� �Ѵ�.
+			// Previously checked g_bPixelShader_1_1 for s_m_cos_airport_body.cps, s_m_cos_airport_leg.cps,
+			// but a crash occurred on specific PCs (Hong Kong PCs) so it now runs in 2.0 mode.
+			// Could not identify the root cause, so set it to require g_bPixelShader_2 or higher.
 			g_emCharacterQulity = TnL_CHAR_PS_1_1;
 		}
 		else
 		{
-			// �ɼ����δ� �̰��� ���� �� ����.
+			// Cannot be changed in options.
 			g_emCharacterQulity = TnL_CHAR_FIXED;
 		}
 
@@ -715,7 +715,7 @@ namespace RENDERPARAM
 		}
 
 
-		// ���� �������������� ������.
+		// Ground rendering settings.
 		//g_emCharacterQulity = TnL_CHAR_FIXED;
 	}
 
@@ -735,7 +735,7 @@ namespace RENDERPARAM
 		switch ( RENDERPARAM::g_emTextureFiltering )
 		{
 		//case TEXTURE_FILTER_BILINEAR:
-		//	dwMipFilter = D3DTEXF_POINT;	// intel ���忡���� �ӵ����̰� ����.
+		//	dwMipFilter = D3DTEXF_POINT;	// Slow performance on Intel hardware.
 		//	break;
 
 		case TEXTURE_FILTER_TRILINEAR:
@@ -786,7 +786,7 @@ namespace RENDERPARAM
 
 	void SetTextureQuality( TEXTURE_QUALITY emTexQuality )
 	{
-		// Option ���Ͽ��� ó�� �ε� �� ��츦 ����� NEW ���� ���� �ִ´�.
+		// When loading from Options file for the first time, the NEW value is preserved.
 		g_emTextureQuality_NEW = emTexQuality;
 
 		if ( g_emTextureQuality != emTexQuality )
@@ -799,15 +799,15 @@ namespace RENDERPARAM
 		}
 	}
 
-	// ������ �ɼ��� �־������.
-	// Lobby ������ Texture Quality �� �ְ��� ������ߵǾ �� �Լ��� ���ܳ���.
+	// Apply the given option immediately.
+	// In the Lobby stage, Texture Quality must be at maximum, so this function was created for that purpose.
 	void SetTextureQuality_FORCE( TEXTURE_QUALITY emTexQuality )
 	{
 		g_bChangeTexQuality = TRUE;
 		g_emTextureQuality = emTexQuality;
 	}
 
-	// ���̵� �� ���� ����ǵ��� �Ѵ�.
+	// Applied only after loading is complete.
 	void ApplyTextureQuality()
 	{
 		if ( g_bChangeTexQuality )

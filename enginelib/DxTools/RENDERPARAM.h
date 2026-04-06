@@ -5,7 +5,7 @@
 
 enum EMCHARRENDER_TYPE
 {
-	EMCRT_NON_SOFT = 0,	// ��ǻ�� ����� ���� SSE �� �����ϸ� �������� �ϰ� �Ѵ�.
+	EMCRT_NON_SOFT = 0,	// If the computer does not support SSE, it will not use software rendering.
 	EMCRT_SOFTWARE = 1,
 	EMCRT_NORMAL = 2,
 	EMCRT_VERTEX = 3,
@@ -15,7 +15,7 @@ enum EMCHARRENDER_TYPE
 
 enum TEXTURE_FILTERING
 {
-	//TEXTURE_FILTER_BILINEAR,	// intel ���忡���� �ӵ����̰� ����.
+	//TEXTURE_FILTER_BILINEAR,	// Slow performance on Intel hardware.
 	TEXTURE_FILTER_TRILINEAR,
 	TEXTURE_FILTER_ANISOTROPIC_2X,
 	TEXTURE_FILTER_ANISOTROPIC_4X,
@@ -34,9 +34,9 @@ enum TEXTURE_QUALITY
 
 enum PHYSX_CLOTH_LEVEL
 {
-	PHYSX_CLOTH_LEVEL_NONE,	// PhysX �۵� ���Ѵ�.
-	PHYSX_CLOTH_LEVEL_MY,	// ���ڽŸ� �۵���Ų��.
-	PHYSX_CLOTH_LEVEL_ALL,	// ��� �������ϵ��� �Ѵ�.
+	PHYSX_CLOTH_LEVEL_NONE,	// PhysX cloth simulation disabled.
+	PHYSX_CLOTH_LEVEL_MY,	// Operates PhysX only for own character.
+	PHYSX_CLOTH_LEVEL_ALL,	// Applied to all characters.
 	PHYSX_CLOTH_LEVEL_SIZE,
 };
 
@@ -54,22 +54,22 @@ enum TnL_CHAR_MODE
 {
 	TnL_CHAR_FIXED = 0,
 	TnL_CHAR_FIXED_HIGH = 1,
-	TnL_CHAR_PS_1_1 = 2,		// �̰� �̻���� �ݻ簡 �����ϴ�.
-	TnL_CHAR_PS_2_0 = 3,		// ������� VisualMaterial �� �����ϴ�.
+	TnL_CHAR_PS_1_1 = 2,		// Reflections are supported at this level and above.
+	TnL_CHAR_PS_2_0 = 3,		// VisualMaterial is supported at the highest quality level.
 	TnL_CHAR_PS_3_0 = 4,
 };
 
 namespace RENDERPARAM
 {
-	//	���÷��� ����.
-	extern EMCHARRENDER_TYPE	emCharRenderTYPE;	// Char Shader Type..!!	- ���� ���Ŀ��� �ǵ��� �� �ִ�. ���� ���� �� �ǵ��̵��� �ؾ� ��.
+	//	Character render settings.
+	extern EMCHARRENDER_TYPE	emCharRenderTYPE;	// Char Shader Type..!!	- Can be changed later. Must be changed before execution.
 
-	// Note : ����
+	// Note: Brightness
 	extern float	fGamma;
 	extern DWORD	dwOverBright;
 	extern float	fContrast;
 
-	// Note : Device ����
+	// Note: Device information
 	extern BOOL		g_bPixelShader_1_1;
 	extern BOOL		g_bPixelShader_1_4;
 	extern BOOL		g_bPixelShader_2;
@@ -87,18 +87,18 @@ namespace RENDERPARAM
 	extern BOOL		bEnableEEX;
 	extern BOOL		bEnableSSE;
 
-	// ���� Qulity
+	// Ground Quality
 	extern TnL_MODE			g_emGroundQulity;
 	extern TnL_MODE			g_emGroundQulityTHREAD;
 
-	// ���� Qulity
-	//extern TnL_CHAR_MODE	g_emCharacterQulityHW;	// ������ ����
-	extern TnL_CHAR_MODE	g_emCharacterQulity;	// ���� �������� ����.
+	// Character Quality
+	//extern TnL_CHAR_MODE	g_emCharacterQulityHW;	// hardware settings
+	extern TnL_CHAR_MODE	g_emCharacterQulity;	// Applied to current rendering quality.
 
-	// ���� PS_3_0_DF ����
+	// Force PS_3_0_DF settings
 	extern BOOL		g_bFORCE_TnL_PS_3_0_DF;
 
-	// Note : �׽�Ʈ
+	// Note: Test
 	extern BOOL		bCALCULATE_BONE;
 	extern BOOL		bCALCULATE_SSE;
 	extern BOOL		bRENDER_CHAR;
@@ -124,7 +124,7 @@ namespace RENDERPARAM
 	extern DWORD	m_dwGpuModel; 
 	extern DWORD	m_dwShaderModel; 
 
-	extern BOOL		g_bForceLowHardwareMode;	// ���� ������� Ȱ��ȭ ON / OFF
+	extern BOOL		g_bForceLowHardwareMode;	// Low hardware mode activation ON / OFF
 	extern BOOL		g_bHideDeadBodies;			// Hide dead player character bodies ON / OFF
 
 	enum EMSERVICE_TYPE
@@ -140,7 +140,7 @@ namespace RENDERPARAM
 		EMSERVICE_INDONESIA		= 8,
 		EMSERVICE_PHILIPPINES	= 9,
 		EMSERVICE_VIETNAM		= 10,
-		EMSERVICE_GLOBAL		= 11, //! �۷ι� ����
+		EMSERVICE_GLOBAL		= 11, //! Global service
         EMSERVICE_WORLD_BATTLE  = 12, //! World battle
 		EMSERVICE_EU			= 13, //! Games-Masters
 		EMSERVICE_US			= 14, //! GameSamba
@@ -160,13 +160,13 @@ namespace RENDERPARAM
 
 	void SetTextureFiltering( TEXTURE_FILTERING emTexFilter );
 
-	// ���ð��� �ӽ÷� ������ ���� ���̵��ÿ� ����ǵ��� �Ѵ�.
+	// Temporarily applies texture quality during loading.
 	void SetTextureQuality( TEXTURE_QUALITY emTexQuality );
 
-	// ������ �ɼ��� �־������.
-	// Lobby ������ Texture Quality �� �ְ��� ������ߵǾ �� �Լ��� ���ܳ���.
+	// Apply the given option immediately.
+	// In the Lobby stage, Texture Quality must be at maximum, so this function was created for that purpose.
 	void SetTextureQuality_FORCE( TEXTURE_QUALITY emTexQuality );
 
-	// ���̵� �� ���� ����ǵ��� �Ѵ�.
+	// Applied only after loading is complete.
 	void ApplyTextureQuality();
 }

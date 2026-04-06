@@ -73,13 +73,13 @@
 //extern CBLOCK_PROG	g_BLOCK_PROG;
 extern HWND g_hWnd;
 
-// �ܺο��� ������ ������ �����ϰ� �Ѵ�.
+// Receive force exit notification from outside.
 extern TSTRING g_strGameForceExit;
 
 typedef std::queue<UINT> UINT_QUEUE;
 UINT_QUEUE g_AuthMsgBuffer;
 
-//#if defined(MY_PARAM) || defined(PH_PARAM) || defined(MYE_PARAM) //|| defined(_RELEASED) || defined ( VN_PARAM ) || defined(TH_PARAM) || defined ( HK_PARAM ) || defined(TW_PARAM) // Nprotect ����
+//#if defined(MY_PARAM) || defined(PH_PARAM) || defined(MYE_PARAM) //|| defined(_RELEASED) || defined ( VN_PARAM ) || defined(TH_PARAM) || defined ( HK_PARAM ) || defined(TW_PARAM) // Nprotect use
 BOOL CALLBACK NPGameMonCallback(DWORD dwMsg, DWORD dwArg)
 {
 	GLogicData::GetInstance().LoadCountryFile();
@@ -121,7 +121,7 @@ BOOL CALLBACK NPGameMonCallback(DWORD dwMsg, DWORD dwArg)
             lpszMsg = ID2GAMEEXTEXT( "NPGAMEMON_GAMEHACK_DOUBT" );
             break;
         case NPGAMEMON_GAMEHACK_REPORT:
-			// �������� �߰ߵǾ����� ���� �����մϴ�.
+            // Hack detected but continue running.
 			lpszMsg = ID2GAMEEXTEXT( "NPGAMEMON_GAMEHACK_DETECT" );
             break;
         case NPGAMEMON_CHECK_CSAUTH2:
@@ -134,7 +134,7 @@ BOOL CALLBACK NPGameMonCallback(DWORD dwMsg, DWORD dwArg)
                 if (!pGlobalStage)
                     return false;
 
-				// charid�� ����ɶ����� ID ����
+					// ID assignment when charid is valid
 				GLGaeaClient* pGaeaClient = pGlobalStage->GetGaeaClient();
 				DWORD dwCHARID = pGaeaClient->GetCharacter()->m_CharDbNum;
 
@@ -199,7 +199,7 @@ BOOL CALLBACK NPGameMonCallback(DWORD dwMsg, DWORD dwArg)
 						//sc::writeLogDebug(std::string("_NP30 : NPGAMEMON_CHECK_CSAUTH3 - !pGlobalStage"));
 						return false;
 					}
-					// charid�� ����ɶ����� ID ����
+						// ID assignment when charid is valid
 					GLGaeaClient* pGaeaClient = pGlobalStage->GetGaeaClient();
 					DWORD dwCHARID = pGaeaClient->GetCharacter()->m_CharDbNum;
 
@@ -244,7 +244,7 @@ BOOL CALLBACK NPGameMonCallback(DWORD dwMsg, DWORD dwArg)
         }
 
 
-	    if (bAppExit) // ���� ����ÿ��� false�� ����
+	    if (bAppExit) // Set to false during normal operation
 	    {
             CBasicWnd* pBaiscWnd = (CBasicWnd*)AfxGetApp()->GetMainWnd();
             DxGlobalStage* pGlobalStage = pBaiscWnd->GetGlobalStage();
@@ -254,18 +254,18 @@ BOOL CALLBACK NPGameMonCallback(DWORD dwMsg, DWORD dwArg)
 			GLGaeaClient* pGaeaClient = pGlobalStage->GetGaeaClient();
 			DWORD dwCHARID = pGaeaClient->GetCharacter()->m_CharDbNum;
 
-			{ // Note : �������� �α� ���
+				{ // Note: Client-side error log
 				GLMSG::SNET_BLOCK_DETECTED NetMsg(dwMsg, dwCHARID, pNpgl->GetInfo());
 				pGlobalStage->NetSend(&NetMsg);
 			}
 
-			{ // Note : NP������ �α� ���
+				{ // Note: NProtect client-side log
 				CString strUserID;
 				strUserID.Format( "CHAR_ID:%u", dwCHARID );
 				pNpgl->Send( strUserID.GetString() );
 			}	
 
-			// Note : ���α׷��� �����Ѵ�.
+				// Note: Close the program.
 			//CInnerInterface::GetInstance().WAITSERVER_DIALOGUE_OPEN(ID2GAMEINTEXT("WAITSERVER_HACK_MESSAGE"), WAITSERVER_CLOSEGAME);
 			pGlobalStage->CloseGame( lpszMsg );
 			return false;
@@ -293,8 +293,8 @@ HRESULT CBasicWnd::Resize3DEnvironment()
 	if( m_pGlobalStage )
 		m_pGlobalStage->ReSizeWindow(m_d3dpp.BackBufferWidth, m_d3dpp.BackBufferHeight);
 
-	// [shhan][2015.06.15] ������ �޸𸮸� �����Ѵ�.
-	//						ResetDevice �� �Ҹ���  ���� ��뵵 ���� �͵��� ������ �޸𸮿� �ö󰡼� �װ� �����ϵ��� �Ѵ�.
+	// [shhan][2015.06.15] Release working set memory.
+	//					ResetDevice causes resources with no other use to accumulate in working set memory; they must be cleaned up.
 	HANDLE hProcess	= GetCurrentProcess();
 	if (hProcess)
 	{
@@ -314,7 +314,7 @@ void CBasicWnd::OnSize(UINT nType, int cx, int cy)
 	WORD wWidth = rectWnd.Width();
 	WORD wHeight = rectWnd.Height();
 
-	// �����ػ� �޾ƿ���.
+	// Get current resolution.
 	//
 	if ( !RANPARAM::bScrWindowed && GetD3dDevice() )
 	{
@@ -340,9 +340,9 @@ HRESULT CBasicWnd::OneTimeSceneInit()
 {
 	HRESULT hr(S_OK);
 
-	// [shhan][2015.06.19] �ִ� �絵 ���ΰ� ���� Page Fault �� �Ͼ�� ������ ����.
+	// [shhan][2015.06.19] Added to prevent Page Fault when maximum threads are in use.
 	//
-	//// [shhan][2015.06.19] �� �̿��� �ٸ� ���μ������� ������ �޸𸮸� �ּ�ȭ �Ѵ�.
+	//// [shhan][2015.06.19] Minimize working set memory for other processes using this.
 	////
 	//HANDLE hProcess, hSnap;
 	//hSnap = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS, 0 );
@@ -378,7 +378,7 @@ HRESULT CBasicWnd::OneTimeSceneInit()
 		sc::writeLogError("OneTimeSceneInit-Usefeatures load error");
 	}
 
-	// ���� ��ġ��.
+	// Initial setup.
 	//
 	hr = m_pEngineDevice->OneTimeSceneInit(
         pFrame->m_szAppPath,
@@ -420,14 +420,14 @@ HRESULT CBasicWnd::CreateObjects()
     LoadingSectionTimer.restart();
 #endif
 
-	{ // Note : �ε��� �ؽ�Ʈ�� ����ϱ� ���ؼ� ��Ʈ �κ��� �ʱ�ȭ.
+	{ // Note: Initialize font portion for loading text display.
 		
-		// ��Ʈ �޴��� �ʱ�ȭ.
+		// Initialize font menu.
 		DxFontMan::GetInstance().InitDeviceObjects ( m_pd3dDevice );
 		CD3DFontPar* pD3dFont9 = DxFontMan::GetInstance().LoadDxFont ( _DEFAULT_FONT, 9, _DEFAULT_FONT_FLAG );
 		CD3DFontPar* pD3dFont8 = DxFontMan::GetInstance().LoadDxFont ( _DEFAULT_FONT, 8, D3DFONT_SHADOW|D3DFONT_ASCII );
 
-		//	Note	:	����׼� ��� ���� �� �ʱ�ȭ
+		//	Note:	DirectX-related initialization
 		CDebugSet::InitDeviceObjects( pD3dFont9 );
 	}
 
@@ -444,11 +444,11 @@ HRESULT CBasicWnd::CreateObjects()
     if( FAILED(hr) )
         return hr;
 
-	// Ŭ���̾�Ʈ������ ������ �ȴ�.
-	// ��� ������ ���� m_pGlobalStage->OneTimeSceneInitPrev �������� �ؾ� �Ѵ�.
+	// Client-side input is handled here.
+	// All preparations must be done before m_pGlobalStage->OneTimeSceneInitPrev.
 	NSInitClientLua::LuaLoad();
 
-    // ���� ��ġ��.
+	// Initial setup.
 	//
 	m_pEngineDevice->InitDeviceObjects(m_pd3dDevice, TRUE);
 
@@ -461,7 +461,7 @@ HRESULT CBasicWnd::CreateObjects()
     LoadingDirectClient::s_hWnd = m_hWnd;
     LoadingDirectClient::s_pGaeaClient = m_pGlobalStage->GetGaeaClient();
 
-	//	������ ��� ǥ��
+	//	Override grade display
     bool bOverGrade = false; 
 //#if defined(_RELEASED) || defined ( KR_PARAM ) || defined ( KRT_PARAM ) 
     if (m_ServiceProvider == SP_OFFICE_TEST || m_ServiceProvider == SP_KOREA || m_ServiceProvider == SP_KOREA_TEST)
@@ -500,13 +500,13 @@ HRESULT CBasicWnd::CreateObjects()
     LoadingDirectClient sLodingDirect( FALSE );
     NSLoadingDirect::Set( &sLodingDirect, EM_LT_NORMAL );
 
-	// [shhan][2015.02.03] Lobby Loading Image Refresh �� �ȵǴ� ������ �־ �߰��ߴ�.
-	//						�� ������� ã���� ��������.
+	// [shhan][2015.02.03] Added fix for Lobby Loading Image Refresh not working.
+	//					Root cause not yet identified.
 	//
-	// [shhan][2015.04.15] LoadingDirectClient::FrameMoveRender ���� PeekMessage( &msg, s_hWnd, 0, 0, PM_REMOVE ); �� ��� �Ͽ�����
-	//						���̵��� crash �� �߻��Ͽ���. 
-	//						PM_QS_PAINT �� �����ϴ� ���������µ� ������ �� �𸣰ڴ�.
-	//						�̰��� ������ ���� �� �־ PM_QS_PAINT �� �����Ͽ� ��.
+	// [shhan][2015.04.15] LoadingDirectClient::FrameMoveRender used PeekMessage with PM_REMOVE,
+	//					which caused a crash during loading.
+	//					PM_QS_PAINT was supposed to fix it but the reason it did not is unclear.
+	//					Left this in as the fix, so changed to use PM_QS_PAINT.
 	// 
 	MSG msg;
 	PeekMessage( &msg, NULL, 0, 0, PM_QS_PAINT );
@@ -548,7 +548,7 @@ HRESULT CBasicWnd::CreateObjects()
     LoadingSectionTimer.restart();
 #endif
 
-//#if defined(MY_PARAM) || defined(MYE_PARAM) || defined(PH_PARAM) //|| defined(_RELEASED) || defined ( VN_PARAM ) || defined(TH_PARAM) || defined ( HK_PARAM ) || defined(TW_PARAM) // Nprotect ����
+//#if defined(MY_PARAM) || defined(MYE_PARAM) || defined(PH_PARAM) //|| defined(_RELEASED) || defined ( VN_PARAM ) || defined(TH_PARAM) || defined ( HK_PARAM ) || defined(TW_PARAM) // Nprotect use
 
 	if (m_ServiceProvider == SP_MALAYSIA || m_ServiceProvider == SP_MALAYSIA_EN || m_ServiceProvider == SP_PHILIPPINES || m_ServiceProvider == SP_EU ) // _NP30
 	{
@@ -620,7 +620,7 @@ HRESULT CBasicWnd::InitDeviceObjects()
     LoadingSectionTimer.restart();
 #endif
 
-	// ���� ��������.
+	// Scene one-time initialization.
 	//
 	HRESULT hr = m_pGlobalStage->OneTimeSceneInitNext(m_wndSizeX, m_wndSizeY, NULL, false);
 	if (FAILED(hr))
@@ -635,7 +635,7 @@ HRESULT CBasicWnd::InitDeviceObjects()
     LoadingSectionTimer.restart();
 #endif
 
-	// ���� ��������.
+	// Device object initialization.
 	//
 	hr = m_pGlobalStage->InitDeviceObjects(m_pd3dDevice);
 	if (FAILED(hr))
@@ -650,12 +650,12 @@ HRESULT CBasicWnd::InitDeviceObjects()
     LoadingSectionTimer.restart();
 #endif
 
-	// [shhan][2015.01.12] Texture Thread Loading �� �ϱ� ������, ���� VB, IB ���� �� �ʿ�� ����.
-	//						���� Thread �󿡼� VB, IB, ���� Lock �ϴ� �͵� ���輺�� �ִ�.
-	// Note : DynamicLoad�� ����� ���� ���Ѵ�.
+	// [shhan][2015.01.12] Texture Thread Loading requires no VB, IB locking here.
+	//					Locking VB, IB from a separate Thread also has risks.
+	// Note: Do not use DynamicLoad.
 	//NSOCTREE::EnableDynamicLoad();
 
-	// Ŀ�� �ʱ�ȭ.
+	// Cursor initialization.
 	const SUBPATH* pPath = pApp->GetSubPath();
 	char szFullPath[MAX_PATH] = {0};
 	StringCchCopy ( szFullPath, MAX_PATH, pApp->m_szAppPath );
@@ -686,21 +686,21 @@ HRESULT CBasicWnd::RestoreDeviceObjects()
 
 	RENDERPARAM::CheckSystemInfo( m_pD3D, m_pd3dDevice );
 
-	// ���� ��ġ��.
+	// Initial setup.
 	//
 	m_pEngineDevice->RestoreDeviceObjects();
 
-	// ���� ��������.
+	// Scene restore.
 	//
 	m_pGlobalStage->RestoreDeviceObjects();
 
-	// �۷ο� ó���� �ϱ����� ��� �Ѵ�.
+	// Global processing.
 	DxGlowMan::GetInstance().SetProjectActiveON();
 	DxPostProcess::GetInstance().SetProjectActiveON();
 
 	DXPARAMSET::INIT ();
 	
-	//	DEBUG : �������ϸ� �ʱ�ȭ.
+	//	DEBUG: Profile initialization.
 	PROFILE_INIT();
 	PROFILE_INIT2();
 
@@ -761,7 +761,7 @@ HRESULT CBasicWnd::Render3DEnvironment ()
 
 HRESULT CBasicWnd::FrameMove( BOOL bNotRendering )
 {
-	// [2016.09.23] �ּ�ȭ�� �� ��� �޸𸮰� ��� �����ϴ� ������ �־, Message ó���� �ϰ� �������� ���� �ʴ´�.
+	// [2016.09.23] When minimized, memory usage skyrockets, so only process Messages and skip rendering.
 	if ( bNotRendering )
 	{
 		m_pGlobalStage->MsgProcessFrame();
@@ -774,14 +774,14 @@ HRESULT CBasicWnd::FrameMove( BOOL bNotRendering )
 		RENDERPARAM::g_bHideDeadBodies = !RENDERPARAM::g_bHideDeadBodies;
 	}
 
-	// ���� ������� ON / OFF
+	// Low hardware mode ON / OFF
 	if ( DxInputDevice::GetInstance().GetKeyState(DIK_F11)&DXKEY_UP )
 	{
 		RENDERPARAM::g_bForceLowHardwareMode = !RENDERPARAM::g_bForceLowHardwareMode;
 		RENDERPARAM::CheckTnLMode();
 	}
 
-	// GPU ������
+	// GPU delay
 	m_dwDelayGPU = timeGetTime() - m_dwTimeGetTimePrev;
 
 	PROFILE_BLOCKSTART();
@@ -809,7 +809,7 @@ HRESULT CBasicWnd::FrameMove( BOOL bNotRendering )
 
 	//			//CDebugSet::ToListView ( "detect process : %d, %s", sDETECT.dwID, sDETECT.szINFO );
 
-	//			// ���α׷��� �����Ѵ�.
+			//				// Note: Close the program.
 	//			CInnerInterface::GetInstance().WAITSERVER_DIALOGUE_OPEN(ID2GAMEINTEXT("WAITSERVER_HACK_MESSAGE"), WAITSERVER_CLOSEGAME);
 	//		}
 	//		while ( sDETECT.dwID!=0 );
@@ -820,36 +820,36 @@ HRESULT CBasicWnd::FrameMove( BOOL bNotRendering )
 
 	// [shhan][2015.06.25]
 	//
-	// bNotRendering �� TRUE ��� window �ּ�ȭ ���¶� ����. �װ� Sleep(1000) �� �Ǿ� ����.
+	// [shhan][2015.06.25]
 	//
-	// ȭ���� ���� �� ���¸� !bNotRendering ��.
-	// EMFR_OFF ��� bNotRendering �� ��������. ���� FrameMove ���� �ʿ���� �۾��� �� �ʿ䰡 ����.
-	// EMFR_OFF �� �ɼǿ��� ������ ���� �ְ�, ���λ����� ���� �ӽ÷� ���� �� ���� �ִ�.
-	// â�� �ڷΰ��� 5fps ���Ϸ� ����. �׷��� ������ fps �� �ö󰡰� �׷����� cps �������� �������� �ʴ´�.
-	if ( !bNotRendering )
-	{
+	// When bNotRendering is TRUE the window is minimized; Sleep(1000) is applied.
+	//
+	// The state when the screen is active is !bNotRendering.
+	// EMFR_OFF also sets bNotRendering. Tasks that do not need FrameMove can be skipped.
+	// EMFR_OFF is set by options and can also be set temporarily in some map states.
+	// Window in background runs below 5fps. When focused, fps rises but cps does not update at that rate.
 		bNotRendering = DxFogMan::GetInstance().GetFogRange() == EMFR_OFF ? TRUE : FALSE;
 
-		// �������� �ȵȴٰ� ���Դ�.
+			// Rendering is not required.
 		if ( bNotRendering )
 		{
-			// �ڿ� �� �ִٸ�...
+				// If there is time...
 			if ( !m_bForegroundWindow )
 			{
-				// 5fps ���Ϸ� ���۵ǵ��� �Ѵ�.
+					// Run at below 5fps.
 				Sleep( 200 );
 			}
 		}
 	}
 
-	// Rendering �� ���� �ʴ� �����̶�� 30�п� �ѹ��� ������ �޸𸮸� �����ϵ��� �Ѵ�.
+	// When not rendering, clear working set memory once every 30 minutes.
 	if ( bNotRendering )
 	{
 		m_fEmptyWorkingSetTime += m_fElapsedTime;
 
-		if ( m_fEmptyWorkingSetTime > 30 * 60 )		// 30��
+			if ( m_fEmptyWorkingSetTime > 30 * 60 )		// 30 min
 		{
-			// [shhan][2015.06.15] ������ �޸𸮸� �����Ѵ�.
+				// [shhan][2015.06.15] Release working set memory.
 			HANDLE hProcess	= GetCurrentProcess();
 			if (hProcess)
 			{
@@ -860,36 +860,36 @@ HRESULT CBasicWnd::FrameMove( BOOL bNotRendering )
 		}
 	}
 
-	// ����Ʈ
+	// Events
 	//
 	DxViewPort::GetInstance().FrameMove ( m_fTime, m_fElapsedTime );
 
-	// ���� ��ġ��
+	// Engine first update.
 	m_pEngineDevice->FrameMoveFirst(m_fTime, m_fElapsedTime);
 
-	// ���� ��������.
+	// Scene FrameMove.
 	//
 	m_pGlobalStage->FrameMove(m_fTime, m_fElapsedTime, bNotRendering);
 
-	// ���� ��ġ��
+	// Engine second update.
 	m_pEngineDevice->FrameMoveSecond(m_fTime, m_fElapsedTime, m_bDefWin, TRUE);
 
-    // Ű���� �������� RenderState �����غ��� ����ϴ� �ڵ�
+    // Code to backup RenderState before keyboard input
 	GLOBAL_PARAM::ChangeState( &DxInputDevice::GetInstance() );
 
-    // �������� �׽�Ʈ�� �ڵ�
+    // Debug test code
 	//COMMON_WEB::TestVisible( &DxInputDevice::GetInstance(), WORD( m_wndSizeX ), WORD( m_wndSizeY ) );
 
-    // 10�ʿ� �ѹ� WPE Pro ���� �������Ͽ� ��û�ϴ��� �˻�
+    // Check WPE Pro connection request once every 10 seconds
 	if (m_ServiceProvider != SP_OFFICE_TEST )
-	{ // �系 �׽�Ʈ ����(���� ����)�� ��� ��Ȱ�� �׽�Ʈ�� ���� �н� �Ѵ�;
+	{ // If security test mode (test run) is inactive, bypass the test;
 		CheckPacketSniffer(m_fElapsedTime);
 	}
 
 	PROFILE_BLOCKEND();
 	PROFILE_DUMPOUTPUT();
 
-	// Ǯ��ũ��/â��� ��ȯ.
+	// Toggle fullscreen/windowed mode.
 	DWORD dwL_ALT = DxInputDevice::GetInstance().GetKeyState ( DIK_LMENU );
 	DWORD dwR_ALT = DxInputDevice::GetInstance().GetKeyState ( DIK_RMENU );
 	DWORD dwRETURN = DxInputDevice::GetInstance().GetKeyState ( DIK_RETURN );
@@ -905,10 +905,10 @@ HRESULT CBasicWnd::FrameMove( BOOL bNotRendering )
 	//////////////////////////////////////////////////////////////////////////
 	// NSSkinAniThread
 	// TAG_ProcessAnimationThread_3
-	// ��� ������ COMPLETE_DATA �� �� ���� ��ٸ����� �Ѵ�.
+	// TAG_ProcessAnimationThread_3
 	NSSkinAniThread::Wait_CompleteSkinAniControl( m_fElapsedTime, bNotRendering );
 
-	// NSEffectThread ���
+	// NSEffectThread update
 	NSEffectThread::Wait_FrameMove( m_pd3dDevice, m_fElapsedTime, bNotRendering );
 
 	PROFILE_END("FrameMove");
@@ -936,7 +936,7 @@ HRESULT CBasicWnd::Render()
 		return hr;
 	}
 
-	//	Fog ����
+	//	Fog settings
 	D3DCOLOR colorClear = D3DCOLOR_XRGB(89,135,179);
 	DxFogMan::GetInstance().RenderFogSB ( m_pd3dDevice, FALSE );
 	colorClear = DxFogMan::GetInstance().GetFogColor();
@@ -946,11 +946,11 @@ HRESULT CBasicWnd::Render()
 	{
 //		// Glow 
 //		DxGlowMan::GetInstance().RenderTex ( m_pd3dDevice );
-		// Light ����.
+			// Light settings.
 		//
 		DxLightMan::GetInstance()->Render ( m_pd3dDevice, FALSE, m_pGlobalStage->GetUsedMaterialSystem() );
 
-		// ���ؽ� ���̴� �ܽ�źƮ ����.
+			// Vertex shader constant settings.
 		//
 		DXLIGHT &Light = *DxLightMan::GetInstance()->GetDirectLight ();
 		m_pd3dDevice->SetVertexShaderConstantF ( VSC_LIGHTDIRECT, (float*)&Light.m_Light.Direction, 1 );
@@ -960,7 +960,7 @@ HRESULT CBasicWnd::Render()
 		D3DXVECTOR3 &vFromPt = DxViewPort::GetInstance().GetFromPt ();
 		m_pd3dDevice->SetVertexShaderConstantF ( VSC_CAMERAPOSITION, (float*)&vFromPt, 1 );
 
-		// ����Ʈ ����Ʈ VertexShaderConstant
+			// Point light VertexShaderConstant
 		//
 		D3DLIGHTQ	pLight;
 		D3DXVECTOR4	vPointPos;
@@ -1003,14 +1003,14 @@ HRESULT CBasicWnd::Render()
 		D3DXMatrixIdentity( &matIdentity );
 		m_pd3dDevice->SetTransform( D3DTS_WORLD,  &matIdentity );
 
-		m_pd3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP,	D3DTOP_MODULATE );		// ���� ����
+			m_pd3dDevice->SetTextureStageState( 0, D3DTSS_COLOROP,	D3DTOP_MODULATE );		// Blend operation
 
-		// PhysX �������� ����
+			// PhysX update settings.
 		NSPhysX::Render( m_fElapsedTime );
 
 		//m_pd3dDevice->SetRenderState( D3DRS_MULTISAMPLEANTIALIAS, TRUE );
 
-		// ���� ��������.
+			// Scene render.
 		//
 		PROFILE_BEGIN2("Render_DxGlobalStage");
 		m_pGlobalStage->Render( colorClear );
@@ -1018,7 +1018,7 @@ HRESULT CBasicWnd::Render()
 
 		//m_pd3dDevice->SetRenderState( D3DRS_MULTISAMPLEANTIALIAS, FALSE );
 
-        // �� ������ ������
+        // Render this frame
 		COMMON_WEB::Render();
 
 		//// Cursor
@@ -1026,7 +1026,7 @@ HRESULT CBasicWnd::Render()
 
 		//NSCHARSG::Render( m_pd3dDevice );
 
-		// Ŀ�� �׸���.
+			// Draw cursor.
 		//
 		CCursor::GetInstance().Render ( m_pd3dDevice, DxInputDevice::GetInstance().GetMouseLocateX(), DxInputDevice::GetInstance().GetMouseLocateY() );
 
@@ -1047,7 +1047,7 @@ HRESULT CBasicWnd::Render()
 	{
 		m_dwTimeGetTimePrev = timeGetTime();
 
-		//	BeginScene() �� �����ϴ� ���� EndScene() �� ȣ����� �ʾƼ� ����� �����̴�.
+		//	If BeginScene() fails, do not call EndScene() as it will cause an error.
 		//CDebugSet::ToLogFile ( "BeginScene() fail %d", hr );
 		m_pd3dDevice->EndScene();
 	}
@@ -1123,7 +1123,7 @@ HRESULT CBasicWnd::DeleteDeviceObjects()
 	if( m_pEngineDevice )
 		m_pEngineDevice->DeleteDeviceObjects();
 
-	// ���콺 Ŀ��.
+	// Mouse cursor.
 	CCursor::GetInstance().DeleteDeviceObjects ();
 
 	return S_OK;
@@ -1142,7 +1142,7 @@ HRESULT CBasicWnd::FinalCleanup()
 
 void CBasicWnd::OnSysCommand(UINT nID, LPARAM lParam)
 {
-	// TODO: ���⿡ �޽��� ó���� �ڵ带 �߰� ��/�Ǵ� �⺻���� ȣ���մϴ�.
+	// TODO: Add message handling code here or call the default handler.
 	if(nID==SC_KEYMENU)	return;
 
 	__super::OnSysCommand(nID, lParam);
@@ -1150,7 +1150,7 @@ void CBasicWnd::OnSysCommand(UINT nID, LPARAM lParam)
 
 BOOL CBasicWnd::OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 {
-	// TODO: ���⿡ Ư��ȭ�� �ڵ带 �߰� ��/�Ǵ� �⺻ Ŭ������ ȣ���մϴ�.
+	// TODO: Add specialized code here or call the base class handler.
 	MSG msg;
 	msg.hwnd = m_hWnd;
 	msg.message = message;
@@ -1172,8 +1172,8 @@ BOOL CBasicWnd::OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pR
 
 void CBasicWnd::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 {
-	// ������ ��峪 Ǯ��ũ�� ����϶� �ּ� �ػ�(����������)�� 800*600���� ����
-	// ���� ������ ����϶��� ���� Ŭ���̾�Ʈ�� ũ��� 800*600���� ���� �� �ִ�.
+	// When switching from fullscreen to windowed, the minimum resolution (800x600) applies.
+	// When using windowed mode, the client size may be fixed at 800x600.
 	lpMMI->ptMinTrackSize.x = 800;
 	lpMMI->ptMinTrackSize.y = 600;
 	//if( RANPARAM::dwScrWidth < 1024 || RANPARAM::dwScrHeight < 768 )
@@ -1191,9 +1191,9 @@ void CBasicWnd::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 
 BOOL CBasicWnd::OnNcActivate(BOOL bActive)
 {
-	// TODO: ���⿡ �޽��� ó���� �ڵ带 �߰� ��/�Ǵ� �⺻���� ȣ���մϴ�.
+	// TODO: Add message handling code here or call the default handler.
 	DxInputDevice::GetInstance().OnActivate ( bActive );
-	// ���� ������ ����
+	// Current window activation change
 	DxBgmSound::GetInstance().SetActivate ( bActive );
 
 	return __super::OnNcActivate(bActive);
@@ -1202,7 +1202,7 @@ BOOL CBasicWnd::OnNcActivate(BOOL bActive)
 void CBasicWnd::OnTimer(UINT nIDEvent)
 {
 #ifndef NO_GAMEGARD
-//#if defined(MY_PARAM) || defined(MYE_PARAM) || defined(PH_PARAM) //|| defined(_RELEASED) || defined ( VN_PARAM ) || defined(TH_PARAM) || defined ( HK_PARAM ) || defined(TW_PARAM) // Nprotect ����
+//#if defined(MY_PARAM) || defined(MYE_PARAM) || defined(PH_PARAM) //|| defined(_RELEASED) || defined ( VN_PARAM ) || defined(TH_PARAM) || defined ( HK_PARAM ) || defined(TW_PARAM) // Nprotect use
 	if (m_ServiceProvider == SP_MALAYSIA || m_ServiceProvider == SP_MALAYSIA_EN || m_ServiceProvider == SP_PHILIPPINES|| m_ServiceProvider == SP_EU ) // _NP30
 	{
 		switch( nIDEvent )
@@ -1220,7 +1220,7 @@ void CBasicWnd::OnTimer(UINT nIDEvent)
                     GLGaeaClient* pGaeaClient = m_pGlobalStage->GetGaeaClient();
 				    DWORD dwCHARID = pGaeaClient->GetCharacter()->m_CharDbNum;
 
-					{ // Note : �������� �α� ���
+						{ // Note: Client-side error log
 						GLMSG::SNET_BLOCK_DETECTED NetMsg(
                             NPGAMEMON_CHECK_ERROR,
 						    dwCHARID,
@@ -1230,7 +1230,7 @@ void CBasicWnd::OnTimer(UINT nIDEvent)
 						sc::writeLogError(sc::string::format("nProtect Check ERROR. ID : %1%, Info : %2%", dwCHARID, pNpgl->GetInfo()));
 					}
 
-					{ // Note : NP������ �α� ���
+						{ // Note: NProtect client-side log
 						CString strUserID;
 						strUserID.Format( "CHAR_ID:%u", dwCHARID );
 						pNpgl->Send( strUserID.GetString() );
@@ -1239,7 +1239,7 @@ void CBasicWnd::OnTimer(UINT nIDEvent)
 					TCHAR msg[128]={0};
 					sprintf_s( msg, 128, "GameGuard check error." );
 
-					// Note : ���α׷��� �����Ѵ�.
+						// Note: Close the program.
 					m_pGlobalStage->CloseGame(msg);
 				}
 			}
@@ -1265,7 +1265,7 @@ void CBasicWnd::OnTimer(UINT nIDEvent)
 					//sc::writeLogDebug(sc::string::format("NPGAMEMON_AUTH_TIMER OK - Auth3 Ret %1%, recvSize %2%, Msg Type %3%, m_dwNProtect30ServerNumber %4%", nRet, gad.packetSize, AuthMsg, m_pGlobalStage->m_dwNProtect30ServerNumber));
 			    }
 #endif
-                // Note : ���� m_bGameGuardAuth = false�� nProtect ���� ������ ���� �ʴ´�.(��Ȯ�� ������ ��.)
+                // Note: If m_bGameGuardAuth = false, nProtect authentication will not be triggered. (Not yet verified.)
                 /*else
                 {
                     sc::writeLogError(sc::string::format("NPGAMEMON_AUTH_TIMER GetGGAuthData failed %1%", AuthMsg));
@@ -1297,7 +1297,7 @@ void CBasicWnd::OnTimer(UINT nIDEvent)
                     sc::writeLogError(sc::string::format("NPGAMEMON_AUTH12_TIMER GetGGAuthData failed %1%", AuthMsg));
                 }
 #endif
-                // Note : ���� m_bGameGuardAuth = false�� nProtect ���� ������ ���� �ʴ´�.(��Ȯ�� ������ ��.)
+                // Note: If m_bGameGuardAuth = false, nProtect authentication will not be triggered. (Not yet verified.)
                 /*else
                 {
                     sc::writeLogError(sc::string::format("NPGAMEMON_AUTH12_TIMER GetGGAuthData failed %1%", AuthMsg));
@@ -1316,15 +1316,15 @@ HRESULT CBasicWnd::ReSizeWindow ( int cx, int cy )
 	if ( cx < 10 )	cx = 10;
 	if ( cy < 10 )	cy = 10;
 
-	// [shhan][2016.09.08] ���� ȭ�� ���⸦ ���� ���, CBasicWnd::OnActivate �Լ��� ȣ���� �ȵǼ�, SetActive �� FALSE �� �Ǵ� ������ �־ ������.
+	// [shhan][2016.09.08] Fixed issue where CBasicWnd::OnActivate was not called when switching windows, causing SetActive to remain FALSE.
 	if ( cx == 10 && cy == 10 )
 	{
 		m_pApp->SetActive ( FALSE );
 	}
 
-	// [shhan][2016.09.21] Ư����ǻ�Ϳ��� �ټ��� Ŭ���̾�Ʈ�� ����ϸ�, �ε�ȭ�鿡�� ����¡ �ɸ��� ������ �־ ������.
-	//						���ٸ� Resize3DEnvironment �� ���� �ʿ䰡 ����.
-	//						���� ���Ե� ������ ���� �� Resize3DEnvironment �� �� ���ִ� ����¡�� �Ȱɸ�.
+	// [shhan][2016.09.21] Fixed issue where running multiple clients caused a stuck loading screen.
+	//					Without this, Resize3DEnvironment is not needed.
+	//					With the fix applied, the stuck loading screen no longer occurs.
 	if ( m_d3dpp.BackBufferWidth == cx && m_d3dpp.BackBufferHeight == cy )
 		return S_OK;
 
@@ -1338,7 +1338,7 @@ void CBasicWnd::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)
 {
 	__super::OnActivate(nState, pWndOther, bMinimized);
 
-	// TODO: ���⿡ �޽��� ó���� �ڵ带 �߰��մϴ�.
-	// ������ ����
+	// TODO: Add message handling code here.
+	// Activate state change
 	m_pApp->SetActive ( !bMinimized );
 }

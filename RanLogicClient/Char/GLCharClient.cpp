@@ -144,7 +144,7 @@ const BOOL GLCharClient::CalcVisibleDetect(const float fTime)
 		return FALSE;
 
 // 	if ( IsActState(EM_REQ_VISIBLENONE + EM_REQ_VISIBLEOFF) )
-// 		return FALSE; // GM ������� ���� ���� �����̰ų� ���� ���� ���¸� ������ ����;
+// 	return FALSE; // GM invisible state, or state where character should not be displayed;
 
 	GLCharacter* pCharacter = m_pGaeaClient->GetCharacter();
 
@@ -153,19 +153,19 @@ const BOOL GLCharClient::CalcVisibleDetect(const float fTime)
 
 	if ( m_pLandManClient->IsCullByObjectMap() == true )
 	{
-		// �� �ɸ��� �þ߿� ���ٸ� �Ⱥ���;
+		// If outside the culled field of view, not visible;
 		if ( m_spCollisionByObject->GetCollsion() )
 			return FALSE; 
 
 		//if ( m_pGaeaClient->IsCollision(vMyPosition, vPosition, EMCC_CULL_NONE_ONLY_WALL) == true )
-		//	return FALSE; // �� �ɸ��� �þ߿� ���ٸ� �Ⱥ���;
+		//if ( m_pGaeaClient->IsCollision(vMyPosition, vPosition, EMCC_CULL_NONE_ONLY_WALL) == true )
 	}
 
 	if ( IsCheckedSkillFlagSpecial(EMSPECA_INVISIBLE) == FALSE )
-		return TRUE; // ���� ���� �ƴϸ� �Ʒ� �˻�� �������� ����;	
+		return TRUE; // Not an invisible skill, skip checks below and show;
 
 	if ( GLCharClient::GetPartyID() == pCharacter->GetPartyID() )
-		return TRUE; // ���� ���� ���� ��Ƽ�� ����;	
+		return TRUE; // Same party as own character, always show;
 
 	const SRECVISIBLE& RECVISIBLE = pCharacter->m_sRECVISIBLE;	
 
@@ -175,9 +175,9 @@ const BOOL GLCharClient::CalcVisibleDetect(const float fTime)
 	if ( pCharacter->IsCheckedSkillFlagSpecial(EMSPECA_RECVISIBLE) &&
 		(m_sINVISIBLE.dwLevelINVISIBLE <= RECVISIBLE.dwLevelRECVISIBLE) &&
 		(fDistance < RECVISIBLE.fRadiusRECVISIBLE) )
-		return TRUE; // ���� ���� ����� Ȱ��ȭ �Ǿ� �ְ� ������ �����ϸ� ����;
+		return TRUE; // Invisible detection skill active and condition satisfied, show;
 
-	return CalcVisibleDetectAuto(fTime, fDistance, vDistance); // �ڵ� ���� ����;
+	return CalcVisibleDetectAuto(fTime, fDistance, vDistance); // Auto invisible detection;
 }
 
 const BOOL GLCharClient::CalcVisibleDetectAuto(const float fTime, const float fDistance, const D3DXVECTOR3& vDistance)
@@ -1699,7 +1699,7 @@ void GLCharClient::TurnAction ( EMACTIONTYPE toAction )
 
 	case GLAT_ATTACK:
 
-		// ���� �ִϸ��̼����� �����ϸ� �ִϸ��̼��� �߰� �߰� �ȳ����� ��찡 ���ܼ�, ������ ���ش�.
+		// If the current animation is interrupted, adding a guard animation causes an exception; reset instead.
 		if ( m_pSkinChar )
 		{
 			SELECTANI( m_pSkinChar, AN_GUARD_N, m_emANISUBTYPE );
@@ -1710,7 +1710,7 @@ void GLCharClient::TurnAction ( EMACTIONTYPE toAction )
 
 	case GLAT_SKILL_WAIT:
 		{
-			// ���� �ִϸ��̼����� �����ϸ� �ִϸ��̼��� �߰� �߰� �ȳ����� ��찡 ���ܼ�, ������ ���ش�.
+			// If the current animation is interrupted, adding a guard animation causes an exception; reset instead.
 			if ( m_pSkinChar )
 			{
 				SELECTANI( m_pSkinChar, AN_GUARD_N, m_emANISUBTYPE );
@@ -3900,8 +3900,8 @@ void GLCharClient::UpdateSkillEff()
 	SITEM* pItem = GLItemMan::GetInstance().GetItem( sLHandItem.sNativeID.dwID );
 	if ( pItem )
 	{
-		// Table ID �� ���� ��쿡�� Index�� �����Ѵ�;
-		// �����͸� �ø��� �ʱ� ���Ͽ� Pet ������ �̿��Ѵ�;
+		// Use Index only when Table ID matches;
+		// Uses Pet information to avoid loading data;
 		if ( RF_DISGUISE( m_EffSkillVarSet ).GetTableID() == pItem->sPet.sPetID.Mid() )
 			Index = pItem->sPet.sPetID.Sid();
 	}
