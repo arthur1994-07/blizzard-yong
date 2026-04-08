@@ -61,7 +61,7 @@ BOOL CVersionManagerApp::InitInstance()
 	// 해당 설정이 저장된 레지스트리 키를 변경하십시오.
 	// TODO: 이 문자열을 회사 또는 조직의 이름과 같은
 	// 적절한 내용으로 수정해야 합니다.
-	SetRegistryKey(_T("로컬 응용 프로그램 마법사에서 생성된 응용 프로그램"));
+	SetRegistryKey(_T("Applications created by the Local Application Wizard"));
 	LoadStdProfileSettings(4);  // MRU를 포함하여 표준 INI 파일 옵션을 로드합니다.
 	// 응용 프로그램의 문서 템플릿을 등록합니다. 문서 템플릿은
 	// 문서, 프레임 창 및 뷰 사이의 연결 역할을 합니다.
