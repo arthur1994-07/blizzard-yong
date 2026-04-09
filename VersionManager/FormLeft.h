@@ -7,13 +7,13 @@
 #include "resource.h"
 #include "MinEdit.h"
 
-// CFormLeft Æû ºäÀÔ´Ï´Ù.
+// CFormLeft ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 class CFormLeft : public CFormView
 {
 	DECLARE_DYNCREATE(CFormLeft)
 
 protected:
-	CFormLeft();           // µ¿Àû ¸¸µé±â¿¡ »ç¿ëµÇ´Â protected »ý¼ºÀÚÀÔ´Ï´Ù.
+	CFormLeft();           // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½Ç´ï¿½ protected ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 	virtual ~CFormLeft();
 
 public:
@@ -32,9 +32,10 @@ public:
 
 	void InitListHead();
 	void InitListData();
-	
+	BOOL RecursiveRemoveDirectory(const CString& szPath);
+
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Áö¿øÀÔ´Ï´Ù.
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 
 	DECLARE_MESSAGE_MAP()
 public:
