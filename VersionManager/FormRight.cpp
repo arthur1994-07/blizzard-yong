@@ -190,7 +190,7 @@ void CFormRight::FillData(int nFolder)
 
 	if (nRetCode == DB_ERROR)
 	{
-		MessageBox(_T("파일리스트를 가져올 수 없습니다"), "ERROR", MB_ICONEXCLAMATION);
+		MessageBox(_T("Unable to retrieve file list"), "ERROR", MB_ICONEXCLAMATION);
 		return;
 	}
 
@@ -414,7 +414,7 @@ void CFormRight::OnRightAdd()
     IVersionManConfig* pConfig = pFrame->GetConfig();
 
 	// 사용하지 않는 기능이므로 삭제
-	MessageBox("사용하지 않는 기능이므로 삭제되었습니다. FileList를 이용해서 추가하세요");
+	MessageBox("This feature has been removed as it is no longer in use. Please add it using FileList.");
 	/*
 	std::vector<CompressFile> vCompressFile;
 	CFileDialog DlgFile(TRUE, NULL,	NULL);
@@ -479,7 +479,7 @@ void CFormRight::OnRightDelete()
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
     TRACE("RIGHT DELETE \n");
 
-    int nRetCode = MessageBox(_T("정말로 삭제하시겠습니까?"), _T("삭제 확인"), MB_OKCANCEL);
+    int nRetCode = MessageBox(_T("Are you sure you want to delete it?"), _T("Confirm deletion"), MB_OKCANCEL);
 
     if (nRetCode != 1)
     {
@@ -511,14 +511,14 @@ void CFormRight::OnRightDelete()
 
             if (DeleteFile(strDelFullPath) == 0)
             {                
-                MessageBox(_T("삭제에 실패하였습니다"));
+                MessageBox(_T("Deletion failed."));
             }
             else
             {
                 // DB 에서 삭제한다.
                 if (pDb->DeleteFile((&m_vFile[nItem])->nIdx) == DB_ERROR)
                 {
-                    MessageBox(_T("파일은 삭제 되었지만 DB 삭제에 실패하였습니다"));
+                    MessageBox(_T("The file was deleted, but the DB deletion failed."));
                 }
             }
         }
@@ -531,7 +531,7 @@ void CFormRight::OnRightIsPreDownSet0()
 {
 	TRACE("RIGHT IsPreDown 0 \n");
 
-	int nRetCode = MessageBox(_T("IsPreDown 설정을 변경하시겠습니까?"), _T("확인"), MB_OKCANCEL);
+	int nRetCode = MessageBox(_T("Would you like to change the IsPreDown setting??"), _T("confirm"), MB_OKCANCEL);
 
 	if (nRetCode != 1)
 	{
@@ -547,7 +547,7 @@ void CFormRight::OnRightIsPreDownSet1()
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	TRACE("RIGHT IsPreDown 1 \n");
 
-	int nRetCode = MessageBox(_T("IsPreDown 설정을 변경하시겠습니까?"), _T("확인"), MB_OKCANCEL);
+	int nRetCode = MessageBox(_T("Would you like to change the IsPreDown setting??"), _T("confirm"), MB_OKCANCEL);
 
 	if (nRetCode != 1)
 	{
@@ -563,7 +563,7 @@ void CFormRight::OnRightIsPreDownSet2()
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	TRACE("RIGHT IsPreDown 2 \n");
 
-	int nRetCode = MessageBox(_T("IsPreDown 설정을 변경하시겠습니까?"), _T("확인"), MB_OKCANCEL);
+	int nRetCode = MessageBox(_T("Would you like to change the IsPreDown setting??"), _T("confirm"), MB_OKCANCEL);
 
 	if (nRetCode != 1)
 	{
@@ -579,7 +579,7 @@ void CFormRight::OnRightIsPreDownSet3()
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	TRACE("RIGHT IsPreDown 3 \n");
 
-	int nRetCode = MessageBox(_T("IsPreDown 설정을 변경하시겠습니까?"), _T("확인"), MB_OKCANCEL);
+	int nRetCode = MessageBox(_T("Would you like to change the IsPreDown setting??"), _T("confirm"), MB_OKCANCEL);
 
 	if (nRetCode != 1)
 	{
@@ -616,7 +616,7 @@ void CFormRight::SetIsPreDown( const EM_PREDOWN &emIsPreDown )
 			// DB 에서 IsPreDown 변경;
 			if (pDb->UpdateIsPreDown( (&m_vFile[nItem])->strFile, (&m_vFile[nItem])->nIsPreDown ) == DB_ERROR)
 			{
-				MessageBox(_T("DB isPreDown 변경에 실패하였습니다"));
+				MessageBox(_T("Failed to change DB isPreDown"));
 			}
 		}
 		InitListData();

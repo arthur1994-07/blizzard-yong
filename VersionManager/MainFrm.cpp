@@ -66,7 +66,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
 	{
-		TRACE0("도구 모음을 만들지 못했습니다.\n");
+		TRACE0("Failed to create toolbar.");
 		return -1;      // 만들지 못했습니다.
 	}	
 
@@ -74,7 +74,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		!m_wndStatusBar.SetIndicators(indicators,
 		  sizeof(indicators)/sizeof(UINT)))
 	{
-		TRACE0("상태 표시줄을 만들지 못했습니다.\n");
+		TRACE0("Failed to create the status bar.");
 		return -1;      // 만들지 못했습니다.
 	}
 	// TODO: 도구 모음을 도킹할 수 없게 하려면 이 세 줄을 삭제하십시오.
