@@ -21,26 +21,26 @@ namespace	NS_GLOBAL_VAR
 	/*
 //#ifdef CH_PARAM
 	if (sp == SP_CHINA)
-		CString	strTitle = "Á÷ÐÇ»¨Ô° Launcher";
+		CString	strTitle = "ï¿½ï¿½ï¿½Ç»ï¿½Ô° Launcher";
 //#elif TW_PARAM
 	else if (sp == SP_TAIWAN)
-		CString	strTitle = "«i online Launcher";
+		CString	strTitle = "ï¿½i online Launcher";
 //#elif HK_PARAM 
 	else if (sp == SP_HONGKONG)
-		CString	strTitle = "«i online Launcher";
+		CString	strTitle = "ï¿½i online Launcher";
 //#else 
 	else
 		CString	strTitle = "Ran Launcher";
 //#endif
 	*/
-	CString strTitle = (sp == SP_CHINA) ? "Á÷ÐÇ»¨Ô° Launcher" : (sp == SP_TAIWAN) ? "«i online Launcher" : (sp == SP_HONGKONG) ? "«i online Launcher" : "Ran Launcher";
+	CString strTitle = (sp == SP_CHINA) ? "ï¿½ï¿½ï¿½Ç»ï¿½Ô° Launcher" : (sp == SP_TAIWAN) ? "ï¿½i online Launcher" : (sp == SP_HONGKONG) ? "ï¿½i online Launcher" : "Ran Launcher";
 
 	CString	strDownloadTemp = "Temp\\";
 	CString	strServerCabFileList = "filelist.bin.cab";
 	CString	strDownList = "cDownList.bin";
 	CString strCopyList = "cCopyList.bin";
 	
-//	CString strCompDir = "package\\"; // ¾ÐÃàÇÒ ÆÄÀÏµéÀÇ °æ·Î
+//	CString strCompDir = "package\\"; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
 	TCHAR	g_szPatchMessage[128] = {0};
 
@@ -75,11 +75,11 @@ namespace	NS_GLOBAL_VAR
 	TCHAR*	g_szClientFileList = "cFileList.bin";	
 	TCHAR*	g_szPreDownFileList = "preFileList.bin";
 
-	TCHAR*	g_szServerPreDownFileList = "PreDownFileList.bin"; 	// »çÀü ´Ù¿î·Îµå Å×½ºÆ®¸¦ À§ÇØ¼­ ÀÓ½Ã·Î »ý¼ºÇÏ´Â ÆÄÀÏ. ÀÛ¾÷ ¿Ï·áÈÄ ÄÚµå Á¤¸® ÇÊ¿ä
+	TCHAR*	g_szServerPreDownFileList = "PreDownFileList.bin"; 	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½Îµï¿½ ï¿½×½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ó½Ã·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½Û¾ï¿½ ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½
 	
 	DWORD	g_DxVersion = 0x801;	
 
-	TCHAR*	g_szLauncherPatchCabFile = "launcherpatch.exe.cab";
+	TCHAR*	g_szLauncherPatchCabFile = "launcher.exe.cab";
 	TCHAR*	g_szLauncherPatchWndName = "Launcher Patch";
 
 	BOOL	g_bApplyPreDown = FALSE;
