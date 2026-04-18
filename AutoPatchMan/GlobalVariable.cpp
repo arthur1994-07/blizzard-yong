@@ -79,7 +79,7 @@ namespace	NS_GLOBAL_VAR
 	
 	DWORD	g_DxVersion = 0x801;	
 
-	TCHAR*	g_szLauncherPatchCabFile = "launcher.exe.cab";
+	TCHAR*	g_szLauncherPatchCabFile = "launcherpatch.exe.cab";
 	TCHAR*	g_szLauncherPatchWndName = "Launcher Patch";
 
 	BOOL	g_bApplyPreDown = FALSE;
