@@ -297,17 +297,17 @@ private:
 	CRITICAL_SECTION		m_CSPCLock;
 
 	DWORD					m_dwMaxClient;
-	//PGLCHARAG*			m_PCArray;				//!	PC ¹è¿­(»èÁ¦, m_CharData ·Î º¯°æ) 2012-05-08 jgkim
+	//PGLCHARAG*			m_PCArray;				//!	PC ï¿½è¿­(ï¿½ï¿½ï¿½ï¿½, m_CharData ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) 2012-05-08 jgkim
     AGENT_CHAR_DATA         m_CharData;             //! Characters
-	PCGID					m_FreePCGIDs;			//	¹Ì»ç¿ëµÈ PC GlobID µé.
-	DWORD					m_dwBaseGaeaId;			// ÀÌ ¼­¹ö±ºÀÇ ±âÁØ(½ÃÀÛ) GaeaId
+	PCGID					m_FreePCGIDs;			//	ï¿½Ì»ï¿½ï¿½ï¿½ PC GlobID ï¿½ï¿½.
+	DWORD					m_dwBaseGaeaId;			// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½) GaeaId
 
-	//AGCHARLIST			m_PCList;				//	È°µ¿ÁßÀÎ ÄÉ¸¯ÅÍ ¸®½ºÆ®.(»èÁ¦, m_CharData ·Î º¯°æ) 2012-05-08 jgkim
+	//AGCHARLIST			m_PCList;				//	È°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®.(ï¿½ï¿½ï¿½ï¿½, m_CharData ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) 2012-05-08 jgkim
 
-	SWorkingEvent			m_WorkEvent;			//  ÇöÀç Àû¿ëÁßÀÎ ÀÌº¥Æ®µé
+	SWorkingEvent			m_WorkEvent;			//  ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½
 
     AgentCharMan*           m_pCharMan;
-	CHAR_MAP				m_CharNameMap;			//! Ä³¸¯ÅÍÀÌ¸§/Ä³¸¯ÅÍ Pointer
+	CHAR_MAP				m_CharNameMap;			//! Ä³ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½/Ä³ï¿½ï¿½ï¿½ï¿½ Pointer
 	
 	//mjeon.groupchat
 	ChatManager				*m_pGroupChatMan;			//GroupChat mananger
@@ -315,16 +315,16 @@ private:
 	
 	PCGID					m_RegDropOutPC;
 
-	InstanceSystem::ManagerAgent* m_pInstanceManager; //! ÀÎ½ºÅÏ½º ´øÀü °ü¸®;
+	InstanceSystem::ManagerAgent* m_pInstanceManager; //! ï¿½Î½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½;
 
-	MatchingSystem::MatchingCore* m_pMatchingCore; // ¸ÞÄª °ü¸®
+	MatchingSystem::MatchingCore* m_pMatchingCore; // ï¿½ï¿½Äª ï¿½ï¿½ï¿½ï¿½
 
-	GLEvent::ManagerAgent* m_pEventManager; //! ÀÌº¥Æ® ¸Å´ÏÀú;
+	GLEvent::ManagerAgent* m_pEventManager; //! ï¿½Ìºï¿½Æ® ï¿½Å´ï¿½ï¿½ï¿½;
 
 	GLPartyManagerAgent*  			m_pPartyManager;	
 	GLClubManAgent*   		m_pClubMan;
-	GLFreePK*				m_pFreePK;				// ¼ºÇâ ÀÌº¥Æ®¿ë
-	GLAGPeriod				m_cAGPeriod;			// ÁÖ±â/ÀÌº¥Æ® ¿ë
+	GLFreePK*				m_pFreePK;				// ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½
+	GLAGPeriod				m_cAGPeriod;			// ï¿½Ö±ï¿½/ï¿½Ìºï¿½Æ® ï¿½ï¿½
     GLAutoLevelMan*		m_pAutoLevel;
 	GLMapLayerMan*		m_pMapLayer;
     GLSchoolFreePKAgent*    m_pSchoolFreePk;
@@ -340,9 +340,9 @@ private:
 	CTime					m_PresetTime;
 	SEventState				m_sEventState;
 	MAP_ENTRYLIMIT			m_mapEntryLimitInfo;
-	MAP_PARTY_RECRUIT_TIME	m_mapPartyRecruitTime;	//	ÆÄÆ¼ ¸ðÁý Ã¤ÆÃ Á¦ÇÑ ½Ã°£ 
-	float					m_fPartyRecruitTime;	//	ÆÄÆ¼ ¸ðÁý Ã¤ÆÃ Á¦ÇÑ °»½Å ½Ã°£
-	bool					m_bClubMasterMandate;	//  Å¬·´¸¶½ºÅÍ À§ÀÓ on/off
+	MAP_PARTY_RECRUIT_TIME	m_mapPartyRecruitTime;	//	ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ 
+	float					m_fPartyRecruitTime;	//	ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+	bool					m_bClubMasterMandate;	//  Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ on/off
 	bool					m_pFreePkGMCommand;
 	bool					m_bEmulator;
 
@@ -383,20 +383,20 @@ private:
 
 	PartyInfoBoardMultiIndex m_PartyInfoBoardTable;
 
-	std::vector< RESERVED_TASK_TYPE > m_ReservedTask;	// ¿¹¾àµÈ ÀÛ¾÷ ¸®½ºÆ®
+	std::vector< RESERVED_TASK_TYPE > m_ReservedTask;	// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¾ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 
 	std::vector< int > m_AutoJoinClub;
 
 private:
-	// Á¤Àû Map Data;
+	// ï¿½ï¿½ï¿½ï¿½ Map Data;
 	GLMapListServer			m_sMapList;
 
-	// Agent ¿¡¼­ °ü¸®µÇ´Â Land Á¤º¸;
-	// µ¿Àû Land ¿Í Á¤Àû Land °¡ °°ÀÌ °ü¸®µÇ°í ÀÖ±â ¶§¹®¿¡ »ç¿ë¿¡ ÁÖÀÇ°¡ ÇÊ¿äÇÏ´Ù;
-	// ÀÌÀüÀÛ¾÷ÀÚ°¡ °ü¸®ÇÏ±â ÆíÇÏµµ·Ï ÀÌ·¸°Ô ÇØ³õÀº°Í°°´Ù;
+	// Agent ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ Land ï¿½ï¿½ï¿½ï¿½;
+	// ï¿½ï¿½ï¿½ï¿½ Land ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Land ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ë¿¡ ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ê¿ï¿½ï¿½Ï´ï¿½;
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Û¾ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½Ø³ï¿½ï¿½ï¿½ï¿½Í°ï¿½ï¿½ï¿½;
     LandManagerMap	        m_mapLandMan;
 
-	// ÀÎ´ø ¸Ê ¾ÆÀÌµð º¤ÅÍ;
+	// ï¿½Î´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½;
     VEC_INSTANT_MAPID		m_vecInstantMapId;
 
 private:
@@ -442,11 +442,11 @@ public:
 
 	const bool IsSubServer ();
 
-	// ¾î¶² Client Slot ÀÎ°¡?;
+	// ï¿½î¶² Client Slot ï¿½Î°ï¿½?;
 	const bool IsAgentClientSlot ( DWORD _dwClientSlotID );
 	const bool IsFieldClientSlot ( DWORD _dwClientSlotID );
 
-	// Agent ¼­¹ö±º¿¡ µû¸¥ Client Slot ID Á¤º¸;
+	// Agent ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Client Slot ID ï¿½ï¿½ï¿½ï¿½;
 	const DWORD GetServerGroup_ClientSlotID ( DWORD _dwClientSlotID );
 	const DWORD GetClientSlotID_ServerGroup ( DWORD _dwServerGroup );
 
@@ -455,7 +455,7 @@ public:
 	void ChangeChannelUser( DWORD dwClient, int nPreChannel, int nAfterChannel );
 	const int GetServerGroup(void) const { return m_pMsgServer->GetServerGroup(); }
 
-    //! ¿ÀÇÁ¶óÀÎ Ä£±¸ ¿äÃ»
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä£ï¿½ï¿½ ï¿½ï¿½Ã»
     void FriendOfflineRequest(const std::string& ReqCharName, const std::string& TargetCharName );
 	void SetClubMasterMandate( bool bBool );
 	bool IsClubMasterMandate();
@@ -506,11 +506,11 @@ public:
     void SENDTOFIELD(DWORD dwClientID, EMNET_MSG MsgType, const msgpack::sbuffer& PackBuffer, bool UseCrc=false);
     void SENDTOFIELD(DWORD dwClientID, EMNET_MSG MsgType, const std::vector<std::tr1::shared_ptr<msgpack::sbuffer>>& vecSpBuffer, bool UseCrc=false);
 
-	void SENDTOFIELD(DWORD dwChannel, DWORD dwFieldSvrNum, NET_MSG_GENERIC* nmg);	//mjeon.SendField¸¦ »ç¿ëÇÏµµ·Ï ±¸Çö : ¸Þ½ÃÁö ¾ÐÃàÀ» ÇÏÁö ¾Ê´Â´Ù.
+	void SENDTOFIELD(DWORD dwChannel, DWORD dwFieldSvrNum, NET_MSG_GENERIC* nmg);	//mjeon.SendFieldï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´ï¿½.
     void SENDTOFIELD(DWORD dwChannel, DWORD dwFieldSvrNum, EMNET_MSG MsgType, const msgpack::sbuffer& PackBuffer, bool UseCrc=false);
     void SENDTOFIELD(DWORD dwChannel, DWORD dwFieldSvrNum, EMNET_MSG MsgType, const std::vector<std::tr1::shared_ptr<msgpack::sbuffer>>& vecSpBuffer, bool UseCrc=false);
 
-	void SENDTOFIELDSVR(int nChannel, int nField, NET_MSG_GENERIC* nmg); //SendClient¸¦ »ç¿ë: ¸Þ½ÃÁö¿¡ ´ëÇØ ¾ÐÃàÀ» ¼öÇàÇÑ´Ù.
+	void SENDTOFIELDSVR(int nChannel, int nField, NET_MSG_GENERIC* nmg); //SendClientï¿½ï¿½ ï¿½ï¿½ï¿½: ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
     void SENDTOFIELDSVR(int nChannel, int nField, EMNET_MSG MsgType, const msgpack::sbuffer& PackBuffer, bool UseCrc=false);
     void SENDTOFIELDSVR(int nChannel, int nField, EMNET_MSG MsgType, const std::vector<std::tr1::shared_ptr<msgpack::sbuffer>>& vecSpBuffer, bool UseCrc=false);
 
@@ -553,7 +553,7 @@ public:
 	void SENDTOMYSELF(EMNET_MSG MsgType, const msgpack::sbuffer& PackBuffer, bool UseCrc=false);
 
 	/* ---------------------------------------------------------------------------------------------------- */
-	// Agent Relay Message °ü·Ã ( Agent Åë½ÅÀ» ÀÌ¿ëÇÏ´Â Message ÀÇ °æ¿ì »ç¿ëÇØ¾ßÇÑ´Ù );
+	// Agent Relay Message ï¿½ï¿½ï¿½ï¿½ ( Agent ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ï´ï¿½ Message ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½Ñ´ï¿½ );
 	void SENDTOCLIENT_RELAY ( DWORD _dwDbNum, DWORD _dwClientID, NET_MSG_GENERIC_RELAY_AGENT* _pMsg );
 	void SENDTOCLIENT_RELAY_BYSVRGROUP ( DWORD _dwDbNum, DWORD _dwServerGroup, NET_MSG_GENERIC_RELAY_AGENT* _pMsg );
 
@@ -564,7 +564,7 @@ public:
 
 	/* ---------------------------------------------------------------------------------------------------- */
 
-	// ¹èÆ² ÁøÇà½Ã party ¸â¹ö È®ÀÎ
+	// ï¿½ï¿½Æ² ï¿½ï¿½ï¿½ï¿½ï¿½ party ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 	void ClubBattlePartyCheck( DWORD dwClubID, DWORD dwClubIDTar );
 	void AllianceBattlePartyCheck( DWORD dwClubID, DWORD dwClubIDTar );
 
@@ -574,25 +574,25 @@ public:
 	bool IS_FIELDSERVER_ONLINE ( const UINT32 nChannel, const UINT32 nFieldServer ) { return m_bFIELDSVR[nChannel][nFieldServer]; }
 
 public:
-    //! Gaea ID ·Î Ä³¸¯ÅÍ¸¦ Ã£´Â´Ù
+    //! Gaea ID ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í¸ï¿½ Ã£ï¿½Â´ï¿½
 	GLCharAG* GetChar(const GAEAID dwGaeaID);
     inline GLCharAG* GetCharByGaeaID(const GAEAID dwGaeaID) 
     {
         return GetChar(dwGaeaID);
     }
 
-    //! Ä³¸¯ÅÍ ÀÌ¸§À¸·Î Ä³¸¯ÅÍ¸¦ Ã£´Â´Ù
+    //! Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í¸ï¿½ Ã£ï¿½Â´ï¿½
 	GLCharAG* GetChar(const char* szName);
     GLCharAG* GetChar(const std::string& ChaName);
 
-    //! »ç¿ëÀÚ ID ·Î Ä³¸¯ÅÍ¸¦ Ã£´Â´Ù
+    //! ï¿½ï¿½ï¿½ï¿½ï¿½ ID ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í¸ï¿½ Ã£ï¿½Â´ï¿½
     GLCharAG* GetCharByUserAccount(const std::string& UserId);
 
-    //! Ä³¸¯ÅÍ DB ¹øÈ£·Î Ä³¸¯ÅÍ¸¦ Ã£´Â´Ù
+    //! Ä³ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È£ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Í¸ï¿½ Ã£ï¿½Â´ï¿½
 	GLCharAG* GetCharByDbNum(const DWORD ChaDbNum);
 	GLCharAG* GetCharByUserDbNum(const DWORD UserDbNum);
 
-    //! Ä³¸¯ÅÍ ÀÌ¸§/Ä³¸¯ÅÍ DB ¹øÈ£, Ä³¸¯ÅÍ DB ¹øÈ£/Ä³¸¯ÅÍ ÀÌ¸§
+    //! Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½/Ä³ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È£, Ä³ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È£/Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
     void ChaNameDbNumAdd(
         const std::string& ChaName,
         DWORD ChaDbNum,
@@ -608,10 +608,10 @@ public:
 		int iLv);
 
 
-    //! Ä³¸¯ÅÍ ÀÌ¸§/Ä³¸¯ÅÍ DB ¹øÈ£
+    //! Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½/Ä³ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È£
     DWORD GetChaDbNumByChaName(const std::string& ChaName);
     
-    //! Ä³¸¯ÅÍ DB ¹øÈ£/Ä³¸¯ÅÍ ÀÌ¸§
+    //! Ä³ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È£/Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
     std::string GetChaNameByDbNum(DWORD ChaDbNum);
 
     std::tr1::shared_ptr<CHAR_BASE_CACHE_DATA> GetCharCacheData(const std::string& ChaName);
@@ -661,13 +661,13 @@ public:
 	BOOL MsgPartyLinkLure(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 		
 	//  [1/11/2013 gbgim];
-	// - ÆÄÆ¼Àå ÃÊ´ë¸¦ ÅëÇÑ °¡ÀÔ °æ·Î;
+	// - ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½Ê´ë¸¦ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½;
 	BOOL MsgPartyLure(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 	BOOL MsgPartyLureWithCharNum(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
-	// - ¸µÅ©¸¦ ÅëÇÑ °¡ÀÔ °æ·Î;
+	// - ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½;
 	BOOL MsgPartyLinkJoin(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);    
-	// - ±âÁ¸¿¡´Â À§ÀÇ µÎ°¡Áö Å¸ÀÔ¿¡ µû¶ó ¸ðµÎ ¿¹¿ÜÃ³¸®¸¦ µû·ÎÇØÁÖ¾ù´Âµ¥;
-	//   ºÒÆíÇØ¼­ ÇÏ³ª·Î ¹­Àº ÇÔ¼ö°¡ ¹Ù·Î MsgPartyInviteRequest;
+	// - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ï¿½ï¿½ Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½Âµï¿½;
+	//   ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ MsgPartyInviteRequest;
 		BOOL MsgPartyInviteRequest(
 			const DWORD dwMasterGaeaID,
 			const DWORD dwCharTarGaeaID,
@@ -689,7 +689,7 @@ public:
     //! Club ------------------------------------------------------------------
 	GLClubManAgent* GetClubMan();
     std::tr1::shared_ptr<GLClubAgent> GetClub(DWORD ClubId);
-    //! ÁÖÀÇ:¼Óµµ´À¸²
+    //! ï¿½ï¿½ï¿½ï¿½:ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½
     std::tr1::shared_ptr<GLClubAgent> GetClub(const std::string& ClubName);
 
 	DWORD GetFieldNum() const { return m_dwFIELDSVR_NUM; }
@@ -705,7 +705,7 @@ public:
     void UnregisterCharacter(DWORD GaeaId);
 
 public:
-	//! Ä³¸¯ÅÍ »ý¼º
+	//! Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     GLCharAG* CreateChar(
         GLCHARAG_DATA* pCharData,
         DWORD dwClientID,
@@ -718,9 +718,9 @@ public:
     void CraeteCharRegist(GLCharAG* pChar);
     bool CreateCharCheck(GLCHARAG_DATA* pCharData, DWORD ClientSlot);
 
-    //! Ä³¸¯ÅÍ »ý¼º½ÇÆÐ
+    //! Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     GLCharAG* CreateCharFail(GLCharAG* pChar, DWORD dwClientID);
-    //! Ä³¸¯ÅÍ¸¦ Á¦°Å ÇÕ´Ï´Ù
+    //! Ä³ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Õ´Ï´ï¿½
     HRESULT DropOutChar(DWORD GaeaID);
     void SendClubInfo(DWORD ClientSlot, DWORD ClubDbNum);
 
@@ -814,8 +814,8 @@ public:
 	void MatchingSystemSyncState ( const DWORD dwClientID, const DWORD dwChaNum );
 
 public:
-    //! ÇÊµå ¼­¹ö º¯°æ½Ã Å¬¶óÀÌ¾ðÆ® Á¤º¸ º¯°æ »çÇ× ¹Ý¿µ
-    //! ºÎÈ°½Ã, gate¸¦ ÅëÇØ ¸Ê ÀÌµ¿½Ã È£ÃâµÊ
+    //! ï¿½Êµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¿ï¿½
+    //! ï¿½ï¿½È°ï¿½ï¿½, gateï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½
 	BOOL ReActionMoveFieldSvr(DWORD dwClientID, DWORD dwGaeaID );
 
 	BOOL GameJoinToFieldSvr(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
@@ -835,7 +835,7 @@ public:
 
 public:
 	BOOL CheckStartMap( DWORD dwGaeaID );
-	// Æ¯Á¤ ¸ÊÀ¸·Î ÀÌµ¿, ÇÊµå ¼­¹ö º¯°æ ÇÊ¿ä¿©ºÎ ¹ÝÈ¯
+	// Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½, ï¿½Êµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ä¿©ï¿½ï¿½ ï¿½ï¿½È¯
 	//BOOL MoveToMap( GLCharAG* pChar, SNATIVEID& sMapID, DWORD dwGenGate );
 
 private:
@@ -1126,7 +1126,7 @@ private:
 
 	BOOL MsgGMFlyCameraControl(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 
-    //! È®·ü/¾ÆÀÌÅÛ ¸®½ºÆ® Á¦¾î ±â´É : sckim, Redmine #4544
+    //! È®ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ : sckim, Redmine #4544
     BOOL MsgGmRandomboxNotifyItemReloadReqCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 
 
@@ -1161,10 +1161,10 @@ private:
 	BOOL MsgClubNoticeReq(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 	//BOOL MsgClubSubMaster(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 	
-    //! Å¬·´ ¿¬ÇÕ(µ¿¸Í) °¡ÀÔ ¿äÃ»
+    //! Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»
     BOOL MsgClubAllianceReq(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 
-    //! Å¬·´ ¿±ÇÕ(µ¿¸Í) °¡ÀÔ ¿äÃ» ÀÀ´ä
+    //! Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½
 	BOOL MsgClubAllianceReqAns(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 
 	BOOL MsgClubAllianceDelReq(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
@@ -1196,9 +1196,9 @@ private:
     BOOL MsgBuyRebuyItem(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
     BOOL MsgBuyRebuyItemFB(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
     BOOL MsgLevelUpFA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
-    //! Lobby ¿¡¼­ Club ¿¡ °¡ÀÔ¿äÃ»
+    //! Lobby ï¿½ï¿½ï¿½ï¿½ Club ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½Ã»
     void ClubMemberAddLobby(DWORD ClientSlot, DWORD ChaDbNum, const char* szChaName);
-    //! Å¬·´ °øÁö º¯°æ
+    //! Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     bool ClubNoticeChange(DWORD ClubDbNum, DWORD ChaDbNum, DWORD ClientSlot, const std::string& ChaName, const std::string& Notice);
     BOOL MsgCheckRebuySupplies(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 	BOOL MsgClubId2MasterNameReqCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
@@ -1207,26 +1207,29 @@ public:
 	BOOL MsgChaSaveFA( NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID );
 	BOOL MsgChaSaveEndFA( NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID );
 	bool IsChaSaving( DWORD dwUserNum );
+	bool IsCharJoining( DWORD dwUserNum );
+	void CharJoinAdd( DWORD dwUserNum );
+	void CharJoinDel( DWORD dwUserNum );
 
 	BOOL MsgChaValidataionFA( NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID );
 
-    //! Å¬·´ °è±Þ ÀÌ¸§ º¯°æ
+    //! Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½
     void ClubGradeNameChange(GLCharAG* pChar, size_t GradeIndex, const std::string& GradeName);
 
 public:
-	// Å¬·´ ÀÚµ¿ °¡ÀÔ
+	// Å¬ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
 	bool AutoClubJoin( DWORD ClubDbNum, GLCharAG* pChar, DWORD ClientSlot );
-	//BOOL TraceFilter(EMNET_MSG nType);	//mjeon.AF.ÃßÀû¿ë ÇÊÅÍ (ÀÓ½Ã)
+	//BOOL TraceFilter(EMNET_MSG nType);	//mjeon.AF.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½Ó½ï¿½)
 
-	// ÇÊ¸®ÇÉ ¿ëµµ Å¬·´ ÀÚµ¿ °¡ÀÔ
+	// ï¿½Ê¸ï¿½ï¿½ï¿½ ï¿½ëµµ Å¬ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
 	void AutoClubJoinForMigration( GLCharAG* pChar, DWORD ClientSlot );
 
 	BOOL MsgProcess(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 
     const DWORD CreateInstantMap(const SNATIVEID& baseMapID, const DWORD dwFieldChannel, const DWORD dwFieldID);
 
-	// Agent ÀÇ ÀÎ´øÁ¤º¸¸¸À» »èÁ¦ÇÏ´Â ÇÔ¼öÀÌ´Ù;
-	// »ç¿ë¿¡ ÁÖÀÇ¸¦ ÇØ¾ßÇÑ´Ù;
+	// Agent ï¿½ï¿½ ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½ï¿½Ì´ï¿½;
+	// ï¿½ï¿½ë¿¡ ï¿½ï¿½ï¿½Ç¸ï¿½ ï¿½Ø¾ï¿½ï¿½Ñ´ï¿½;
     BOOL DeleteInstantMap ( const DWORD instanceMapID);
 
 private:
@@ -1299,7 +1302,7 @@ public:
     BOOL MsgClubStorageDrawMoneyCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
     BOOL MsgClubStorageDrawMoneyFA( NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID );
     
-    //! Ä³¸¯ÅÍ¸Ó´Ï->Å¬·´Ã¢°í
+    //! Ä³ï¿½ï¿½ï¿½Í¸Ó´ï¿½->Å¬ï¿½ï¿½Ã¢ï¿½ï¿½
     BOOL MsgClubStorageSaveMoneyFA( NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID );
 
     BOOL MsgReqDropCharClubNameCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
@@ -1312,23 +1315,23 @@ public:
     //! Club cd certifier change
     void ClubCdCertifyChange(GLCharAG* pChar, DWORD MemberDbNum, bool bCd);
 
-    //! Å¬·´ ±ÇÇÑ º¯°æ Client->Agent
+    //! Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Client->Agent
     BOOL MsgClubGradeFlagChangeCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
     
-    //! Å¬·´ °ø°³ ¼³Á¤ º¯°æ Client->Agent
+    //! Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Client->Agent
     BOOL MsgClubPublicFlagChangeCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
     BOOL MsgClubAutoKickCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 
-    //! Å¬·´ ½ÅÀÔ»ý ¼Ò°³±Û
+    //! Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½Ô»ï¿½ ï¿½Ò°ï¿½ï¿½ï¿½
     BOOL MsgClubNewbieNoticeCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 
-    //! Å¬·´ °¡ÀÔ½Ã°£ ¸®¼Â
+    //! Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½Ô½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
     BOOL MsgClubJoinTimeResetCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 
-    //! Å¬·´ µ¿¸Í Á¦ÇÑ½Ã°£ ¸®¼Â
+    //! Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ñ½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
     BOOL MsgClubAllianceTimeResetCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 
-	//! Å¬·´ ¸¶½ºÅÍ À§ÀÓ ON/OFF
+	//! Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ON/OFF
 	BOOL MsgClubMasterMandate(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 
 	BOOL MsgClubStorageUserReset( NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID );
@@ -1337,14 +1340,14 @@ public:
 	BOOL MsgClubNameChangeFA( NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID );
 
     //! Log -------------------------------------------------------------------
-	// Åë°è ¹× ·Î±× ¼öÁ¤
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½
     void LogMoneyExchange(
-        gamelog::EMIDTYPE FromType, DWORD FromDbNum, // Ãâ¹ßÁö
-        gamelog::EMIDTYPE ToType, DWORD ToDbNum, // ¸ñÀûÁö
+        gamelog::EMIDTYPE FromType, DWORD FromDbNum, // ï¿½ï¿½ï¿½ï¿½ï¿½
+        gamelog::EMIDTYPE ToType, DWORD ToDbNum, // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         LONGLONG lnPrice, EMITEM_ROUTE Flag, const MapID &sMapID, EMITEM_ROUTE_DETAIL emFlagDetail);
 
-    //! Ä³¸¯ÅÍ Action Log
-	// Åë°è ¹× ·Î±× ¼öÁ¤
+    //! Ä³ï¿½ï¿½ï¿½ï¿½ Action Log
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½
     void LogCharAction(
         DWORD dwCI, gamelog::EMACTION emACT, 
         gamelog::EMIDTYPE emTAR, DWORD dwTAR, 
@@ -1354,7 +1357,7 @@ public:
     void ConvertMapToWorld(const MapID& mapID, int PosX, int PosY, D3DXVECTOR3& vPos);
 
 public:
-    //! Product (Á¦Á¶) --------------------------------------------------------
+    //! Product (ï¿½ï¿½ï¿½ï¿½) --------------------------------------------------------
     BOOL MsgProductReqCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
     BOOL MsgProductLearnBookCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);    
     BOOL MsgProductBookListCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);   
@@ -1389,7 +1392,7 @@ public:
     BOOL MsgNotifyReqCA(NET_MSG_GENERIC* nmg, DWORD dwClientID, DWORD dwGaeaID);
 
 public:
-    //! Ä³¸¯ÅÍ ÀÌ¸§À¸·Î Ä³¸¯ÅÍ DB ¹øÈ£¸¦ ¿äÃ»
+    //! Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½Ã»
     BOOL MsgChaDbNumReqCA(NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID);
     BOOL MsgCharDbNumReqDA(NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID);
 
@@ -1406,7 +1409,7 @@ public:
 
 
 public:
-	//! °³ÀÎ»óÁ¡ °Ë»ö ----------------------------------------------------------------
+	//! ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ ----------------------------------------------------------------
 	BOOL MsgPrivateMarketItemSearchBasicCA( NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID );
 	BOOL MsgPrivateMarketItemNumTotalHA( NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID );
 	BOOL MsgPrivateMarketItemNumHA( NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID );
@@ -1486,49 +1489,49 @@ public:
 
 	BOOL MsgGmNetworkProfileReq( NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID );	
 	BOOL MsgGmChangeJoinWorldBattle( NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID );	
-	// WB ¼­¹ö Á¢¼Ó °¡´É¿©ºÎ È®ÀÎ ¹× Á¢¼Ó
+	// WB ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¿ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	BOOL MsgTransDB2WorldBattle( NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID );	
 
-	// ¶õ¸ð¹ÙÀÏ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BOOL MsgGmRanMobileCommandRequest( NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID );	
 	BOOL MsgGmRanMobileCommandResponse( NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID );	
 	
 /*
- * redmine : #1161 Randombox È®·üÁ¦¾î ½Ã½ºÅÛ Ã³¸®
+ * redmine : #1161 Randombox È®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
  * created : sckim, 2015.12.14
  * modified : 
  */
 public:
-    // µî·Ï ¿äÃ»
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»
     BOOL MsgGmSetRandomboxChanceReqCA(NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID);
     BOOL MsgGmSetRandomboxChanceReqHA(NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID);
 
-    // Á¶È¸ ¿äÃ»
+    // ï¿½ï¿½È¸ ï¿½ï¿½Ã»
     BOOL MsgGmGetRandomboxChanceListCA(NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID);
     BOOL MsgGmGetRandomboxChanceListHA(NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID);
 
-    // »èÁ¦ ¿äÃ»
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»
     BOOL MsgGmDelRandomboxChanceCA(NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID);
     BOOL MsgGmDelRandomboxChanceHA(NET_MSG_GENERIC* pMsg, DWORD ClientSlot, DWORD GaeaID);
 
-    // Randombox Open½Ã ´çÃ·È®·üÀÌ 5%¹Ì¸¸ÀÇ °æ¿ì °øÁö ¸Þ½ÃÁö¸¦ Àü´Þ
+    // Randombox Openï¿½ï¿½ ï¿½ï¿½Ã·È®ï¿½ï¿½ï¿½ï¿½ 5%ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     BOOL MsgRandomboxWinnerNotifyFA(NET_MSG_GENERIC* nmg, DWORD ClientSlot, DWORD GaeaID);
 
 public:
-	// ¾ÆÀÌÅÛ °ü·Ã Ã³¸® µµÁß ¿¡·¯°¡ ¹ß»ýÇØ¼­ ·Ñ¹é±îÁö ÇßÀ¸³ª Á¦´ë·Î µÇÁö ¾ÊÀ» °æ¿ì
-	// ¾ÆÀÌÅÛ guid ¿Í ¿øÀÎÀ» parameter ·Î ³Ñ°ÜÁØ´Ù.
-	// ³»ºÎ µ¿ÀÛÀº µðºñ¿¡ Æ¯Á¤ Å×ÀÌºí¿¡ ¾ÆÀÌÅÛ guid, ¿øÀÎ, ¹ß»ý ½Ã°£ ÀÌ·¸°Ô ÀúÀåÀÌ µÈ´Ù.
-	// ¿¹¿Ü°¡ ¹ß»ýÇÑ ¾ÆÀÌÅÛÀº °á±¹ µðºñ¿¡ ÀÖ±â ¶§¹®¿¡ ·Î±× È®ÀÎ ¹× ¾ÆÀÌÅÛ Å×ÀÌºí°ú
-	// °¡Äª ¿¡·¯ ¾ÆÀÌÅÛ Å×ÀÌºí¿¡¼­ guid ·Î ¾ÆÀÌÅÛÀ» Ã£À» ¼ö ÀÖ°í ÈÄ Ã³¸®°¡ °¡´ÉÇÒ °Í ÀÌ´Ù.
-	// °¡Äª ¿¡·¯ ¾ÆÀÌÅÛ Å×ÀÌºí¿¡ guid ´Â Áßº¹ÇØ¼­ µé¾î°¥ ¼ö ÀÖµµ·Ï Å×ÀÌºí ¼³°è
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½Ø¼ï¿½ ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ guid ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ parameter ï¿½ï¿½ ï¿½Ñ°ï¿½ï¿½Ø´ï¿½.
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ guid, ï¿½ï¿½ï¿½ï¿½, ï¿½ß»ï¿½ ï¿½Ã°ï¿½ ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È´ï¿½.
+	// ï¿½ï¿½ï¿½Ü°ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½á±¹ ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½
+	// ï¿½ï¿½Äª ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ï¿½ï¿½ guid ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì´ï¿½.
+	// ï¿½ï¿½Äª ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ guid ï¿½ï¿½ ï¿½ßºï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½î°¥ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½
 	void InsertErrorItem( sc::MGUID& guid, int CallType );
 
-	// db action Á¦ÀÛ ÇÊ¿ä Á¦ÀÛÇß´Ù. µðºñ ÇÔ¼ö Á¦ÀÛ ¹× ÇÁ·Î½ÃÀú ³²¾ÒÀ½
-	// guid, º¯°æµÉ ÀÎº¥Å¸ÀÔ, ÁÂÇ¥ ÇÊ¿äÇÏ´Ù.
-	// sItemCustom ÀÇ ÀÎº¥Å¸ÀÔenum INVEN_TYPE ÂüÁ¶
-	// ¾ÆÀÌÅÛ ¼¼ºÎ Á¤º¸ º¯°æ¾øÀÌ, ´ÜÁö À§Ä¡¸¸ º¯°æµÇ´Â °æ¿ì¿¡ »ç¿ëµÈ´Ù. ¿¹¸¦ µé¾î Ã¢°í¿¡ ÀÖ´ø ¾ÆÀÌÅÛÀÌ ÀÎº¥Åä¸®·Î ÀÌµ¿ÇÑ °æ¿ì
-	// ÀåÂøÃ¢¿¡¼­ ÀÎº¥Åä¸®·Î ÀÌµ¿ÇÑ °æ¿ì, ÀÎº¥Åä¸®¿¡¼­ ÀÎº¥Åä¸®·Î ÀÌµ¿ÇÑ °æ¿ìµî
-	// µðºñ¿¡¼­ ÀúÀå À§Ä¡¿Í, ÁÂÇ¥°ª¸¸ º¯°æÇÑ´Ù. ¾ÆÀÌÅÛ ¼¼ºÎÇ×¸ñ ÀüÃ¼ ¾÷µ¥ÀÌÆ® ºñ¿ëÀ» ÁÙÀÌ±â À§ÇÑ ¿ëµµÀÌ´Ù.
+	// db action ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´ï¿½. ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Î½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// guid, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½Å¸ï¿½ï¿½, ï¿½ï¿½Ç¥ ï¿½Ê¿ï¿½ï¿½Ï´ï¿½.
+	// sItemCustom ï¿½ï¿½ ï¿½Îºï¿½Å¸ï¿½ï¿½enum INVEN_TYPE ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ì¿¡ ï¿½ï¿½ï¿½È´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ñ¿¡¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½, ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½×¸ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ëµµï¿½Ì´ï¿½.
 	void UpdateItemInvenType( DWORD Owner, const SITEMCUSTOM& sItemCustom, INVEN_TYPE InvenType, WORD PosX, WORD PosY, DWORD Channel = 0 );
 
 public:
