@@ -516,17 +516,29 @@ BOOL GLAgentServer::MsgReqFieldSvrCharChkFb(NET_MSG_GENERIC* nmg, DWORD _dwClien
 	if ( pAgentServer )
 		pChar->SetCountryInfo( pAgentServer->GetCountry( pChar->ChaDbNum() ) );
 
-	// üũ�� Ƚ�� LOG	
+	// üũ�� Ƚ�� LOG
 	if (pNetMsg->bExist)
     {
-        // ĳ���Ͱ� ���� �����Ѵ�. DB �۾����� �� �ִ�.
-        //++pChar->m_dwFIELDCK_BEING;
-        sc::writeLogInfo(
-            sc::string::format(
-                "Found same character. UserDbNum %1% ChaDbNum %2%",
-                pChar->UserDbNum(),
-                pChar->ChaDbNum()));
-        pChar->FieldCheckNumReset();
+        // Ghost session still alive on FieldServer — kick it, clean up, tell client to retry
+        DWORD dwChaDbNum   = pChar->ChaDbNum();
+        DWORD dwClientSlot = pChar->ClientSlot();
+        DWORD dwGaeaId     = pChar->GaeaId();
+        std::string szName = pChar->m_szName;
+
+        GLMSG::SNET_DROP_OUT_FORCED NetMsgForced;
+        NetMsgForced.dwChaNum = dwChaDbNum;
+        NetMsgForced.emForced = EMDROPOUT_REQLOGIN;
+        SENDTOALLCHANNEL(&NetMsgForced);
+
+        GLMSG::SNETLOBBY_CHARJOIN_FB NetMsgWait(EMCJOIN_FB_WAIT);
+        NetMsgWait.dwChaNum = dwChaDbNum;
+        SENDTOCLIENT(dwClientSlot, &NetMsgWait);
+
+        DropOutChar(dwGaeaId);
+
+        sc::writeLogWarn(sc::string::format(
+            "MsgReqFieldSvrCharChkFb: ghost char[%s] still on FieldServer, kicked and sent WAIT to slot[%u]",
+            szName.c_str(), dwClientSlot));
         return TRUE;
     }
 
