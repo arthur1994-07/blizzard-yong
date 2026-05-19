@@ -126,7 +126,7 @@ BOOL CSkinObjPage::LoadSkinObject( const char *pszFileName )
 	}
 	else
 	{
-		MessageBox ( "스킨 오브젝트 파일을 읽는 도중 에러 발생." );
+		MessageBox ( "Error reading skin object file." );
 		return FALSE;
 	}
 	return TRUE;
@@ -236,13 +236,13 @@ void CSkinObjPage::OnBnClickedButtonMakeobj()
 
 	if ( sSkinBone.IsEmpty() || sSkinMesh.IsEmpty () )
 	{
-		MessageBox ( "스킨, 본 파일이 지정되지 않았습니다." );
+		MessageBox ( "Skin, no bone file specified." );
 		return;
 	}
 
 	if ( !pView->GetD3dDevice() )	return;
 	if ( !pSkinObject->CreateSkinMesh( sSkinMesh.GetString(), sSkinBone.GetString(), pView->GetD3dDevice(), FALSE ) )
 	{
-		MessageBox ( "스킨, 본을 생성에 실패하였습니다." );
+		MessageBox ( "Failed to create skin object." );
 	}
 }
