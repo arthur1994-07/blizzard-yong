@@ -408,7 +408,7 @@ BOOL CFramePage::LoadSkinBone( const char *pszFileName )
 		BOOL bOk = pSkinCharData->GetSkinAniControlData()->LoadSkeleton ( sFileName.GetString(), pd3dDevice );
 		if ( !bOk )
 		{
-			MessageBox ( "본파일 읽기에 실패하였습니다." );
+			MessageBox ( "Failed to read this file." );
 			return FALSE;
 		}
 		else
@@ -428,7 +428,7 @@ BOOL CFramePage::LoadSkinBone( const char *pszFileName )
 		BOOL bOk = pAttBoneData->GetSkinAniControlData()->LoadSkeleton ( sFileName.GetString(), pd3dDevice );
 		if ( !bOk )
 		{
-			MessageBox ( "본파일 읽기에 실패하였습니다." );
+			MessageBox ( "Failed to read this file." );
 			return FALSE;
 		}
 		else
@@ -448,7 +448,7 @@ BOOL CFramePage::LoadSkinBone( const char *pszFileName )
 		BOOL bOk = pVehicleData->GetSkinAniControlData()->LoadSkeleton ( sFileName.GetString(), pd3dDevice );
 		if ( !bOk )
 		{
-			MessageBox ( "본파일 읽기에 실패하였습니다." );
+			MessageBox ( "Failed to read this file." );
 			return FALSE;
 		}
 		else
@@ -497,7 +497,7 @@ HRESULT CFramePage::InsertVehiclePart( const char *pszFileName )
 	if ( FAILED(hr) )
 	{
 		if ( hr == E_DIFFERENT_BONEFILE )
-			MessageBox ( "삽입하고자 하는 '조각'의 본파일과 현제 지정된 본파일이 틀립니다." );
+			MessageBox ( "The main file of the 'piece' you want to insert is different from the currently specified main file." );
 
 		return hr;
 	}
@@ -524,7 +524,7 @@ HRESULT CFramePage::InsertAttBone( const char *pszFileName )
 	if ( FAILED(hr) )
 	{
 		if ( hr == E_DIFFERENT_BONEFILE )
-			MessageBox ( "삽입하고자 하는 '조각'의 본파일과 현제 지정된 본파일이 틀립니다." );
+			MessageBox ( "The main file of the ‘piece’ you want to insert is different from the currently specified main file.." );
 
 		return hr;
 	}
@@ -552,7 +552,7 @@ HRESULT CFramePage::InsertSkinPiece( const char *pszFileName )
 	if ( FAILED(hr) )
 	{
 		if ( hr == E_DIFFERENT_BONEFILE )
-			MessageBox ( _T("삽입하고자 하는 '조각'의 본파일과 현재 지정된 본파일이 틀립니다.") );
+			MessageBox ( _T("The main file of the ‘piece’ you want to insert is different from the currently specified main file..") );
 
 		return S_FALSE;
 	}
@@ -596,7 +596,7 @@ void CFramePage::OnBnClickedButtonPieceSelect()
 
 	if ( strSkeleton.IsEmpty() )
 	{
-		MessageBox ( "본 파일이 지정되지 않았습니다.\r\n 먼저 지정하신후 '조각'을 삽입하세요." );
+		MessageBox ( "This file has not been specified.\r\n Please specify it first and then insert 'fragment'.." );
 		return;
 	}
 
@@ -674,7 +674,7 @@ void CFramePage::OnBnClickedButtonPieceDeselect()
 		dwPieceType = m_PieceList.GetItemData ( nIndex );
 	}
 
-	int nRet = MessageBox ( "PIECE 를 정말로 삭제 하시겠습니까?", "주의", MB_ICONEXCLAMATION | MB_YESNO );
+	int nRet = MessageBox ( "Do you really want to delete ??", "caution", MB_ICONEXCLAMATION | MB_YESNO );
 	if ( IDYES != nRet )	return;
 
 	CMainFrame *pFrame = (CMainFrame *) AfxGetApp()->m_pMainWnd;
@@ -803,7 +803,7 @@ BOOL CFramePage::InsertSkinEff( const char *pszFileName )
 	BOOL bOK = EffCharDataArray.LoadFile ( pszFileName );
 	if ( !bOK )
 	{
-		MessageBox ( "DxEffCharDataArray 효과 파일 읽기에 실패하였습니다.", pszFileName, MB_OK );
+		MessageBox ( "DxEffCharDataArray Failed to read effect file.", pszFileName, MB_OK );
 		return FALSE;
 	}
 
@@ -961,7 +961,7 @@ void CFramePage::OnBnClickedButtonBoneSetting()
 
 	if ( !pSkeleton )
 	{
-		AfxMessageBox( _T("Bone 이 없어서 작업이 불가능 합니다.") );
+		AfxMessageBox( _T("Bone Without it, work is impossible..") );
 		return;
 	}
 

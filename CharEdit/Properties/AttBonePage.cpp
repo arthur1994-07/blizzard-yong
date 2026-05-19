@@ -215,7 +215,7 @@ BOOL CAttBonePage::LoadAbfFile( const char *pszFileName )
     BOOL bOk = pAttBoneData->LoadFile(std::string(pszFileName), pd3dDevice, EMSCD_ZERO, FG_BONEFILE_CHECK|FG_MUSTNEWLOAD );
 	if ( !bOk )
 	{
-		MessageBox ( "파일 읽기에 실패하였습니다." );
+		MessageBox ( "Failed to read file." );
 		return FALSE;
 	}
 

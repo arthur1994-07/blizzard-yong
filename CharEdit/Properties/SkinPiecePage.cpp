@@ -631,7 +631,7 @@ void CSkinPiecePage::OnBnClickedButtonMakeobj()
 
 	if ( sSkinBone.IsEmpty() || sSkinMesh.IsEmpty () )
 	{
-		MessageBox ( "스킨, 본 파일이 지정되지 않았습니다." );
+		MessageBox ( "Skin Skeleton or Skin Mesh is empty" );
 		return;
 	}
 
@@ -846,7 +846,7 @@ void CSkinPiecePage::OnBnClickedButtonAddHairCpsLoad()
 
 		if ( sSkinPieceHair.GetSlot() != PIECE_HAIR_4_HAT )
 		{
-			AfxMessageBox( "모자의헤어 가 아니라 셋팅이 불가능합니다." );
+			AfxMessageBox( "Because it is not the hair of the hat, setting is not possible." );
 			sFileName.ReleaseBuffer ();
 			return;
 		}
@@ -1090,7 +1090,7 @@ void CSkinPiecePage::OnBnClickedButtonVertinsert()
 	POSITION pos = m_listVertics.GetFirstSelectedItemPosition();
 	if (pos == NULL)
 	{
-		MessageBox ( "설정할 위치를 선택하여 주십시요.", "정보", MB_OK );
+		MessageBox ( "Please select a location to set.", "정보", MB_OK );
 		return;
 	}
 	
@@ -1114,7 +1114,7 @@ void CSkinPiecePage::OnBnClickedButtonVertdel()
 	POSITION pos = m_listVertics.GetFirstSelectedItemPosition();
 	if (pos == NULL)
 	{
-		MessageBox ( "해제 위치를 선택하여 주십시요.", "정보", MB_OK );
+		MessageBox ( "Please select release location.", "정보", MB_OK );
 		return;
 	}
 	
@@ -1551,7 +1551,7 @@ void CSkinPiecePage::OnBnClickedButtonEffdel()
 	DxEffChar* pEffChar = (DxEffChar*) m_EffList.GetItemData ( nIndex );
 	assert(pEffChar);
 
-	int nRet = MessageBox ( "Effect를 정말로 삭제 하시겠습니까?", "주의", MB_ICONEXCLAMATION | MB_YESNO );
+	int nRet = MessageBox ( "Do you really want to deleteEffect?", "주의", MB_ICONEXCLAMATION | MB_YESNO );
 	if ( IDYES == nRet )
 	{
         pSkinPiece->DelEffList ( pView->GetD3dDevice(), pEffChar );
