@@ -1,4 +1,4 @@
-// DlgCompress.cpp : ±¸Çö ÆÄÀÏÀÔ´Ï´Ù.
+// DlgCompress.cpp : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 //
 
 #include "stdafx.h"
@@ -13,10 +13,10 @@
 #include "CCfg.h"
 #include ".\dlgcompress.h"
 
-// CDlgCompress ´ëÈ­ »óÀÚÀÔ´Ï´Ù.
+// CDlgCompress ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 
 IMPLEMENT_DYNAMIC(CDlgCompress, CDialog)
-// »ç¿ëÇÏÁö ¾Ê´Â ±â´ÉÀÌ¹Ç·Î »èÁ¦
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ï¿½Ì¹Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½
 //CDlgCompress::CDlgCompress(CMainFrame* pFrame, std::vector<CompressFile> &v, CWnd* pParent /*=NULL*/, int nMode)
 //	: CDialog(CDlgCompress::IDD, pParent)
 //{
@@ -25,7 +25,7 @@ IMPLEMENT_DYNAMIC(CDlgCompress, CDialog)
 //	m_nMode			= nMode;
 //}
 
-CDlgCompress::CDlgCompress(CMainFrame* pFrame, CString strFileName, CWnd* pParent, int nMode)   // Ç¥ÁØ »ý¼ºÀÚÀÔ´Ï´Ù.
+CDlgCompress::CDlgCompress(CMainFrame* pFrame, CString strFileName, CWnd* pParent, int nMode)   // Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 	: CDialog(CDlgCompress::IDD, pParent)
 {
 	m_nMode			= nMode;
@@ -52,20 +52,20 @@ BEGIN_MESSAGE_MAP(CDlgCompress, CDialog)
 END_MESSAGE_MAP()
 
 
-// CDlgCompress ¸Þ½ÃÁö Ã³¸®±âÀÔ´Ï´Ù.
+// CDlgCompress ï¿½Þ½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
 
 BOOL CDlgCompress::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	// TODO:  ¿©±â¿¡ Ãß°¡ ÃÊ±âÈ­ ÀÛ¾÷À» Ãß°¡ÇÕ´Ï´Ù.
+	// TODO:  ï¿½ï¿½ï¿½â¿¡ ï¿½ß°ï¿½ ï¿½Ê±ï¿½È­ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Õ´Ï´ï¿½.
 	CConsoleMessage::GetInstance()->SetControl(GetDlgItem(IDC_EDIT_CONSOLE)->m_hWnd);	
 	m_Pregress.SetRange(0, 100);	
 	m_Pregress.SetPos(0);
 
 	if (m_nMode == 1) // General file addition
 	{
-		// »ç¿ëÇÏÁö ¾Ê´Â ±â´ÉÀÌ¹Ç·Î »èÁ¦
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ï¿½Ì¹Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½
 		//SetTimer(100, 1000, NULL);
 	}
 	else if(m_nMode == 2)
@@ -77,12 +77,12 @@ BOOL CDlgCompress::OnInitDialog()
 	}
 
 	return TRUE;  // return TRUE unless you set the focus to a control
-	// ¿¹¿Ü: OCX ¼Ó¼º ÆäÀÌÁö´Â FALSE¸¦ ¹ÝÈ¯ÇØ¾ß ÇÕ´Ï´Ù.
+	// ï¿½ï¿½ï¿½ï¿½: OCX ï¿½Ó¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ FALSEï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ø¾ï¿½ ï¿½Õ´Ï´ï¿½.
 }
 
 void CDlgCompress::OnTimer(UINT nIDEvent)
 {
-	// TODO: ¿©±â¿¡ ¸Þ½ÃÁö Ã³¸®±â ÄÚµå¸¦ Ãß°¡ ¹×/¶Ç´Â ±âº»°ªÀ» È£ÃâÇÕ´Ï´Ù.
+	// TODO: ï¿½ï¿½ï¿½â¿¡ ï¿½Þ½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå¸¦ ï¿½ß°ï¿½ ï¿½ï¿½/ï¿½Ç´ï¿½ ï¿½âº»ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 	if (nIDEvent == 100)
 	{
 		//KillTimer(100);
@@ -133,7 +133,7 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
     IVersionManagerDb* pDb = pFrame->GetDbMan();    
     IVersionManConfig* pConfig = pFrame->GetConfig();
 
-	// µð·ºÅä¸®ºÎÅÍ »ý¼ºÇÏ°í DB ¿¡ ÀÔ·ÂÇÑ´Ù.
+	// ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ DB ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ñ´ï¿½.
 	std::vector<FolderList>::iterator pos;
 	int nTotalCount = (int) ListLoader.m_vFolderList.size();
     int nRetCode;
@@ -165,15 +165,15 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
             dwRetCode = GetFileAttributes(strFolder);
             if (dwRetCode == INVALID_FILE_ATTRIBUTES) // Cases where it exists in the DB but does not exist
             {
-                // µð·ºÅä¸®¸¦ »ý¼ºÇÑ´Ù.
+                // ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
                 if (CreateDirectory(strFolder, NULL) == 0)
 		        {
-			        // »ý¼º½ÇÆÐ
+			        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     CConsoleMessage::GetInstance()->Write("The %s directory was not created.", strFolder.GetString());			        
 		        }
 		        else
 		        {
-			        // »ý¼º¼º°ø
+			        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		        }
             } 
             else // In the case where it is entered into the DB and actually exists
@@ -182,29 +182,53 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
         }
         else // If not in the DB
         {
-            // Create a directory.
-            if (CreateDirectory(strFolder, NULL) == 0)
+            // Create directory and all intermediate directories
+            BOOL bCreated = TRUE;
+            CString strPath = strFolder;
+            if (!strPath.IsEmpty() && strPath[strPath.GetLength()-1] == '\\')
+                strPath = strPath.Left(strPath.GetLength()-1);
+
+            // Build each path component and create if missing
+            int nPos = 0;
+            CString strToken;
+            CString strBuild;
+            while (nPos <= strPath.GetLength())
+            {
+                int nNext = strPath.Find('\\', nPos);
+                if (nNext == -1) nNext = strPath.GetLength();
+                strToken = strPath.Mid(nPos, nNext - nPos);
+                if (!strToken.IsEmpty())
+                {
+                    strBuild += strToken + _T("\\");
+                    DWORD dwAttr = GetFileAttributes(strBuild);
+                    if (dwAttr == INVALID_FILE_ATTRIBUTES)
+                    {
+                        if (CreateDirectory(strBuild, NULL) == 0)
+                        {
+                            bCreated = FALSE;
+                            break;
+                        }
+                    }
+                }
+                nPos = nNext + 1;
+            }
+
+            if (bCreated)
 		    {
-			    // Creation failed
-				CConsoleMessage::GetInstance()->Write("Please check the %s directory", strFolder.GetString());
+			    // Directory exists or was created - insert into DB
+			    CString strXXX = (*pos).strName;
+			    strXXX.Replace('/', '\\');
+			    if (pDb->CreateFolder(strXXX) != DB_OK)
+			    {
+				    CConsoleMessage::GetInstance()->Write("The %s directory was not entered into the DB.", strFolder.GetString());
+			    }
 		    }
 		    else
 		    {
-			    // Creation successful
-			    // Enter the folder name created in the DB
-                CString strXXX = (*pos).strName;
-                strXXX.Replace('/', '\\');
-			    if (pDb->CreateFolder(strXXX) != DB_OK)
-			    {
-				    // »ý¼º¿¡´Â ¼º°ø DB ¿¡´Â ÀÔ·ÂµÇÁö ¾Ê¾ÒÀ½
-                    CConsoleMessage::GetInstance()->Write("The %s directory was not entered into the DB.", strFolder.GetString());    			
-			    }
-                else
-                {
-                    // ¼º°ø
-                }
-		    }            
-        }	
+			    // Real creation failure
+			    CConsoleMessage::GetInstance()->Write("Please check the %s directory", strFolder.GetString());
+		    }
+        }
 	}
     CConsoleMessage::GetInstance()->Write("----Folder check complete----");
 	// Compress the files one by one and move them to the corresponding folder..
@@ -259,7 +283,7 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
                 {               
 					pDb->UpdateFile( sTemp.strFileName, sTemp.strMD5, ListLoader.m_nVerIncreaseCount, (*posFile).nDir );
                     pDb->UpdateFileStateFalse( sTemp.strFileName );
-				    // CConsoleMessage::GetInstance()->Write("%s ±âÁ¸ ÆÄÀÏÀ» ±³Ã¼ÇÏ¿´½À´Ï´Ù", sTemp.strFileName.GetString());
+				    // CConsoleMessage::GetInstance()->Write("%s ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½", sTemp.strFileName.GetString());
                 }                
                 else // If the file has the same name in a different directory, cancel the compression.
                 {
@@ -268,11 +292,11 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
             }
 			else
 			{
-				// ½Å±ÔÆÄÀÏ
+				// ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½
 				pDb->InsertFile( (*posFile).nDir, (*posFile).strFileName, (*posFile).strMD5 );
 				int nIndex = pDb->GetFileIndex( (*posFile).strFileName, (*posFile).nDir );
 				pFrame->InsertNewFileName( nIndex, (*posFile).strFileName );
-				// CConsoleMessage::GetInstance()->Write("%s »õ·Î¿î ÆÄÀÏÀ» µî·ÏÇß½À´Ï´Ù", sTemp.strFileName.GetString());
+				// CConsoleMessage::GetInstance()->Write("%s ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½", sTemp.strFileName.GetString());
 			}
 		}
 		else
@@ -287,7 +311,7 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
 
 	return 0;
 }
-// »ç¿ëÇÏÁö ¾Ê´Â ±â´ÉÀÌ¹Ç·Î »èÁ¦
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ï¿½Ì¹Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½
 //
 //unsigned int WINAPI CDlgCompress::CompressStart( void* pDlg )
 //{
@@ -309,26 +333,26 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
 //		pDLG->m_StaticCtl.SetWindowText(strTemp);
 //        
 //		sTemp.strSrc.GetString();
-//		// ¾ÐÃàÇØ¼­ ÇØ´ç µð·ºÅä¸®¿¡ ÀúÀåÇÑ´Ù.
+//		// ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 //		if (CAB_UTIL_MIN::MinMakeCab(sTemp.strSrc.GetString(), sTemp.strTarget.GetString()) == TRUE)
 //		{ 
-//			// °°Àº ÀÌ¸§ÀÇ ÆÄÀÏÀÌ ÀÖ´ÂÁö Á¶»çÇÑ´Ù.
+//			// ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 //			BOOL bExist = pDb->IsFileExist(sTemp.strFileName);
 //			if (bExist)
 //			{
 //				pDb->UpdateFile( sTemp.strFileName, sTemp.strMD5, 1 );
 //                pDb->UpdateFileStateFalse(sTemp.strFileName); 
-//				CConsoleMessage::GetInstance()->Write("%s ±âÁ¸ ÆÄÀÏÀ» ±³Ã¼ÇÏ¿´½À´Ï´Ù", sTemp.strFileName.GetString());
+//				CConsoleMessage::GetInstance()->Write("%s ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½", sTemp.strFileName.GetString());
 //			}
 //			else
 //			{
 //				pDb->InsertFile( sTemp.nDir, sTemp.strFileName, sTemp.strMD5 );
-//				CConsoleMessage::GetInstance()->Write("%s »õ·Î¿î ÆÄÀÏÀ» µî·ÏÇß½À´Ï´Ù", sTemp.strFileName.GetString());
+//				CConsoleMessage::GetInstance()->Write("%s ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½", sTemp.strFileName.GetString());
 //			}
 //		}
 //		else
 //		{
-//			CConsoleMessage::GetInstance()->Write("%s ÆÄÀÏ ¾ÐÃà¿¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù", sTemp.strFileName.GetString());			
+//			CConsoleMessage::GetInstance()->Write("%s ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½à¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½", sTemp.strFileName.GetString());			
 //		}
 //		pDLG->m_Pregress.SetPos((int)((nCount*100)/nTotalCount));
 //	}
@@ -338,6 +362,6 @@ unsigned int WINAPI CDlgCompress::CompressFromFileStart( void* pDlg )
 
 void CDlgCompress::OnEnMaxtextEditConsole()
 {
-    // TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+    // TODO: ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ë¸ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå¸¦ ï¿½ß°ï¿½ï¿½Õ´Ï´ï¿½.
     GetDlgItem(IDC_EDIT_CONSOLE)->SetWindowText("");
 }
