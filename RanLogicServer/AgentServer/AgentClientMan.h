@@ -32,35 +32,36 @@ public:
 protected:
     GLAgentServer* m_pServer;
 
-    CHAR_MAP m_UAccountMap; //! User Account/Ä³¸¯ÅÍ Pointer
-    CHAR_MAP m_CharNameMap; //! Ä³¸¯ÅÍÀÌ¸§/Ä³¸¯ÅÍ Pointer
+    CHAR_MAP m_UAccountMap; //! User Account/Ä³ï¿½ï¿½ï¿½ï¿½ Pointer
+    CHAR_MAP m_CharNameMap; //! Ä³ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½/Ä³ï¿½ï¿½ï¿½ï¿½ Pointer
 
-    CLIENTMAP m_ClientSlotGaeaIdMap; //! Client Åë½Å Slot/Gaea ID    
+    CLIENTMAP m_ClientSlotGaeaIdMap; //! Client ï¿½ï¿½ï¿½ Slot/Gaea ID    
     CLIENTMAP m_CharDbNumGaeaIdMap;  //! Character DB Num/Gaea ID
     CLIENTMAP m_UserNumberMap;       //! User Db Num/Gaea ID
 	CLIENTMAP m_SaveUserNum;       //! User Db Num/time
+	CLIENTMAP m_JoinUserNum;       //! User Db Num/time for join-in-progress
 
-    CharNameCache* m_pNameCache; //! Ä³¸¯ÅÍ ÀÌ¸§/Ä³¸¯ÅÍ DB ¹øÈ£, Ä³¸¯ÅÍ DB ¹øÈ£/Ä³¸¯ÅÍ ÀÌ¸§
+    CharNameCache* m_pNameCache; //! Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½/Ä³ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È£, Ä³ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È£/Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
 
 public:
-    //! User Account/Ä³¸¯ÅÍ Pointer
+    //! User Account/Ä³ï¿½ï¿½ï¿½ï¿½ Pointer
     GLCharAG* GetCharByUserAccount(const std::string& UserId);
     void UserAccountAdd(const std::string& UserId, GLCharAG* pChar);
     void UserAccountDel(const std::string& UserId);
 
-    //! Client Åë½Å Slot/Gaea ID
+    //! Client ï¿½ï¿½ï¿½ Slot/Gaea ID
     DWORD GetGaeaIdByClientSlot(DWORD ClientSlot);
     void NetworkSlotAdd(DWORD ClientSlot, DWORD GaeaId);
     void NetworkSlotDel(DWORD ClientSlot);
 
-    //! Ä³¸¯ÅÍ ÀÌ¸§/Ä³¸¯ÅÍ DB ¹øÈ£, Ä³¸¯ÅÍ DB ¹øÈ£/Ä³¸¯ÅÍ ÀÌ¸§
+    //! Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½/Ä³ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È£, Ä³ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È£/Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
     void ChaNameDbNumAdd(const std::string& ChaName, DWORD ChaDbNum, DWORD UserDbNum, EMUSERTYPE UserType);
 	void ChaNameDbNumAdd(const std::string& ChaName, DWORD ChaDbNum, DWORD UserDbNum, EMUSERTYPE UserType, int iClass, int iLv);
 
-    //! Ä³¸¯ÅÍ ÀÌ¸§/Ä³¸¯ÅÍ DB ¹øÈ£
+    //! Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½/Ä³ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È£
     DWORD GetChaDbNumByChaName(const std::string& ChaName);
 
-    //! Ä³¸¯ÅÍ DB ¹øÈ£/Ä³¸¯ÅÍ ÀÌ¸§
+    //! Ä³ï¿½ï¿½ï¿½ï¿½ DB ï¿½ï¿½È£/Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
     std::string GetChaNameByDbNum(DWORD ChaDbNum);
 
     std::tr1::shared_ptr<CHAR_BASE_CACHE_DATA> GetCharCacheData(const std::string& ChaName);
@@ -76,7 +77,7 @@ public:
     void UserDbNumGaeaIdDel(DWORD UserDbNum);
     DWORD GetGaeaIdByUserDbNum(DWORD UserDbNum);
 
-    //! Ä³¸¯ÅÍÀÌ¸§/Ä³¸¯ÅÍ Pointer
+    //! Ä³ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½/Ä³ï¿½ï¿½ï¿½ï¿½ Pointer
     void ChaNameAdd(const std::string& ChaName, GLCharAG* pChar);
     void ChaNameDel(const std::string& ChaName);
     GLCharAG* GetCharByChaName(const std::string& ChaName);
@@ -98,5 +99,9 @@ public:
 	void ChaSaveUserNumAdd( DWORD dwUserNum );
 	void ChaSaveUserNumDel( DWORD dwUserNum );
 	bool ChaSaveUserNumExist( DWORD dwUserNum );
+
+	void ChaJoinUserNumAdd( DWORD dwUserNum );
+	void ChaJoinUserNumDel( DWORD dwUserNum );
+	bool ChaJoinUserNumExist( DWORD dwUserNum );
 
 };

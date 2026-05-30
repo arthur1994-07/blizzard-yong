@@ -149,7 +149,7 @@ DWORD AgentCharMan::GetGaeaIdByUserDbNum(DWORD UserDbNum)
         return GAEAID_NULL;
 }
 
-//! Ä³¸¯ÅÍÀÌ¸§/Ä³¸¯ÅÍ Pointer
+//! Ä³ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½/Ä³ï¿½ï¿½ï¿½ï¿½ Pointer
 void AgentCharMan::ChaNameAdd(const std::string& ChaName, GLCharAG* pChar)
 {
     if (ChaName.empty() || !pChar)
@@ -280,4 +280,32 @@ bool AgentCharMan::ChaSaveUserNumExist( DWORD dwUserNum )
 	{
 		return false;
 	}
+}
+
+void AgentCharMan::ChaJoinUserNumAdd( DWORD dwUserNum )
+{
+	m_JoinUserNum.insert( CLIENTMAP_VALUE( dwUserNum, GetTickCount() ) );
+}
+
+void AgentCharMan::ChaJoinUserNumDel( DWORD dwUserNum )
+{
+	CLIENTMAP_ITER iter = m_JoinUserNum.find( dwUserNum );
+	if ( iter != m_JoinUserNum.end() )
+		m_JoinUserNum.erase( iter );
+}
+
+bool AgentCharMan::ChaJoinUserNumExist( DWORD dwUserNum )
+{
+	CLIENTMAP_ITER iter = m_JoinUserNum.find( dwUserNum );
+	if ( iter != m_JoinUserNum.end() )
+	{
+		// Safety expiry: covers edge case where MsgAgentReqJoinDA never fires
+		if ( GetTickCount() - iter->second > 30000 )
+		{
+			m_JoinUserNum.erase( iter );
+			return false;
+		}
+		return true;
+	}
+	return false;
 }
