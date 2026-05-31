@@ -158,18 +158,39 @@ Clients below ClientVer are rejected by LoginServer until they patch.
 ```
 Player runs Launcher
     ↓
-Downloads cVer.bin → reads PatchVer
+1. Downloads param.ini.cab from HTTP server (FIRST thing)
+   → Extracts and overwrites local param.ini
+   → Reloads HttpAddress, LoginAddress from new param.ini
     ↓
-Compares with local version
+2. Connects to LoginServer using LoginAddress from param.ini
+   → Sends client version
+   → Receives SERVER_VERSION from LoginServer
     ↓
-If outdated:
-    Downloads filelist.bin.cab
-    Checks each file version vs local
-    Downloads only changed .cab files
-    Extracts files to game folder
+3. Compares versions
+   → If up to date: shows START button → launches game
+   → If outdated:   shows UPDATE START button
     ↓
-Launches game
+4. Player presses UPDATE START
+   → Downloads filelist.bin.cab from HttpAddress
+   → Compares each file version vs local
+   → Downloads only changed .cab files
+   → Extracts files to game folder
+    ↓
+5. Shows START button → launches game
 ```
+
+---
+
+## Important: param.ini.cab Warning
+
+The Launcher downloads `param.ini.cab` from FTP **before** connecting to LoginServer.
+If `param.ini.cab` is on your FTP and contains wrong/outdated settings, it will
+overwrite the client's working `param.ini` and break the patch download silently.
+
+**Rule:** Only include `param.ini` in `filelist.lst` if you are intentionally pushing
+a config change to all clients (e.g. changing LoginAddress or HttpAddress).
+If param.ini is not changing, **remove it from filelist.lst** to avoid overwriting
+client configs.
 
 ---
 
@@ -178,6 +199,7 @@ Launches game
 - launcherpatch.exe is a copy of AutoPatchMan.exe renamed — used for launcher self-update
 - The delete function in the Launcher is disabled — removing files from filelist.lst will NOT delete them from client machines
 - LoginServer.xml is the only server XML that sets version numbers — all others stay at 0
+- param.ini.cab is downloaded before login — wrong FTP copy silently breaks patch downloads
 
 ---
 
