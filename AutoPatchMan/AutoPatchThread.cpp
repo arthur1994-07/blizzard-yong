@@ -48,25 +48,28 @@ void CAutoPatchThread::ThreadMain()
 
 	NS_LOG_CONTROL::SetProcessAllPosition ( 0, 100 );
 
+	::PostThreadMessage( m_nDlgThreadID, WM_LISTADDSTRING, 0, (LPARAM)_strdup("[PATCH] Thread started") );
+
 	if ( IsForceTerminate() ) return ;
 
 	// ���� PreDownloader �� ���������� ���μ��� Ȯ��. ���ۿ��θ� preFileList.bin �����ÿ� Ȱ��
 	if( IsRunPreDownloader() == FALSE )
 	{
 		CHAR * szTempMessage = new CHAR[256];
-		wsprintf( szTempMessage, "%s", "[ERROR] ��ó ���μ��� �˻� ����" );
-		//CDebugSet::ToLogFile( std::string(szTempMessage));
-		::PostThreadMessage( m_nDlgThreadID, WM_LISTADDSTRING, 0, (LPARAM)szTempMessage );	
+		wsprintf( szTempMessage, "%s", "[ERROR] Pre-downloader check failed" );
+		::PostThreadMessage( m_nDlgThreadID, WM_LISTADDSTRING, 0, (LPARAM)szTempMessage );
 		return;
 	}
 
-	// ����Ʈ ������
+	::PostThreadMessage( m_nDlgThreadID, WM_LISTADDSTRING, 0, (LPARAM)_strdup("[PATCH] Downloading file list...") );
+	// ���� ����Ʈ ������
 	::PostThreadMessage( m_nDlgThreadID, WM_LISTADDSTRING, (WPARAM)ID2LAUNCHERTEXT("IDS_MESSAGE", 49 ), 0 );
 	// ���� ����Ʈ �ٿ�ε�
 	if ( !GETFILE_USEHTTP ( pHttpPatch, "\\", NS_GLOBAL_VAR::strServerCabFileList.GetString(), "" ) )
-	{	
+	{
 		if ( !IsForceTerminate() )
 		{
+			::PostThreadMessage( m_nDlgThreadID, WM_LISTADDSTRING, 0, (LPARAM)_strdup("[ERROR] Failed to download filelist.bin.cab") );
 			// ����Ʈ ������ ����
 			::PostThreadMessage( m_nDlgThreadID, WM_LISTADDSTRING, (WPARAM)ID2LAUNCHERTEXT("IDS_MESSAGE", 50 ), 0 );
 		}
