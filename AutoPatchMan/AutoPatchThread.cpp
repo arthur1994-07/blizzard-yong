@@ -841,8 +841,15 @@ BOOL CAutoPatchThread::DownloadFilesByHttp( CHttpPatch* pHttpPatch )
 			if ( !bAlreadyDown ) //	Note : ���� �ٿ�ε� �ȵ� �͸� GetFile�Ѵ�.
 #endif
 			{
+				CHAR* szDlMsg = new CHAR[256];
+				StringCchPrintfA( szDlMsg, 256, "Downloading: %s%s", FullSubPath.GetString(), pNewFile->FileName );
+				::PostThreadMessage( m_nDlgThreadID, WM_LISTADDSTRING, 0, (LPARAM)szDlMsg );
+
 				if ( !GETFILE_USEHTTP ( pHttpPatch, FullSubPath.GetString(), pNewFile->FileName ) )
 				{
+					CHAR* szErrMsg = new CHAR[256];
+					StringCchPrintfA( szErrMsg, 256, "[ERROR] Failed to download: %s%s", FullSubPath.GetString(), pNewFile->FileName );
+					::PostThreadMessage( m_nDlgThreadID, WM_LISTADDSTRING, 0, (LPARAM)szErrMsg );
 					return FALSE;
 				}
 			}
