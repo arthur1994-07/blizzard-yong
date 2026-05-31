@@ -69,7 +69,7 @@ namespace	NS_GLOBAL_VAR
 	//TCHAR*	g_szAlphaFtpPW = "ranalpha";
 
 	//TCHAR*	g_szBetaFtpID = "ranbeta";
-	//TCHAR*	g_szBetaFtpPW = "tjdrlduq";	
+	//TCHAR*	g_szBetaFtpPW = "tjdrlduq";
 	
 	TCHAR*	g_szServerFileList = "FileList.bin";
 	TCHAR*	g_szClientFileList = "cFileList.bin";	
