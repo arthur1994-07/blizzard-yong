@@ -833,6 +833,7 @@ BOOL CAutoPatchThread::DownloadFilesByHttp( CHttpPatch* pHttpPatch )
 			NS_LOG_CONTROL::SetProcessAllPosition( TotalPos, 100 );
 
 			CString FullSubPath = pNewFile->SubPath;
+			FullSubPath.Replace('\\', '/');
 
 #ifdef PREDOWNLOAD
 			if ( !bAlreadyDown || bForceDown == TRUE ) //	Note : ���� �ٿ�ε� �ȵ� �͸� GetFile�Ѵ�.
