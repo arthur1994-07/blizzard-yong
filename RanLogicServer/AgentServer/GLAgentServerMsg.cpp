@@ -519,26 +519,17 @@ BOOL GLAgentServer::MsgReqFieldSvrCharChkFb(NET_MSG_GENERIC* nmg, DWORD _dwClien
 	// üũ�� Ƚ�� LOG
 	if (pNetMsg->bExist)
     {
-        // Ghost session still alive on FieldServer — kick it, clean up, tell client to retry
-        DWORD dwChaDbNum   = pChar->ChaDbNum();
-        DWORD dwClientSlot = pChar->ClientSlot();
-        DWORD dwGaeaId     = pChar->GaeaId();
-        std::string szName = pChar->m_szName;
-
-        GLMSG::SNET_DROP_OUT_FORCED NetMsgForced;
-        NetMsgForced.dwChaNum = dwChaDbNum;
-        NetMsgForced.emForced = EMDROPOUT_REQLOGIN;
-        SENDTOALLCHANNEL(&NetMsgForced);
-
+        // FieldServer reports char exists (FindCreatingCharUserID / FindSaveDBUserID / GetChaByName).
+        // Release the join guard so the client can queue a fresh retry once it gets WAIT.
         GLMSG::SNETLOBBY_CHARJOIN_FB NetMsgWait(EMCJOIN_FB_WAIT);
-        NetMsgWait.dwChaNum = dwChaDbNum;
-        SENDTOCLIENT(dwClientSlot, &NetMsgWait);
-
-        DropOutChar(dwGaeaId);
+        NetMsgWait.dwChaNum = pChar->ChaDbNum();
+        SENDTOCLIENT(pChar->ClientSlot(), &NetMsgWait);
 
         sc::writeLogWarn(sc::string::format(
-            "MsgReqFieldSvrCharChkFb: ghost char[%s] still on FieldServer, kicked and sent WAIT to slot[%u]",
-            szName.c_str(), dwClientSlot));
+            "MsgReqFieldSvrCharChkFb: bExist for char[%s] user[%u] slot[%u], sent WAIT",
+            pChar->m_szName, pChar->UserDbNum(), pChar->ClientSlot()));
+
+        CharJoinDel(pChar->UserDbNum());
         return TRUE;
     }
 
@@ -703,6 +694,7 @@ BOOL GLAgentServer::MsgReqFieldSvrCharChkFb(NET_MSG_GENERIC* nmg, DWORD _dwClien
                     "Can't find Start Map %1%/%2%",
                     sGenMapID.Mid(),
                     sGenMapID.Sid()));
+			CharJoinDel(pChar->UserDbNum());
 			return FALSE;
 		}
 
@@ -715,6 +707,7 @@ BOOL GLAgentServer::MsgReqFieldSvrCharChkFb(NET_MSG_GENERIC* nmg, DWORD _dwClien
                     sGenMapID.Mid(),
                     sGenMapID.Sid(),
                     pChar->ChaDbNum()));
+			CharJoinDel(pChar->UserDbNum());
 			return FALSE;
 
 		}
@@ -744,6 +737,7 @@ BOOL GLAgentServer::MsgReqFieldSvrCharChkFb(NET_MSG_GENERIC* nmg, DWORD _dwClien
                     pChar->m_wSchool,
                     sGenMapID.Mid(),
                     sGenMapID.Sid()));
+			CharJoinDel(pChar->UserDbNum());
 			return FALSE;
 		}
 
@@ -777,7 +771,10 @@ BOOL GLAgentServer::MsgReqFieldSvrCharChkFb(NET_MSG_GENERIC* nmg, DWORD _dwClien
 
 	// ���� ���� �� ã�Ҵٸ� ���� �ʱ�ȭ �ϰ� �ٸ� ������ ĳ���� ���������� �����Ѵ�
 	if (bCANNOTFINDMAP)
+	{
+		CharJoinDel(pChar->UserDbNum());
         return true;
+	}
 
 	//if (m_pMsgServer->ConnectFieldSvr(pChar->ClientSlot(), dwFieldServer, pChar->GaeaId(), pChar->m_nChannel) != NET_OK)
 	if (m_pMsgServer->SetUpFieldInfo(pChar->ClientSlot(), dwFieldServer, pChar->GaeaId(), pChar->m_nChannel) != NET_OK)
@@ -789,6 +786,7 @@ BOOL GLAgentServer::MsgReqFieldSvrCharChkFb(NET_MSG_GENERIC* nmg, DWORD _dwClien
 			    dwFieldServer,
                 pChar->m_szName,
                 pChar->ChaDbNum()));
+		CharJoinDel(pChar->UserDbNum());
 		return FALSE;
 	}
 
@@ -827,6 +825,9 @@ BOOL GLAgentServer::MsgReqFieldSvrCharChkFb(NET_MSG_GENERIC* nmg, DWORD _dwClien
 	}
 
 	//** Add EventTime
+
+	// Login is committed — FieldServer will take it from here. Release the join guard.
+	CharJoinDel(pChar->UserDbNum());
 
 	SENDTOFIELD ( pChar->ClientSlot(), &NetJoinField );
 
