@@ -13,6 +13,7 @@
 !*.vcxproj
 !*.vcxproj.filters
 !*.vcxproj.user
+!*.md
 
 # Ignore Visual Studio local settings
 .vs/

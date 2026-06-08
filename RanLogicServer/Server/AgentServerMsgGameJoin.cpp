@@ -210,9 +210,6 @@ void CAgentServer::MsgAgentReqJoinDA(DWORD dwClient, DWORD dwGaeaID, NET_MSG_GEN
 	if (!pCHAR_DATA.get())
         return;
 
-	// Release join guard now that the DB job has completed
-	m_pGLAgentServer->CharJoinDel( pCHAR_DATA->m_UserDbNum );
-
 	//	�޽����� ���޵� clientid.
 	DWORD ClientSlot = pPacket->m_dwClientID;
 
@@ -221,6 +218,7 @@ void CAgentServer::MsgAgentReqJoinDA(DWORD dwClient, DWORD dwGaeaID, NET_MSG_GEN
         sc::writeLogWarn(sc::string::format(
             "MsgAgentReqJoinDA: slot[%u] closed during DB job for user[%u] char[%s], discarding",
             ClientSlot, pCHAR_DATA->m_UserDbNum, pCHAR_DATA->m_szName));
+		m_pGLAgentServer->CharJoinDel( pCHAR_DATA->m_UserDbNum );
 		return;
 	}
 
@@ -230,6 +228,7 @@ void CAgentServer::MsgAgentReqJoinDA(DWORD dwClient, DWORD dwGaeaID, NET_MSG_GEN
         sc::writeLogWarn(sc::string::format(
             "MsgAgentReqJoinDA: slot[%u] reused by different user, discarding join for user[%u] char[%s]",
             ClientSlot, pCHAR_DATA->m_UserDbNum, pCHAR_DATA->m_szName));
+		m_pGLAgentServer->CharJoinDel( pCHAR_DATA->m_UserDbNum );
 		return;
 	}
 
@@ -242,6 +241,7 @@ void CAgentServer::MsgAgentReqJoinDA(DWORD dwClient, DWORD dwGaeaID, NET_MSG_GEN
         sc::writeLogError(sc::string::format(
             "MsgAgentReqJoinDA: IsAccountPass false for slot[%u] user[%u]",
             ClientSlot, pCHAR_DATA->m_UserDbNum));
+		m_pGLAgentServer->CharJoinDel( pCHAR_DATA->m_UserDbNum );
 		return;
 	}
 
@@ -256,6 +256,7 @@ void CAgentServer::MsgAgentReqJoinDA(DWORD dwClient, DWORD dwGaeaID, NET_MSG_GEN
 		sc::writeLogError(sc::string::format(
             "MsgAgentReqJoinDA: char num mismatch slot[%u] client[%u] db[%u]",
             ClientSlot, dwCharNum, pCHAR_DATA->m_CharDbNum));
+		m_pGLAgentServer->CharJoinDel( pCHAR_DATA->m_UserDbNum );
 		return;
 	}
 
@@ -273,8 +274,8 @@ void CAgentServer::MsgAgentReqJoinDA(DWORD dwClient, DWORD dwGaeaID, NET_MSG_GEN
 		GLMSG::SNETLOBBY_CHARJOIN_FB NetMsgFB;
 		NetMsgFB.dwChaNum = dwCharNum;
 		NetMsgFB.emCharJoinFB = EMCJOIN_FB_PKPOINT;
-		//m_pClientManager->SendClient(&NetMsgFB);
 		SendClient(ClientSlot, &NetMsgFB);
+		m_pGLAgentServer->CharJoinDel( pCHAR_DATA->m_UserDbNum );
 		return;
 	}
 
@@ -291,6 +292,7 @@ void CAgentServer::MsgAgentReqJoinDA(DWORD dwClient, DWORD dwGaeaID, NET_MSG_GEN
 				NetMsgFB.dwChaNum = dwCharNum;
 				NetMsgFB.emCharJoinFB = EMCJOIN_FB_BLOCK_CLASS;
 				SendClient( ClientSlot, &NetMsgFB );
+				m_pGLAgentServer->CharJoinDel( pCHAR_DATA->m_UserDbNum );
 				return;
 			}
 		}
@@ -364,6 +366,7 @@ void CAgentServer::MsgAgentReqJoinDA(DWORD dwClient, DWORD dwGaeaID, NET_MSG_GEN
 				// �߱� �α��ν� �÷��� �����ð��� 5�ð��� �Ѱ� �������� �����ð��� 5�ð��� ���� �ʾ��� ��� ���� �޽����� ������.
 				GLMSG::SNETLOBBY_CHARJOIN_CHINA_ERROR NetMsg;
 				m_pClientManager->SendClient( ClientSlot, &NetMsg );
+				m_pGLAgentServer->CharJoinDel( pCHAR_DATA->m_UserDbNum );
 				return;
 
 			}else{
@@ -462,16 +465,14 @@ void CAgentServer::MsgAgentReqJoinDA(DWORD dwClient, DWORD dwGaeaID, NET_MSG_GEN
 		m_pClientManager->GetCryptKey(ClientSlot));
 	if (!pChar)
 	{
-		//	���� �õ��ڿ���  �޽����� �����ϴ�.
 		GLMSG::SNETLOBBY_CHARJOIN_FB NetMsgFB;
 		NetMsgFB.dwChaNum = dwCharNum;
-		NetMsgFB.emCharJoinFB = EMCJOIN_FB_ERROR;
-		//m_pClientManager->SendClient(&NetMsgFB);
+		NetMsgFB.emCharJoinFB = EMCJOIN_FB_WAIT;
 		SendClient(ClientSlot, &NetMsgFB);
-
-		sc::writeLogError(std::string("Initialize character instance failed"));
-		sc::writeLogError(sc::string::format("ClientID[%u], Channel[%d]", ClientSlot, nChannel ));
-		sc::writeLogError(sc::string::format("CharIP[%s], CharIDNum[%u], UserIDNum[%u], CharID[%s], CharAccount[%s]",
+		m_pGLAgentServer->CharJoinDel( pCHAR_DATA->m_UserDbNum );
+		sc::writeLogWarn(std::string("Initialize character instance failed, sent WAIT"));
+		sc::writeLogWarn(sc::string::format("ClientID[%u], Channel[%d]", ClientSlot, nChannel ));
+		sc::writeLogWarn(sc::string::format("CharIP[%s], CharIDNum[%u], UserIDNum[%u], CharID[%s], CharAccount[%s]",
             pCHAR_DATA->m_szIp,
             pCHAR_DATA->m_CharDbNum,
             pCHAR_DATA->m_UserDbNum,
