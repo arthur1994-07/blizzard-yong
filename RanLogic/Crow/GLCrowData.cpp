@@ -300,7 +300,7 @@ HRESULT SCROWDATA::LoadFile(sc::BaseStream& SFile, BOOL bServer, bool bPastLoad)
 
 					else if ( dwDataVer == 0x0122 )
                     {
-                        SCROWBASIC_121 sCrowBasicOld;
+                        SCROWBASIC_122 sCrowBasicOld;
                         GASSERT(sizeof(sCrowBasicOld)==dwDataSize);
                         SFile.ReadBuffer ( &sCrowBasicOld, sizeof(sCrowBasicOld) );
 
@@ -735,7 +735,7 @@ HRESULT SCROWDATA::LoadFile(sc::BaseStream& SFile, BOOL bServer, bool bPastLoad)
 		SFile >> dwDATATYPE;
 	};
 
-	//	Note : ¸¸¾à Crow°¡ ÆÇ¸Å ¸ñ·ÏÀ» °¡Áö°í ÀÖ´Ù¸é ÀÐ¾î¿Â´Ù.
+	//	Note : ï¿½ï¿½ï¿½ï¿½ Crowï¿½ï¿½ ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½Ð¾ï¿½Â´ï¿½.
 	if ( GLItemMan::GetInstance().ValidTable() )
 	{
 		for ( int i=0; i<SCROWACTION::SALENUM; ++i )
@@ -749,10 +749,10 @@ HRESULT SCROWDATA::LoadFile(sc::BaseStream& SFile, BOOL bServer, bool bPastLoad)
 			case CROW_LOAD_SALE_SUCCESS     : vTypeVer = GLInventorySale::CROW_SALE_V_1; break;
 			case CROW_LOAD_EXCHANGE_SUCCESS : vTypeVer = GLInventorySale::CROW_SALE_V_2; break;						
 
-			case CROW_LOAD_ERROR1			: sc::writeLogError( sc::string::format("SaleInvenLoadFile %1% ÆÄ¶ó¸ÞÅ¸ °¹¼ö ¿À·ù"     , m_sAction.m_strSaleFile[i].c_str() )); break;
-			case CROW_LOAD_ERROR2			: sc::writeLogError( sc::string::format("SaleInvenLoadFile() %1% ¾ÆÀÌÅÛ ÆÄÀÏ ·Îµå ½ÇÆÐ", m_sAction.m_strSaleFile[i].c_str() )); break;
-			case CROW_LOAD_ERROR3			: sc::writeLogError( sc::string::format("SaleInvenLoadFile %1% À§Ä¡ Áßº¹"			   , m_sAction.m_strSaleFile[i].c_str() )); break;
-			case CROW_LOAD_ERROR4			: sc::writeLogError( sc::string::format("SaleInvenLoadFile() %1% cInventoryÀÇ ÆÄ¶ó¸ÞÅ¸ÀÇ °¹¼ö°¡ Àß¸øµÇ¾ú½À´Ï´Ù.", m_sAction.m_strSaleFile[i].c_str() )); break;
+			case CROW_LOAD_ERROR1			: sc::writeLogError( sc::string::format("SaleInvenLoadFile %1% ï¿½Ä¶ï¿½ï¿½Å¸ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½"     , m_sAction.m_strSaleFile[i].c_str() )); break;
+			case CROW_LOAD_ERROR2			: sc::writeLogError( sc::string::format("SaleInvenLoadFile() %1% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½", m_sAction.m_strSaleFile[i].c_str() )); break;
+			case CROW_LOAD_ERROR3			: sc::writeLogError( sc::string::format("SaleInvenLoadFile %1% ï¿½ï¿½Ä¡ ï¿½ßºï¿½"			   , m_sAction.m_strSaleFile[i].c_str() )); break;
+			case CROW_LOAD_ERROR4			: sc::writeLogError( sc::string::format("SaleInvenLoadFile() %1% cInventoryï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¸ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.", m_sAction.m_strSaleFile[i].c_str() )); break;
 			case CROW_LOAD_ERROR5			: sc::writeLogError( sc::string::format("SaleInvenLoadFile %1%"						   , m_sAction.m_strSaleFile[i].c_str() )); break;
 			case CROW_LOAD_ETC				: break;
 			}
@@ -763,7 +763,7 @@ HRESULT SCROWDATA::LoadFile(sc::BaseStream& SFile, BOOL bServer, bool bPastLoad)
 
 
 
-	//11-07-22 Item °ü·ÃÀº ¸ðµÎ GenItemÀÌ Ã³¸®ÇÏµµ·Ï º¯°æ (bjju)
+	//11-07-22 Item ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ GenItemï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (bjju)
 #if defined( _ITEM_GEN_060417_H_ ) || defined( _QUESTION_ITEM_GEN_060417_H_ )
     BOOST_FOREACH( const std::string& strIter, m_sGenerate.m_vecGeneralGenItem )
         m_sGenItem.LOADFILE( strIter.c_str() );
@@ -792,7 +792,7 @@ HRESULT SCROWDATA::LoadFile(sc::BaseStream& SFile, BOOL bServer, bool bPastLoad)
 
 	if (bServer)
     {
-        // ¾Æ·¡ÂÊ¿¡¼­ ´Ù½Ã Load ÇÑ´Ù. ÁÖ¼®Ã³¸®.2011-09-26 jgkim
+        // ï¿½Æ·ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ Load ï¿½Ñ´ï¿½. ï¿½Ö¼ï¿½Ã³ï¿½ï¿½.2011-09-26 jgkim
         //LoadAniSet(m_sAction.m_strSkinObj.c_str());
 
 
@@ -847,10 +847,10 @@ void SCROWDATA::LoadAniSet ( const char* szSkinObj )
 		int nIndex = pAnimConInfo->m_MainType*AN_SUB_CROW_SIZE + pAnimConInfo->m_SubType;
 		m_pANIMATION[nIndex].push_back ( sAniAttack );
 
-        /*  ÇöÀç CharEdit ¿¡¼­ ¼öÁ¤ÇÑ »çÇ×ÀÌ ¹Ý¿µÀÌ ¾ÈµÇ´Â ¹®Á¦°¡ ÀÖ¾î¼­
-            ¾Æ·¡¿Í °°ÀÌ ÃÖ½Å ¾Ö´Ïµ¥ÀÌÅÍ¸¦ °¡Á®´Ù ¾²µµ·Ï ¼öÁ¤À» ÇÏ¿´À¸³ª 
-            ¼öÁ¤ÇÏ¸é¼­ º¯°æµÈ »çÇ×ÀÌ ¿ÀÈ÷·Á ¾î»öÇØÁö´Â ¹®Á¦°¡ ÀÖ¾î ÀÏµýÀº º¸·ù
-            ÇâÈÄ ±âÈ¹ÆÀ°ú ÇÏ³ª¾¿ Ã£¾Æ¼­ ¼öÁ¤ÇÏ±â·Î ÇÔ
+        /*  ï¿½ï¿½ï¿½ï¿½ CharEdit ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý¿ï¿½ï¿½ï¿½ ï¿½ÈµÇ´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾î¼­
+            ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ ï¿½Ö´Ïµï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½ï¿½ 
+            ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸é¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¹ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ Ã£ï¿½Æ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ ï¿½ï¿½
 
         for (CROWATTACK_VEC_ITER it = m_vecCrowAttack.begin(); it != m_vecCrowAttack.end(); ++it)
         {
@@ -859,14 +859,14 @@ void SCROWDATA::LoadAniSet ( const char* szSkinObj )
                 if (it->sAniAttack.m_dwSTime != sAniAttack.m_dwSTime)
                 {
                     TCHAR temp[256] = {0};
-                    _sntprintf_s(temp, 256, _T("(%02d, %02d) (%s) (%s) (¾Ö´Ï ½ÃÀÛ ½Ã°£ Æ²¸²) (old %.4f) (cur %.4f)\n"), m_sBasic.sNativeID.wMainID, m_sBasic.sNativeID.wSubID, szSkinObj, pAnimConInfo->m_strBinFile.c_str(), (float)it->sAniAttack.m_dwSTime / UNITANIKEY_PERSEC, (float)sAniAttack.m_dwSTime / UNITANIKEY_PERSEC);
+                    _sntprintf_s(temp, 256, _T("(%02d, %02d) (%s) (%s) (ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ Æ²ï¿½ï¿½) (old %.4f) (cur %.4f)\n"), m_sBasic.sNativeID.wMainID, m_sBasic.sNativeID.wSubID, szSkinObj, pAnimConInfo->m_strBinFile.c_str(), (float)it->sAniAttack.m_dwSTime / UNITANIKEY_PERSEC, (float)sAniAttack.m_dwSTime / UNITANIKEY_PERSEC);
                     OutputDebugStr(temp);
                 }
 
                 if (it->sAniAttack.m_dwETime != sAniAttack.m_dwETime)
                 {
                     TCHAR temp[256] = {0};
-                    _sntprintf_s(temp, 256, _T("(%02d, %02d) (%s) (%s) (¾Ö´Ï ³¡ ½Ã°£ Æ²¸²) (old %.4f) (cur %.4f)\n"), m_sBasic.sNativeID.wMainID, m_sBasic.sNativeID.wSubID, szSkinObj, pAnimConInfo->m_strBinFile.c_str(), (float)it->sAniAttack.m_dwETime / UNITANIKEY_PERSEC, (float)sAniAttack.m_dwETime / UNITANIKEY_PERSEC);
+                    _sntprintf_s(temp, 256, _T("(%02d, %02d) (%s) (%s) (ï¿½Ö´ï¿½ ï¿½ï¿½ ï¿½Ã°ï¿½ Æ²ï¿½ï¿½) (old %.4f) (cur %.4f)\n"), m_sBasic.sNativeID.wMainID, m_sBasic.sNativeID.wSubID, szSkinObj, pAnimConInfo->m_strBinFile.c_str(), (float)it->sAniAttack.m_dwETime / UNITANIKEY_PERSEC, (float)sAniAttack.m_dwETime / UNITANIKEY_PERSEC);
                     OutputDebugStr(temp);
                 }
 
@@ -880,28 +880,28 @@ void SCROWDATA::LoadAniSet ( const char* szSkinObj )
                 if (it->sAniAttack.m_dwFlags != sAniAttack.m_dwFlags)
                 {
                     TCHAR temp[256] = {0};
-                    _sntprintf_s(temp, 256, _T("(%02d, %02d) (%s) (%s) (¾Ö´Ï ¿É¼Ç Æ²¸²) (old %d) (cur %d)\n"), m_sBasic.sNativeID.wMainID, m_sBasic.sNativeID.wSubID, szSkinObj, pAnimConInfo->m_strBinFile.c_str(), it->sAniAttack.m_dwFlags, sAniAttack.m_dwFlags);
+                    _sntprintf_s(temp, 256, _T("(%02d, %02d) (%s) (%s) (ï¿½Ö´ï¿½ ï¿½É¼ï¿½ Æ²ï¿½ï¿½) (old %d) (cur %d)\n"), m_sBasic.sNativeID.wMainID, m_sBasic.sNativeID.wSubID, szSkinObj, pAnimConInfo->m_strBinFile.c_str(), it->sAniAttack.m_dwFlags, sAniAttack.m_dwFlags);
                     OutputDebugStr(temp);
                 }
 
                 if (it->sAniAttack.m_MainType != sAniAttack.m_MainType)
                 {
                     TCHAR temp[256] = {0};
-                    _sntprintf_s(temp, 256, _T("(%02d, %02d) (%s) (%s) (¾Ö´Ï ¸ÞÀÎ Å¸ÀÔ Æ²¸²) (old %d) (cur %d)\n"), m_sBasic.sNativeID.wMainID, m_sBasic.sNativeID.wSubID, szSkinObj, pAnimConInfo->m_strBinFile.c_str(), it->sAniAttack.m_MainType, sAniAttack.m_MainType);
+                    _sntprintf_s(temp, 256, _T("(%02d, %02d) (%s) (%s) (ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ Æ²ï¿½ï¿½) (old %d) (cur %d)\n"), m_sBasic.sNativeID.wMainID, m_sBasic.sNativeID.wSubID, szSkinObj, pAnimConInfo->m_strBinFile.c_str(), it->sAniAttack.m_MainType, sAniAttack.m_MainType);
                     OutputDebugStr(temp);
                 }
 
                 if (it->sAniAttack.m_SubType != sAniAttack.m_SubType)
                 {
                     TCHAR temp[256] = {0};
-                    _sntprintf_s(temp, 256, _T("(%02d, %02d) (%s) (%s) (¾Ö´Ï ¼­ºê Å¸ÀÔ Æ²¸²) (old %d) (cur %d)\n"), m_sBasic.sNativeID.wMainID, m_sBasic.sNativeID.wSubID, szSkinObj, pAnimConInfo->m_strBinFile.c_str(), it->sAniAttack.m_SubType, sAniAttack.m_SubType);
+                    _sntprintf_s(temp, 256, _T("(%02d, %02d) (%s) (%s) (ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ Æ²ï¿½ï¿½) (old %d) (cur %d)\n"), m_sBasic.sNativeID.wMainID, m_sBasic.sNativeID.wSubID, szSkinObj, pAnimConInfo->m_strBinFile.c_str(), it->sAniAttack.m_SubType, sAniAttack.m_SubType);
                     OutputDebugStr(temp);
                 }
 
                 if (it->sAniAttack.m_wDivCount != sAniAttack.m_wDivCount)
                 {
                     TCHAR temp[256] = {0};
-                    _sntprintf_s(temp, 256, _T("(%02d, %02d) (%s) (%s) (µ¥¹ÌÁö °¹¼ö Æ²¸²) (old %d) (cur %d)\n"), m_sBasic.sNativeID.wMainID, m_sBasic.sNativeID.wSubID, szSkinObj, pAnimConInfo->m_strBinFile.c_str(), it->sAniAttack.m_wDivCount, sAniAttack.m_wDivCount);
+                    _sntprintf_s(temp, 256, _T("(%02d, %02d) (%s) (%s) (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Æ²ï¿½ï¿½) (old %d) (cur %d)\n"), m_sBasic.sNativeID.wMainID, m_sBasic.sNativeID.wSubID, szSkinObj, pAnimConInfo->m_strBinFile.c_str(), it->sAniAttack.m_wDivCount, sAniAttack.m_wDivCount);
                     OutputDebugStr(temp);
                 }
 
@@ -922,7 +922,7 @@ HRESULT SCROWDATA::SaveFile(sc::SerialFile& SFile)
 		SFile << static_cast<DWORD> ( sizeof(SCROWBASIC) );
 
 		CString cstrName;
-		cstrName.Format( _T("CN_%03d_%03d"), sNativeID.wMainID, sNativeID.wSubID ); // by °æ´ë
+		cstrName.Format( _T("CN_%03d_%03d"), sNativeID.wMainID, sNativeID.wSubID ); // by ï¿½ï¿½ï¿½
 		StringCchCopy ( m_szName, CHAR_SZNAME, cstrName.GetString() );
 		SFile.WriteBuffer ( &m_sBasic, sizeof(SCROWBASIC) );
 	}
@@ -1043,7 +1043,7 @@ const char* SCROWDATA::GetName()
 
 	if (szName == NULL )
 		return m_szName;
-	// ¸ó½ºÅÍ ÀÌ¸§ÀÌ ¾ø´Â °æ¿ìµµ ÀÖ´Ù;
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ìµµ ï¿½Ö´ï¿½;
 	else if ( strcmp( szName, "Skip" ) == 0 || strcmp( szName, "skip" ) == 0 )
 	{
 		static TCHAR szEmpty[] = {""};
@@ -1244,7 +1244,7 @@ int SCROWDATA::SaleInvenLoadFileVersion( const char* szFileName, int iArrayIdx )
 	gltexfile glTextFile;
 	glTextFile.reg_sep("\t ,[]");
 
-	if (GLOGIC::UseLogicZipFile()) // by °æ´ë
+	if (GLOGIC::UseLogicZipFile()) // by ï¿½ï¿½ï¿½
 		glTextFile.SetZipFile(GLogicData::GetInstance().GetGlogicZipFile());
 
 	if (!glTextFile.open(strPath, true, GLOGIC::UseLogicPackFile()))
@@ -1268,33 +1268,33 @@ namespace COMMENT
 {
 	std::string szCROWACT_UP[EMCROWACT_UP_NSIZE] =
 	{
-		"¼±Á¦°ø°Ý ÇÏÁö ¾ÊÀ½",
-		"°¡Àå°¡±î¿î Àû °ø°Ý",
-		"ÀÚ½Åº¸´Ù ³·Àº ·¹º§ °ø°Ý",
-		"ÀÚ½Åº¸´Ù ³·Àº HP °ø°Ý",
-		"ºû ¼Ó¼º °ø°Ý",
-		"¾îµÒ ¼Ó¼º °ø°Ý",
-		"»óÅÂÀÌ»ó °ø°Ý",
-		"¹«±âµé°í ÀÖ´ÂÀÚ °ø°Ý",
-		"¶Ù°í ÀÖÀ»¶§ °ø°Ý",
-		"°ø°Ý¹ÞÀ¸¸é µµ¸Á°£´Ù",
+		"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
+		"ï¿½ï¿½ï¿½å°¡ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
+		"ï¿½Ú½Åºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
+		"ï¿½Ú½Åºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ HP ï¿½ï¿½ï¿½ï¿½",
+		"ï¿½ï¿½ ï¿½Ó¼ï¿½ ï¿½ï¿½ï¿½ï¿½",
+		"ï¿½ï¿½ï¿½ ï¿½Ó¼ï¿½ ï¿½ï¿½ï¿½ï¿½",
+		"ï¿½ï¿½ï¿½ï¿½ï¿½Ì»ï¿½ ï¿½ï¿½ï¿½ï¿½",
+		"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
+		"ï¿½Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
+		"ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
 	};
 	
 	std::string szCROWACT_DN[EMCROWACT_DN_NSIZE] =
 	{
-		"º¯ÇÔ ¾øÀ½",
-		"³·Àº HP¸¦ Ã£´Â´Ù",
-		"°ø°Ý ¹ÞÀ¸¸é µµ¸Á°£´Ù",
+		"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½",
+		"ï¿½ï¿½ï¿½ï¿½ HPï¿½ï¿½ Ã£ï¿½Â´ï¿½",
+		"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
 	};
 
 	std::string NPC_TYPE [NPC_TYPE_SIZE] = 
 	{
-		"ÀÏ¹Ý NPC",
-		"¿ìÃ¼Åë",
-		"ÀÎÁõ±â",
-		"È¦Â¦°ÔÀÓ±â",
-		"ÅØ»ç½ºÈ¦´ý",
-        "Å¬¸¯Æ®¸®°Å (ÀÎ´ø)",
+		"ï¿½Ï¹ï¿½ NPC",
+		"ï¿½ï¿½Ã¼ï¿½ï¿½",
+		"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+		"È¦Â¦ï¿½ï¿½ï¿½Ó±ï¿½",
+		"ï¿½Ø»ç½ºÈ¦ï¿½ï¿½",
+        "Å¬ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ (ï¿½Î´ï¿½)",
 	};
 
 };
