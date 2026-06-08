@@ -68,28 +68,6 @@ void CPKRankNotification::Update ( int x, int y, BYTE LB, BYTE MB, BYTE RB, int 
 {
 	if ( !IsVisible () ) return ;
 
-	// Dynamic right-side positioning
-	{
-		float fScreenWidth = DxViewPort::GetInstance().GetWidth();
-		const UIRECT& rcGlobalPos = GetGlobalPos();
-		float fDesiredLeft = fScreenWidth - rcGlobalPos.sizeX - 5.0f; // 5px right margin
-		float fGapX = fDesiredLeft - rcGlobalPos.left;
-
-		if ( fGapX > 1.0f || fGapX < -1.0f )
-		{
-			UIRECT rcNewPos = rcGlobalPos;
-			rcNewPos.left  = fDesiredLeft;
-			rcNewPos.right = fDesiredLeft + rcNewPos.sizeX;
-			SetGlobalPos( rcNewPos ); // CUIGroup::SetGlobalPos cascades to all children
-
-			// Keep local pos in sync for top-level control
-			UIRECT rcLocalPos = GetLocalPos();
-			rcLocalPos.left  = fDesiredLeft;
-			rcLocalPos.right = fDesiredLeft + rcLocalPos.sizeX;
-			SetLocalPos( rcLocalPos );
-		}
-	}
-
 	CUIGroup::Update ( x, y, LB, MB, RB, nScroll, fElapsedTime, bFirstControl );
 
 	for( int i = 0; i < PKNOTIF_NUM; ++ i )
@@ -98,16 +76,20 @@ void CPKRankNotification::Update ( int x, int y, BYTE LB, BYTE MB, BYTE RB, int 
 			m_pInfo[i]->SetVisibleSingle( FALSE );
 	}
 
+	float fScreenWidth = DxViewPort::GetInstance().GetWidth();
+
 	PK_HISTORY_VEC vecPKHistory = m_pGaeaClient->m_vecPKHistory;
 	for( int i = 0; i < (int)vecPKHistory.size(); ++ i )
 	{
 		if ( i >= PKNOTIF_NUM )	continue;
+		if ( !m_pInfo[i] ) continue;
 
-		if ( m_pInfo[i] )
-		{
-			m_pInfo[i]->SetVisibleSingle( TRUE );
-			m_pInfo[i]->SetData( vecPKHistory[i] );
-		}
+		m_pInfo[i]->SetVisibleSingle( TRUE );
+		m_pInfo[i]->SetData( vecPKHistory[i] );
+
+		const UIRECT& rcSlot = m_pInfo[i]->GetGlobalPos();
+		UIRECT rcNewSlot( fScreenWidth - rcSlot.sizeX - 5.0f, rcSlot.top, rcSlot.sizeX, rcSlot.sizeY );
+		m_pInfo[i]->SetGlobalPos( rcNewSlot );
 	}
 }
 
